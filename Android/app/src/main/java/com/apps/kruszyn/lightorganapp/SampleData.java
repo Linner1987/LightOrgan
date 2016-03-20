@@ -12,6 +12,6 @@ public class SampleData {
 
     static {
         for (int i = 0; i < 50; i++)
-            MEDIA_FILE_ITEMS.add(new MediaFileItem("Kawa " + i, "Gang" + i, "kg.mp3" + i));
+            MEDIA_FILE_ITEMS.add(new MediaFileItem("Kawa " + i, "Gang " + i, i * 10000, "kg" + i + ".mp3"));
     }
 }

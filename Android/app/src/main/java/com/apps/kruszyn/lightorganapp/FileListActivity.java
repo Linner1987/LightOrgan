@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +56,7 @@ public class FileListActivity extends AppCompatActivity {
             holder.mItem = mValues.get(position);
             holder.mTitleView.setText(mValues.get(position).title);
             holder.mArtistView.setText(mValues.get(position).artist);
+            holder.mDurationView.setText(DateUtils.formatElapsedTime(mValues.get(position).duration / 1000));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,6 +78,7 @@ public class FileListActivity extends AppCompatActivity {
             public final View mView;
             public final TextView mTitleView;
             public final TextView mArtistView;
+            public final TextView mDurationView;
             public MediaFileItem mItem;
 
             public ViewHolder(View view) {
@@ -83,6 +86,7 @@ public class FileListActivity extends AppCompatActivity {
                 mView = view;
                 mTitleView = (TextView) view.findViewById(R.id.title);
                 mArtistView = (TextView) view.findViewById(R.id.artist);
+                mDurationView = (TextView) view.findViewById(R.id.duration);
             }
         }
     }
