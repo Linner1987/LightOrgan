@@ -36,21 +36,22 @@
             android:id="@+id/artist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@+id/title"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/title"
+            android:layout_marginLeft="16dp"
             android:maxLines="1"
             android:ellipsize="end"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="?android:attr/textColorSecondary"/>
 
         <TextView
             android:id="@+id/duration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_below="@+id/title"
-            android:layout_toRightOf="@+id/artist"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="8dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="?android:attr/textColorSecondary"/>
 
     </RelativeLayout>
