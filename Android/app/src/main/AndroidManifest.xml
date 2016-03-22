@@ -19,7 +19,8 @@
         </activity>
         <activity
             android:name=".FileListActivity"
-            android:label="@string/file_list_activity_name"/>
+            android:label="@string/file_list_activity_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <!--
         <activity
             android:name=".FileListActivity"
