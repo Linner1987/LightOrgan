@@ -1,6 +1,7 @@
 package com.apps.kruszyn.lightorganapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,18 +9,27 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+
+    static final String QUERY_STRING = "queryString";
+    static final String SEARCH_OPEN = "searchOpen";
+    private String searchText = null;
+    private String queryToSave = null;
+    private boolean searchOpen = false;
+    private SearchView mSearchView;
 
     private RecyclerView mRecyclerView;
     private List<MediaFileItem> mModel;
@@ -52,24 +62,43 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
         getMenuInflater().inflate(R.menu.menu_file_list, menu);
 
         final MenuItem item = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setQueryHint("Search songs");
-        searchView.setOnQueryTextListener(this);
+        mSearchView = (SearchView) MenuItemCompat.getActionView(item);
+        mSearchView.setMaxWidth(Integer.MAX_VALUE);
+        mSearchView.setQueryHint("Search songs");
+        mSearchView.setOnQueryTextListener(this);
 
         MenuItemCompat.setOnActionExpandListener(item,
                 new MenuItemCompat.OnActionExpandListener() {
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
+
+                        searchOpen = false;
+
                         mAdapter.setFilter(mModel);
                         return true;
                     }
 
                     @Override
                     public boolean onMenuItemActionExpand(MenuItem item) {
+
+                        searchOpen = true;
+
+                        if (searchText != null) {
+                            queryToSave = new StringBuffer(searchText).toString();
+                        }
+
                         return true;
                     }
                 });
+
+        if (searchOpen) {
+            MenuItemCompat.expandActionView(item);
+
+            if (!TextUtils.isEmpty(queryToSave))
+                mSearchView.setQuery(queryToSave, false);
+
+            mSearchView.clearFocus();
+        }
 
         return true;
     }
@@ -101,18 +130,40 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
 
     @Override
     public boolean onQueryTextChange(String newText) {
+
+        searchText = newText;
+
         final List<MediaFileItem> filteredList = filter(mModel, newText);
         mAdapter.setFilter(filteredList);
+
         return true;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+
+        savedInstanceState.putBoolean(SEARCH_OPEN, searchOpen);
+        savedInstanceState.putString(QUERY_STRING, searchText);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+
+        super.onRestoreInstanceState(savedInstanceState);
+
+        searchOpen = savedInstanceState.getBoolean(SEARCH_OPEN);
+        searchText = savedInstanceState.getString(QUERY_STRING);
+    }
+
     private List<MediaFileItem> filter(List<MediaFileItem> items, String query) {
-        query = query.toLowerCase();
+        query = query.trim().toLowerCase();
 
         final List<MediaFileItem> filteredList = new ArrayList<>();
         for (MediaFileItem item : items) {
-            final String text = item.name.toLowerCase();
-            if (text.contains(query)) {
+            final String text1 = item.title.trim().toLowerCase();
+            final String text2 = item.artist.trim().toLowerCase();
+            if (text1.contains(query) || text2.contains(query)) {
                 filteredList.add(item);
             }
         }
