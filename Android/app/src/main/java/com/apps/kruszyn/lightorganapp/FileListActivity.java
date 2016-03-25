@@ -3,9 +3,11 @@ package com.apps.kruszyn.lightorganapp;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MergeCursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
@@ -27,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -348,9 +351,18 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
                 @Override
                 public void onClick(View v) {
 
-                    Context context = v.getContext();
+                    //Context context = v.getContext();
 
-                    //to do
+                    MediaFileItem mediafileItem = holder.mItem;
+
+                    if (mediafileItem != null) {
+                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+
+                        File audioFile = new File(mediafileItem.filePath);
+                        intent.setDataAndType(Uri.fromFile(audioFile), mediafileItem.mimeType);
+
+                        startActivity(intent);
+                    }
                 }
             });
         }
