@@ -37,6 +37,7 @@
                 android:value=".MainActivity" />
         </activity>
         -->
+        <service android:name=".BackgroundAudioService" />
 
     </application>
 

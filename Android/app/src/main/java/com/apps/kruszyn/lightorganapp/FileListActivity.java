@@ -266,6 +266,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
 
             if (cursor != null && cursor.moveToFirst()) {
                 do {
+                    int idColumn = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
                     int artistColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
                     int titleColumn = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
                     int durationColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
@@ -273,6 +274,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
                     int mimeTypeColumn = cursor.getColumnIndex (MediaStore.Audio.Media.MIME_TYPE);
 
                     MediaFileItem audio = new MediaFileItem(
+                            cursor.getLong(idColumn),
                             cursor.getString(titleColumn),
                             cursor.getString(artistColumn),
                             cursor.getInt(durationColumn),
@@ -351,16 +353,17 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
                 @Override
                 public void onClick(View v) {
 
-                    //Context context = v.getContext();
+                    Context context = v.getContext();
 
                     MediaFileItem mediafileItem = holder.mItem;
 
                     if (mediafileItem != null) {
-                        Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                        //Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
+                        //File audioFile = new File(mediafileItem.filePath);
+                        //intent.setDataAndType(Uri.fromFile(audioFile), mediafileItem.mimeType);
 
-                        File audioFile = new File(mediafileItem.filePath);
-                        intent.setDataAndType(Uri.fromFile(audioFile), mediafileItem.mimeType);
-
+                        Intent intent = new Intent(context, MainActivity.class);
+                        intent.putExtra(MusicHelper.MEDIA_FILE_PATH, mediafileItem.filePath);
                         startActivity(intent);
                     }
                 }

@@ -12,4 +12,18 @@
     tools:context="com.apps.kruszyn.lightorganapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-</RelativeLayout>
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp">
+        <Button android:text="Start" android:id="@+id/StartButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+        <Button android:text="Pause" android:id="@+id/PauseButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+        <Button android:text="Stop" android:id="@+id/StopButton"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    </LinearLayout>
+
+    </RelativeLayout>
