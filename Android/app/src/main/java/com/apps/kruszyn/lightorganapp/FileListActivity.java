@@ -4,13 +4,21 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.MergeCursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.media.MediaBrowserCompat;
+import android.support.v4.media.MediaMetadataCompat;
+import android.support.v4.media.session.MediaControllerCompat;
+import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +37,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.apps.kruszyn.lightorganapp.ui.BaseActivity;
+import com.apps.kruszyn.lightorganapp.utils.LogHelper;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileListActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class FileListActivity extends BaseActivity implements SearchView.OnQueryTextListener {
+
+    private static final String TAG = LogHelper.makeLogTag(FileListActivity.class);
 
     static final String QUERY_STRING = "queryString";
     static final String SEARCH_OPEN = "searchOpen";
@@ -43,12 +56,56 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
     private SearchView mSearchView;
 
     private RecyclerView mRecyclerView;
-    private List<MediaFileItem> mModel;
+    private List<MediaBrowserCompat.MediaItem> mModel;
     private SimpleItemRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private boolean useExternalStorage;
+
+    private String mMediaId;
+
+    // Receive callbacks from the MediaController. Here we update our state such as which queue
+    // is being shown, the current title and description and the PlaybackState.
+    private final MediaControllerCompat.Callback mMediaControllerCallback =
+            new MediaControllerCompat.Callback() {
+                @Override
+                public void onMetadataChanged(MediaMetadataCompat metadata) {
+                    super.onMetadataChanged(metadata);
+                    if (metadata == null) {
+                        return;
+                    }
+                    LogHelper.d(TAG, "Received metadata change to media ",
+                            metadata.getDescription().getMediaId());
+                    mAdapter.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onPlaybackStateChanged(@NonNull PlaybackStateCompat state) {
+                    super.onPlaybackStateChanged(state);
+                    LogHelper.d(TAG, "Received state change: ", state);
+                    mAdapter.notifyDataSetChanged();
+                }
+            };
+
+    private final MediaBrowserCompat.SubscriptionCallback mSubscriptionCallback =
+            new MediaBrowserCompat.SubscriptionCallback() {
+                @Override
+                public void onChildrenLoaded(@NonNull String parentId,
+                                             @NonNull List<MediaBrowserCompat.MediaItem> children) {
+                    try {
+                        mAdapter.setFilter(children);
+                        mAdapter.notifyDataSetChanged();
+                    } catch (Throwable t) {
+                        LogHelper.e(TAG, "Error on childrenloaded", t);
+                    }
+                }
+
+                @Override
+                public void onError(@NonNull String id) {
+                    LogHelper.e(TAG, "browse subscription onError, id=" + id);
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +127,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
         mAdapter = new SimpleItemRecyclerViewAdapter(mModel);
         mRecyclerView.setAdapter(mAdapter);
 
-        searchFiles();
+//        searchFiles();
     }
 
     @Override
@@ -141,6 +198,61 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+
+        // fetch browsing information to fill the listview:
+        MediaBrowserCompat mediaBrowser = getMediaBrowser();
+
+        LogHelper.d(TAG, "fragment.onStart, mediaId=", mMediaId,
+                "  onConnected=" + mediaBrowser.isConnected());
+
+        if (mediaBrowser.isConnected()) {
+            onConnected();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        MediaBrowserCompat mediaBrowser = getMediaBrowser();
+        if (mediaBrowser != null && mediaBrowser.isConnected() && mMediaId != null) {
+            mediaBrowser.unsubscribe(mMediaId);
+        }
+
+//        MediaControllerCompat controller = getSupportMediaController();
+//        if (controller != null) {
+//            controller.unregisterCallback(mMediaControllerCallback);
+//        }
+    }
+
+    public void onConnected() {
+
+        mMediaId = getMediaBrowser().getRoot();
+
+        // Unsubscribing before subscribing is required if this mediaId already has a subscriber
+        // on this MediaBrowser instance. Subscribing to an already subscribed mediaId will replace
+        // the callback, but won't trigger the initial callback.onChildrenLoaded.
+        //
+        // This is temporary: A bug is being fixed that will make subscribe
+        // consistently call onChildrenLoaded initially, no matter if it is replacing an existing
+        // subscriber or not. Currently this only happens if the mediaID has no previous
+        // subscriber or if the media content changes on the service side, so we need to
+        // unsubscribe first.
+        getMediaBrowser().unsubscribe(mMediaId);
+
+        getMediaBrowser().subscribe(mMediaId, mSubscriptionCallback);
+
+        // Add MediaController callback so we can redraw the list when metadata changes:
+        MediaControllerCompat controller = getSupportMediaController();
+        if (controller != null) {
+            controller.registerCallback(mMediaControllerCallback);
+        }
+    }
+
+
+
+    @Override
     public boolean onQueryTextSubmit(String query) {
         return false;
     }
@@ -153,7 +265,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
         //final List<MediaFileItem> filteredList = filter(mModel, newText);
         //mAdapter.setFilter(filteredList);
 
-        searchFiles();
+//        searchFiles();
 
         return true;
     }
@@ -201,7 +313,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
         }
 
         useExternalStorage = true;
-        doSearchFiles();
+        //doSearchFiles();
     }
 
     @Override
@@ -216,7 +328,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
                             .show();
                 }
 
-                doSearchFiles();
+                //doSearchFiles();
 
                 break;
             default:
@@ -224,6 +336,23 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
         }
     }
 
+    @Override
+    protected void onMediaControllerConnected() {
+        onConnected();
+    }
+
+    public void onMediaItemSelected(MediaBrowserCompat.MediaItem item) {
+
+        if (item.isPlayable()) {
+            getSupportMediaController().getTransportControls()
+                    .playFromMediaId(item.getMediaId(), null);
+
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    /*
     private void doSearchFiles() {
         new MediaAsyncTask().execute(searchText);
     }
@@ -323,15 +452,15 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
                 mAdapter.setFilter(mModel);
             }
         }
-    }
+    } */
 
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-        private List<MediaFileItem> mValues;
+        private List<MediaBrowserCompat.MediaItem> mValues;
 
-        public SimpleItemRecyclerViewAdapter(List<MediaFileItem> items) {
+        public SimpleItemRecyclerViewAdapter(List<MediaBrowserCompat.MediaItem> items) {
             mValues = items;
         }
 
@@ -345,26 +474,29 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
             holder.mItem = mValues.get(position);
-            holder.mTitleView.setText(mValues.get(position).title);
-            holder.mArtistView.setText(mValues.get(position).artist);
-            holder.mDurationView.setText(DateUtils.formatElapsedTime(mValues.get(position).duration / 1000));
+            holder.mTitleView.setText(mValues.get(position).getDescription().getTitle());
+            holder.mArtistView.setText(mValues.get(position).getDescription().getSubtitle());
+            holder.mDurationView.setText(DateUtils.formatElapsedTime(mValues.get(position).getDescription()
+                    .getExtras().getLong(MediaMetadataCompat.METADATA_KEY_DURATION) / 1000));
 
             holder.mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    Context context = v.getContext();
+                    //Context context = v.getContext();
 
-                    MediaFileItem mediafileItem = holder.mItem;
+                    MediaBrowserCompat.MediaItem item = holder.mItem;
 
-                    if (mediafileItem != null) {
+                    if (item != null) {
                         //Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
                         //File audioFile = new File(mediafileItem.filePath);
                         //intent.setDataAndType(Uri.fromFile(audioFile), mediafileItem.mimeType);
 
-                        Intent intent = new Intent(context, MainActivity.class);
-                        intent.putExtra(MusicHelper.MEDIA_FILE_PATH, mediafileItem.filePath);
-                        startActivity(intent);
+                        //Intent intent = new Intent(context, MainActivity.class);
+                        //intent.putExtra(MusicHelper.MEDIA_FILE_PATH, mediafileItem.filePath);
+                        //startActivity(intent);
+
+                        onMediaItemSelected(item);
                     }
                 }
             });
@@ -375,7 +507,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
             return mValues.size();
         }
 
-        public void setFilter(List<MediaFileItem> items){
+        public void setFilter(List<MediaBrowserCompat.MediaItem> items){
             mValues = items;
             notifyDataSetChanged();
         }
@@ -385,7 +517,7 @@ public class FileListActivity extends AppCompatActivity implements SearchView.On
             public final TextView mTitleView;
             public final TextView mArtistView;
             public final TextView mDurationView;
-            public MediaFileItem mItem;
+            public MediaBrowserCompat.MediaItem mItem;
 
             public ViewHolder(View view) {
                 super(view);
