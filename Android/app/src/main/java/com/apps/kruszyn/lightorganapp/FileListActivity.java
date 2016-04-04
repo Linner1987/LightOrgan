@@ -94,8 +94,8 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
                 public void onChildrenLoaded(@NonNull String parentId,
                                              @NonNull List<MediaBrowserCompat.MediaItem> children) {
                     try {
-                        mAdapter.setFilter(children);
-                        mAdapter.notifyDataSetChanged();
+                        mModel = children;
+                        searchFiles();
                     } catch (Throwable t) {
                         LogHelper.e(TAG, "Error on childrenloaded", t);
                     }
@@ -149,6 +149,7 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
                         searchOpen = false;
 
                         mAdapter.setFilter(mModel);
+
                         return true;
                     }
 
@@ -220,10 +221,10 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
             mediaBrowser.unsubscribe(mMediaId);
         }
 
-//        MediaControllerCompat controller = getSupportMediaController();
-//        if (controller != null) {
-//            controller.unregisterCallback(mMediaControllerCallback);
-//        }
+        MediaControllerCompat controller = getSupportMediaController();
+        if (controller != null) {
+            controller.unregisterCallback(mMediaControllerCallback);
+        }
     }
 
     public void onConnected() {
@@ -267,6 +268,8 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
 
 //        searchFiles();
 
+        searchFiles();
+
         return true;
     }
 
@@ -287,34 +290,57 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
         searchText = savedInstanceState.getString(QUERY_STRING);
     }
 
-    private List<MediaFileItem> filter(List<MediaFileItem> items, String query) {
+//    private List<MediaFileItem> filter(List<MediaFileItem> items, String query) {
+//        query = query.trim().toLowerCase();
+//
+//        final List<MediaFileItem> filteredList = new ArrayList<>();
+//        for (MediaFileItem item : items) {
+//            final String text1 = item.title.trim().toLowerCase();
+//            final String text2 = item.artist.trim().toLowerCase();
+//            if (text1.contains(query) || text2.contains(query)) {
+//                filteredList.add(item);
+//            }
+//        }
+//        return filteredList;
+//    }
+
+    private List<MediaBrowserCompat.MediaItem> filter(List<MediaBrowserCompat.MediaItem> items, String query) {
+
+        if (TextUtils.isEmpty(query))
+            return items;
+
         query = query.trim().toLowerCase();
 
-        final List<MediaFileItem> filteredList = new ArrayList<>();
-        for (MediaFileItem item : items) {
-            final String text1 = item.title.trim().toLowerCase();
-            final String text2 = item.artist.trim().toLowerCase();
+        final List<MediaBrowserCompat.MediaItem> filteredList = new ArrayList<>();
+        for (MediaBrowserCompat.MediaItem item : items) {
+            final String text1 = item.getDescription().getTitle().toString().trim().toLowerCase();
+            final String text2 = item.getDescription().getSubtitle().toString().trim().toLowerCase();
             if (text1.contains(query) || text2.contains(query)) {
-                filteredList.add(item);
+               filteredList.add(item);
             }
         }
         return filteredList;
     }
 
     private void searchFiles() {
-
-        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(FileListActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(FileListActivity.this,
-                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_CODE_ASK_PERMISSIONS);
-            return;
-        }
-
-        useExternalStorage = true;
-        //doSearchFiles();
+        final List<MediaBrowserCompat.MediaItem> filteredList = filter(mModel, searchText);
+        mAdapter.setFilter(filteredList);
     }
+
+//    private void searchFiles() {
+//
+//        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(FileListActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE);
+//
+//        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(FileListActivity.this,
+//                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+//                    REQUEST_CODE_ASK_PERMISSIONS);
+//            return;
+//        }
+//
+//        useExternalStorage = true;
+//        //doSearchFiles();
+//    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
