@@ -36,17 +36,6 @@
             android:name=".FileListActivity"
             android:label="@string/file_list_activity_name"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <!--
-        <activity
-            android:name=".FileListActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        -->
-        <!--<service android:name=".BackgroundAudioService" />-->
 
         <!-- Main music service, provides media browsing and media playback services to
          consumers through MediaBrowserService and MediaSession. Consumers connect to it through

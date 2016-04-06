@@ -1,27 +1,13 @@
 package com.apps.kruszyn.lightorganapp;
 
-import android.Manifest;
-import android.content.Context;
-import android.content.DialogInterface;
+
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.MergeCursor;
-import android.net.ConnectivityManager;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,12 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.apps.kruszyn.lightorganapp.ui.BaseActivity;
 import com.apps.kruszyn.lightorganapp.utils.LogHelper;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,8 +44,6 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
     private SimpleItemRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    //final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    private boolean useExternalStorage;
 
     private String mMediaId;
 
@@ -122,12 +104,9 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        //mModel = SampleData.MEDIA_FILE_ITEMS;
         mModel = new ArrayList<>();
         mAdapter = new SimpleItemRecyclerViewAdapter(mModel);
         mRecyclerView.setAdapter(mAdapter);
-
-//        searchFiles();
     }
 
     @Override
@@ -263,11 +242,6 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
 
         searchText = newText;
 
-        //final List<MediaFileItem> filteredList = filter(mModel, newText);
-        //mAdapter.setFilter(filteredList);
-
-//        searchFiles();
-
         searchFiles();
 
         return true;
@@ -289,20 +263,6 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
         searchOpen = savedInstanceState.getBoolean(SEARCH_OPEN);
         searchText = savedInstanceState.getString(QUERY_STRING);
     }
-
-//    private List<MediaFileItem> filter(List<MediaFileItem> items, String query) {
-//        query = query.trim().toLowerCase();
-//
-//        final List<MediaFileItem> filteredList = new ArrayList<>();
-//        for (MediaFileItem item : items) {
-//            final String text1 = item.title.trim().toLowerCase();
-//            final String text2 = item.artist.trim().toLowerCase();
-//            if (text1.contains(query) || text2.contains(query)) {
-//                filteredList.add(item);
-//            }
-//        }
-//        return filteredList;
-//    }
 
     private List<MediaBrowserCompat.MediaItem> filter(List<MediaBrowserCompat.MediaItem> items, String query) {
 
@@ -327,41 +287,6 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
         mAdapter.setFilter(filteredList);
     }
 
-//    private void searchFiles() {
-//
-//        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(FileListActivity.this,Manifest.permission.READ_EXTERNAL_STORAGE);
-//
-//        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(FileListActivity.this,
-//                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
-//                    REQUEST_CODE_ASK_PERMISSIONS);
-//            return;
-//        }
-//
-//        useExternalStorage = true;
-//        //doSearchFiles();
-//    }
-
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE_ASK_PERMISSIONS:
-//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    useExternalStorage = true;
-//                } else {
-//                    useExternalStorage = false;
-//                    Toast.makeText(FileListActivity.this, "READ_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//
-//                //doSearchFiles();
-//
-//                break;
-//            default:
-//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        }
-//    }
-
     @Override
     protected void onMediaControllerConnected() {
         onConnected();
@@ -377,109 +302,6 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
             startActivity(intent);
         }
     }
-
-    /*
-    private void doSearchFiles() {
-        new MediaAsyncTask().execute(searchText);
-    }
-
-    private void loadAudioFiles(String searchText) {
-        try {
-
-            mModel = new ArrayList<MediaFileItem>();
-
-            String[] projection = new String[] {
-                    MediaStore.Audio.Media._ID,
-                    MediaStore.Audio.Media.ARTIST,
-                    MediaStore.Audio.Media.TITLE,
-                    MediaStore.Audio.Media.DURATION,
-                    MediaStore.Audio.Media.DATA,
-                    MediaStore.Audio.Media.MIME_TYPE
-            };
-
-            String selection = MediaStore.Audio.Media.IS_MUSIC + "!= 0";
-            if (!TextUtils.isEmpty(searchText))
-                selection += " AND " + MediaStore.Audio.Media.TITLE + " LIKE '%" + searchText + "%'";
-
-            String sortOrder = MediaStore.Audio.Media.DATE_ADDED + " DESC";
-
-            Cursor cursor1 = getContentResolver().query(MediaStore.Audio.Media.INTERNAL_CONTENT_URI,projection,selection,null,sortOrder);
-
-            Cursor cursor;
-
-            if (useExternalStorage) {
-                //Cursor[] cursors = new Cursor[2];
-                //cursors[0] = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,projection,selection,null,sortOrder);
-                //cursors[1] = cursor1;
-                //cursor =  new MergeCursor(cursors);
-                cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,projection,selection,null,sortOrder);
-            }
-            else {
-                cursor = cursor1;
-            }
-
-
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    int idColumn = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
-                    int artistColumn = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
-                    int titleColumn = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
-                    int durationColumn = cursor.getColumnIndex(MediaStore.Audio.Media.DURATION);
-                    int filePathIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-                    int mimeTypeColumn = cursor.getColumnIndex (MediaStore.Audio.Media.MIME_TYPE);
-
-                    MediaFileItem audio = new MediaFileItem(
-                            cursor.getLong(idColumn),
-                            cursor.getString(titleColumn),
-                            cursor.getString(artistColumn),
-                            cursor.getInt(durationColumn),
-                            cursor.getString(filePathIndex),
-                            cursor.getString(mimeTypeColumn));
-
-                    mModel.add(audio);
-
-                } while (cursor.moveToNext());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public class MediaAsyncTask extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-            //setProgressBarIndeterminateVisibility(true);
-        }
-
-        @Override
-        protected Boolean doInBackground(String... params) {
-            Boolean result = false;
-            String searchText = params[0];
-            try {
-                loadAudioFiles(searchText);
-                result = true;
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                result = false;
-            }
-
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-
-            //setProgressBarIndeterminateVisibility(false);
-
-            if (result) {
-                mAdapter.setFilter(mModel);
-            }
-        }
-    } */
-
 
     public class SimpleItemRecyclerViewAdapter
             extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
@@ -509,19 +331,9 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
                 @Override
                 public void onClick(View v) {
 
-                    //Context context = v.getContext();
-
                     MediaBrowserCompat.MediaItem item = holder.mItem;
 
                     if (item != null) {
-                        //Intent intent = new Intent(android.content.Intent.ACTION_VIEW);
-                        //File audioFile = new File(mediafileItem.filePath);
-                        //intent.setDataAndType(Uri.fromFile(audioFile), mediafileItem.mimeType);
-
-                        //Intent intent = new Intent(context, MainActivity.class);
-                        //intent.putExtra(MusicHelper.MEDIA_FILE_PATH, mediafileItem.filePath);
-                        //startActivity(intent);
-
                         onMediaItemSelected(item);
                     }
                 }
