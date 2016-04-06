@@ -15,19 +15,23 @@
  */
 package com.apps.kruszyn.lightorganapp.ui;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.content.ComponentName;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.media.MediaBrowserCompat;
 import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.apps.kruszyn.lightorganapp.MusicService;
 import com.apps.kruszyn.lightorganapp.R;
@@ -43,6 +47,9 @@ public abstract class BaseActivity extends AppCompatActivity implements MediaBro
 
     private MediaBrowserCompat mMediaBrowser;
     private PlaybackControlsFragment mControlsFragment;
+
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +75,15 @@ public abstract class BaseActivity extends AppCompatActivity implements MediaBro
         }
 
         hidePlaybackControls();
+
+        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+            return;
+        }
 
         mMediaBrowser.connect();
     }
@@ -150,6 +166,34 @@ public abstract class BaseActivity extends AppCompatActivity implements MediaBro
         }
 
         onMediaControllerConnected();
+    }
+
+    private void checkPermissions() {
+        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+            return;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_PERMISSIONS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mMediaBrowser.connect();
+                }
+                else {
+                    finish();
+                }
+
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
     }
 
     // Callback that ensures that we are showing the controls

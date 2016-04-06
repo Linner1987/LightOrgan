@@ -60,7 +60,7 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
     private SimpleItemRecyclerViewAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    //final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private boolean useExternalStorage;
 
     private String mMediaId;
@@ -342,25 +342,25 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
 //        //doSearchFiles();
 //    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_PERMISSIONS:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    useExternalStorage = true;
-                } else {
-                    useExternalStorage = false;
-                    Toast.makeText(FileListActivity.this, "READ_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT)
-                            .show();
-                }
-
-                //doSearchFiles();
-
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE_ASK_PERMISSIONS:
+//                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    useExternalStorage = true;
+//                } else {
+//                    useExternalStorage = false;
+//                    Toast.makeText(FileListActivity.this, "READ_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT)
+//                            .show();
+//                }
+//
+//                //doSearchFiles();
+//
+//                break;
+//            default:
+//                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        }
+//    }
 
     @Override
     protected void onMediaControllerConnected() {
