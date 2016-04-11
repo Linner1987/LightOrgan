@@ -59,8 +59,8 @@ public class MainActivity extends BaseActivity {
 
     private void setLight(@IdRes int id, float ratio)
     {
-        CircleView bassLight = (CircleView) findViewById(id);
-        bassLight.setCircleColor(getColorWithAlpha(bassLight.getCircleColor(), ratio));
+        CircleView light = (CircleView) findViewById(id);
+        light.setCircleColor(getColorWithAlpha(light.getCircleColor(), ratio));
     }
 
     private static int getColorWithAlpha(int color, float ratio) {
