@@ -6,12 +6,14 @@
     android:padding="20dp">
 
     <com.apps.kruszyn.lightorganapp.ui.CircleView
+        android:id="@+id/bass_light"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
         app:circleColor="#d50000"/>
 
     <com.apps.kruszyn.lightorganapp.ui.CircleView
+        android:id="@+id/mid_light"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -19,6 +21,7 @@
         app:circleColor="#ffab00"/>
 
     <com.apps.kruszyn.lightorganapp.ui.CircleView
+        android:id="@+id/treble_light"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"

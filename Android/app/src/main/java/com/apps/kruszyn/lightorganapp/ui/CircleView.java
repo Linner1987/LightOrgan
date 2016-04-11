@@ -52,6 +52,7 @@ public class CircleView extends View {
 
     private void invalidatePaint() {
         mPaint.setColor(mCircleColor);
+        invalidate();
     }
 
     @Override
