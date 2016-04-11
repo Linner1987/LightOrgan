@@ -8,32 +8,6 @@
     tools:context="com.apps.kruszyn.lightorganapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!--<LinearLayout android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/controls_container"
-        android:padding="20dp">
-
-        <com.apps.kruszyn.lightorganapp.ui.CircleView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <com.apps.kruszyn.lightorganapp.ui.CircleView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"/>
-
-        <com.apps.kruszyn.lightorganapp.ui.CircleView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_marginTop="20dp"/>
-
-    </LinearLayout>-->
-
     <include layout="@layout/content_lights"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
