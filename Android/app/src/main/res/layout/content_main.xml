@@ -8,19 +8,37 @@
     tools:context="com.apps.kruszyn.lightorganapp.MainActivity"
     tools:showIn="@layout/activity_main">
 
-    <!--<LinearLayout android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp">
-        <Button android:text="Start" android:id="@+id/StartButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-        <Button android:text="Pause" android:id="@+id/PauseButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
-        <Button android:text="Stop" android:id="@+id/StopButton"
-            android:layout_width="wrap_content" android:layout_height="wrap_content"></Button>
+    <!--<LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/controls_container"
+        android:padding="20dp">
+
+        <com.apps.kruszyn.lightorganapp.ui.CircleView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <com.apps.kruszyn.lightorganapp.ui.CircleView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"/>
+
+        <com.apps.kruszyn.lightorganapp.ui.CircleView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"/>
+
     </LinearLayout>-->
+
+    <include layout="@layout/content_lights"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@id/controls_container"/>
 
     <android.support.v7.widget.CardView
         android:id="@+id/controls_container"
