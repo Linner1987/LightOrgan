@@ -17,6 +17,7 @@
 package com.apps.kruszyn.lightorganapp.playback;
 
 import android.content.res.Resources;
+import android.media.audiofx.Visualizer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -186,6 +187,11 @@ public class PlaybackManager implements Playback.Callback {
         mQueueManager.setQueueFromMusic(mediaId);
     }
 
+    @Override
+    public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
+        mServiceCallback.onFftDataCapture(visualizer, fft, samplingRate);
+    }
+
 
     /**
      * Switch to a different Playback instance, maintaining all playback state, if possible.
@@ -329,5 +335,7 @@ public class PlaybackManager implements Playback.Callback {
         void onPlaybackStop();
 
         void onPlaybackStateUpdated(PlaybackStateCompat newState);
+
+        void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate);
     }
 }

@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.media.audiofx.Visualizer;
 import android.net.wifi.WifiManager;
 import android.os.PowerManager;
 import android.support.v4.media.MediaMetadataCompat;
@@ -43,7 +44,8 @@ import static android.support.v4.media.session.MediaSessionCompat.QueueItem;
  * A class that implements local media playback using {@link android.media.MediaPlayer}
  */
 public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeListener,
-        OnCompletionListener, OnErrorListener, OnPreparedListener, OnSeekCompleteListener {
+        OnCompletionListener, OnErrorListener, OnPreparedListener, OnSeekCompleteListener,
+        Visualizer.OnDataCaptureListener {
 
     private static final String TAG = LogHelper.makeLogTag(LocalPlayback.class);
 
@@ -73,7 +75,9 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
     // Type of audio focus we have:
     private int mAudioFocus = AUDIO_NO_FOCUS_NO_DUCK;
     private final AudioManager mAudioManager;
+
     private MediaPlayer mMediaPlayer;
+    private Visualizer mVisualizer;
 
     private final IntentFilter mAudioNoisyIntentFilter =
             new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
@@ -454,6 +458,12 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             mMediaPlayer.setOnCompletionListener(this);
             mMediaPlayer.setOnErrorListener(this);
             mMediaPlayer.setOnSeekCompleteListener(this);
+
+            mVisualizer = new Visualizer(mMediaPlayer.getAudioSessionId());
+            mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+            mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
+            mVisualizer.setEnabled(true);
+
         } else {
             mMediaPlayer.reset();
         }
@@ -471,6 +481,10 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
 
         // stop and release the Media Player, if it's available
         if (releaseMediaPlayer && mMediaPlayer != null) {
+
+            mVisualizer.setEnabled(false);
+            mVisualizer.release();
+
             mMediaPlayer.reset();
             mMediaPlayer.release();
             mMediaPlayer = null;
@@ -494,5 +508,15 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             mContext.unregisterReceiver(mAudioNoisyReceiver);
             mAudioNoisyReceiverRegistered = false;
         }
+    }
+
+    @Override
+    public void onWaveFormDataCapture(Visualizer visualizer, byte[] waveform, int samplingRate) {
+    }
+
+    @Override
+    public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
+        if (mCallback != null)
+            mCallback.onFftDataCapture(visualizer, fft, samplingRate);
     }
 }

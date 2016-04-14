@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,8 +36,10 @@ import android.support.v4.media.MediaMetadataCompat;
 import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.widget.Toast;
 
+import com.apps.kruszyn.lightorganapp.model.LightOrganData;
 import com.apps.kruszyn.lightorganapp.model.MusicProvider;
 import com.apps.kruszyn.lightorganapp.playback.LocalPlayback;
 import com.apps.kruszyn.lightorganapp.playback.PlaybackManager;
@@ -105,7 +108,7 @@ import java.util.List;
  *
  */
 public class MusicService extends MediaBrowserServiceCompat implements
-        PlaybackManager.PlaybackServiceCallback {
+        PlaybackManager.PlaybackServiceCallback, LightOrganProcessor.LightOrganProcessorCallback {
 
     private static final String TAG = LogHelper.makeLogTag(MusicService.class);
 
@@ -118,6 +121,13 @@ public class MusicService extends MediaBrowserServiceCompat implements
     // A value of a CMD_NAME key in the extras of the incoming Intent that
     // indicates that the music playback should be paused (see {@link #onStartCommand})
     public static final String CMD_PAUSE = "CMD_PAUSE";
+
+    public static final String ACTION_LIGHT_ORGAN_DATA_CHANGED = "com.apps.kruszyn.lightorganapp.ACTION_LIGHT_ORGAN_DATA_CHANGED";
+    public static final String BASS_LEVEL = "bass_level";
+    public static final String MID_LEVEL = "mid_level";
+    public static final String TREBLE_LEVEL = "treble_level";
+
+
     // Delay stopSelf by using a handler.
     private static final int STOP_DELAY = 30000;
 
@@ -133,6 +143,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     private PackageValidator mPackageValidator;
 
+    private LightOrganProcessor mLightOrganProcessor;
 
 
     /*
@@ -165,6 +176,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
 
         mPackageValidator = new PackageValidator(this);
+
+        mLightOrganProcessor = new LightOrganProcessor(this);
 
         QueueManager queueManager = new QueueManager(mMusicProvider, getResources(),
                 new QueueManager.MetadataUpdateListener() {
@@ -322,6 +335,21 @@ public class MusicService extends MediaBrowserServiceCompat implements
     @Override
     public void onPlaybackStateUpdated(PlaybackStateCompat newState) {
         mSession.setPlaybackState(newState);
+    }
+
+    @Override
+    public void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate) {
+        mLightOrganProcessor.processFftData(visualizer, fft, samplingRate);
+    }
+
+    @Override
+    public void onLightOrganDataUpdated(LightOrganData data) {
+        Intent broadcastIntent = new Intent();
+        broadcastIntent.setAction(MusicService.ACTION_LIGHT_ORGAN_DATA_CHANGED);
+        broadcastIntent.putExtra(BASS_LEVEL, data.bassLevel);
+        broadcastIntent.putExtra(MID_LEVEL, data.midLevel);
+        broadcastIntent.putExtra(TREBLE_LEVEL, data.trebleLevel);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
     }
 
 

@@ -15,6 +15,8 @@
  */
 package com.apps.kruszyn.lightorganapp.playback;
 
+import android.media.audiofx.Visualizer;
+
 import com.apps.kruszyn.lightorganapp.MusicService;
 
 import static android.support.v4.media.session.MediaSessionCompat.QueueItem;
@@ -128,6 +130,8 @@ public interface Playback {
          * @param mediaId being currently played
          */
         void setCurrentMediaId(String mediaId);
+
+        void onFftDataCapture(Visualizer visualizer, byte[] fft, int samplingRate);
     }
 
     /**
