@@ -204,7 +204,13 @@ public class MusicService extends MediaBrowserServiceCompat implements
                     }
                 });
 
-        LocalPlayback playback = new LocalPlayback(this, mMusicProvider);
+        int hasRecordAudioPermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO);
+
+        if (hasRecordAudioPermission != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(context, "RECORD_AUDIO Denied", Toast.LENGTH_SHORT).show();
+        }
+
+        LocalPlayback playback = new LocalPlayback(this, mMusicProvider, hasRecordAudioPermission == PackageManager.PERMISSION_GRANTED);
         mPlaybackManager = new PlaybackManager(this, getResources(), mMusicProvider, queueManager,
                 playback);
 

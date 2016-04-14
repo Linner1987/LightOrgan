@@ -78,6 +78,7 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
 
     private MediaPlayer mMediaPlayer;
     private Visualizer mVisualizer;
+    private boolean mCanUseVisualizer;
 
     private final IntentFilter mAudioNoisyIntentFilter =
             new IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY);
@@ -97,7 +98,8 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
         }
     };
 
-    public LocalPlayback(Context context, MusicProvider musicProvider) {
+    public LocalPlayback(Context context, MusicProvider musicProvider, boolean canUseVisualizer) {
+        this.mCanUseVisualizer = canUseVisualizer;
         this.mContext = context;
         this.mMusicProvider = musicProvider;
         this.mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -459,10 +461,12 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
             mMediaPlayer.setOnErrorListener(this);
             mMediaPlayer.setOnSeekCompleteListener(this);
 
-            mVisualizer = new Visualizer(mMediaPlayer.getAudioSessionId());
-            mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
-            mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
-            mVisualizer.setEnabled(true);
+            if (mCanUseVisualizer) {
+                mVisualizer = new Visualizer(mMediaPlayer.getAudioSessionId());
+                mVisualizer.setCaptureSize(Visualizer.getCaptureSizeRange()[1]);
+                mVisualizer.setDataCaptureListener(this, Visualizer.getMaxCaptureRate() / 2, false, true);
+                mVisualizer.setEnabled(true);
+            }
 
         } else {
             mMediaPlayer.reset();
@@ -482,8 +486,10 @@ public class LocalPlayback implements Playback, AudioManager.OnAudioFocusChangeL
         // stop and release the Media Player, if it's available
         if (releaseMediaPlayer && mMediaPlayer != null) {
 
-            mVisualizer.setEnabled(false);
-            mVisualizer.release();
+            if (mCanUseVisualizer) {
+                mVisualizer.setEnabled(false);
+                mVisualizer.release();
+            }
 
             mMediaPlayer.reset();
             mMediaPlayer.release();

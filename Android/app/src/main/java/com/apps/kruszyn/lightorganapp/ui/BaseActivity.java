@@ -31,12 +31,18 @@ import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.apps.kruszyn.lightorganapp.MusicService;
 import com.apps.kruszyn.lightorganapp.R;
 import com.apps.kruszyn.lightorganapp.utils.LogHelper;
 import com.apps.kruszyn.lightorganapp.utils.ResourceHelper;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Base activity for activities that need to show a playback control fragment when media is playing.
@@ -76,16 +82,23 @@ public abstract class BaseActivity extends AppCompatActivity implements MediaBro
 
         hidePlaybackControls();
 
-        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
+        final List<String> permissionsList = new ArrayList<String>();
 
-        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+            mMediaBrowser.connect();
+        else
+            permissionsList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED)
+            permissionsList.add(Manifest.permission.RECORD_AUDIO);
+
+        if (permissionsList.size() > 0) {
+
             ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    permissionsList.toArray(new String[permissionsList.size()]),
                     REQUEST_CODE_ASK_PERMISSIONS);
             return;
         }
-
-        mMediaBrowser.connect();
     }
 
     @Override
@@ -168,28 +181,39 @@ public abstract class BaseActivity extends AppCompatActivity implements MediaBro
         onMediaControllerConnected();
     }
 
-    private void checkPermissions() {
-        int hasReadExternalStoragePermission = ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE);
-
-        if (hasReadExternalStoragePermission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_CODE_ASK_PERMISSIONS);
-            return;
-        }
-    }
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case REQUEST_CODE_ASK_PERMISSIONS:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    mMediaBrowser.connect();
-                }
-                else {
-                    finish();
-                }
+            case REQUEST_CODE_ASK_PERMISSIONS: {
 
+                    Map<String, Integer> perms = new HashMap<String, Integer>();
+
+                    perms.put(Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
+                    perms.put(Manifest.permission.RECORD_AUDIO, PackageManager.PERMISSION_GRANTED);
+
+                    boolean readExternalStorageRequested = false;
+                    for (int i = 0; i < permissions.length; i++) {
+                        perms.put(permissions[i], grantResults[i]);
+
+                        if (TextUtils.equals(permissions[i],Manifest.permission.READ_EXTERNAL_STORAGE))
+                            readExternalStorageRequested = true;
+                    }
+
+                    if (readExternalStorageRequested) {
+                        if (perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
+                            mMediaBrowser.connect();
+                        else
+                            finish();
+                    }
+
+                    if (perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                            && perms.get(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
+
+                    } else {
+                        Toast.makeText(this, "Some Permission is Denied", Toast.LENGTH_SHORT)
+                                .show();
+                    }
+                }
                 break;
             default:
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults);
