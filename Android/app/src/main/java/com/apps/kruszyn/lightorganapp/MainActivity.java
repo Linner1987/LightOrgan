@@ -44,9 +44,9 @@ public class MainActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         //test
-        setLight(R.id.bass_light, 0.05f);
-        setLight(R.id.mid_light, 0.05f);
-        setLight(R.id.treble_light, 0.05f);
+//        setLight(R.id.bass_light, 0.05f);
+//        setLight(R.id.mid_light, 0.05f);
+//        setLight(R.id.treble_light, 0.05f);
     }
 
     @Override
