@@ -10,4 +10,8 @@
     <string name="currently_playing_artist">Artist of currently playing song</string>
     <string name="currently_playing_extra_info">Extra info for currently playing song</string>
     <string name="play_pause">play or pause</string>
+    <string name="search_songs">search songs</string>
+    <string name="not_all_permissions_msg">Some Permission is Denied.</string>
+    <string name="permission_denied_msg">%1$s permission denied.</string>
+    <string name="no_metadata_msg">Unable to retrieve metadata.</string>
 </resources>

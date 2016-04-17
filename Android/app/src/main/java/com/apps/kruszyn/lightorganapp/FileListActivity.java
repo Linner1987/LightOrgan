@@ -117,7 +117,7 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
         final MenuItem item = menu.findItem(R.id.action_search);
         mSearchView = (SearchView) MenuItemCompat.getActionView(item);
         mSearchView.setMaxWidth(Integer.MAX_VALUE);
-        mSearchView.setQueryHint("Search songs");
+        mSearchView.setQueryHint(getResources().getString(R.string.search_songs));
         mSearchView.setOnQueryTextListener(this);
 
         MenuItemCompat.setOnActionExpandListener(item,

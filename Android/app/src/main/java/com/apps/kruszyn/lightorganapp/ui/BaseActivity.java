@@ -210,7 +210,7 @@ public abstract class BaseActivity extends AppCompatActivity implements MediaBro
                             && perms.get(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED) {
 
                     } else {
-                        Toast.makeText(this, "Some Permission is Denied", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, R.string.not_all_permissions_msg, Toast.LENGTH_SHORT)
                                 .show();
                     }
                 }

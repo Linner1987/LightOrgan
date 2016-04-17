@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Kolorofon</string>
+    <string name="file_list_activity_name">Pliki audio</string>
+    <string name="action_settings">Ustawienia</string>
+    <string name="action_media_files">Pliki audio</string>
+    <string name="browse_musics_by_genre_subtitle">Utwory %1$s</string>
+    <string name="search_queue_title">Wyniki wyszukiwania</string>
+    <string name="random_queue_title">Losowa muzyka</string>
+    <string name="currently_playing_song">Aktualnie odtwarzany utwór</string>
+    <string name="currently_playing_artist">Artysta aktualnie odtwarzanego utworu</string>
+    <string name="currently_playing_extra_info">Dodatkowe informacje o aktualnie odtwarzanym utworze</string>
+    <string name="play_pause">odtwarzaj lub wstrzymaj</string>
+    <string name="search_songs">szukaj utworów</string>
+    <string name="not_all_permissions_msg">Niektóre uprawnienia nie zostały nadane.</string>
+    <string name="permission_denied_msg">Uprawnienie %1$s nie zostało nadane.</string>
+    <string name="no_metadata_msg">Pobieranie metadanych nie powiodło się.</string>
+</resources>

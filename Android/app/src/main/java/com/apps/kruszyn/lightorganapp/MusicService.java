@@ -171,7 +171,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
         } else {
 
-            Toast.makeText(context, "READ_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT).show();
+            String msg = getResources().getString(R.string.permission_denied_msg, "READ_EXTERNAL_STORAGE");
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
 
 
@@ -188,7 +189,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
                     @Override
                     public void onMetadataRetrieveError() {
-                        mPlaybackManager.updatePlaybackState("Unable to retrieve metadata.");
+                        mPlaybackManager.updatePlaybackState(getResources().getString(R.string.no_metadata_msg));
                     }
 
                     @Override
@@ -207,7 +208,9 @@ public class MusicService extends MediaBrowserServiceCompat implements
         int hasRecordAudioPermission = ActivityCompat.checkSelfPermission(context, Manifest.permission.RECORD_AUDIO);
 
         if (hasRecordAudioPermission != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(context, "RECORD_AUDIO Denied", Toast.LENGTH_SHORT).show();
+
+            String msg = getResources().getString(R.string.permission_denied_msg, "RECORD_AUDIO");
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
 
         LocalPlayback playback = new LocalPlayback(this, mMusicProvider, hasRecordAudioPermission == PackageManager.PERMISSION_GRANTED);
