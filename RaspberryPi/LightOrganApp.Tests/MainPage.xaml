@@ -1,0 +1,30 @@
+﻿<Page
+    x:Class="LightOrganApp.Tests.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LightOrganApp.Tests"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <StackPanel Margin="10" Width="320" VerticalAlignment="Center">
+            <TextBlock>Host</TextBlock>
+            <TextBox x:Name="hostTxt"/>
+            <Button x:Name="connectBtn" HorizontalAlignment="Right" Margin="0,10,0,0" Click="connectBtn_Click">Connect</Button>
+            <StackPanel Orientation="Horizontal" Margin="0,40,0,0">
+                <TextBlock Margin="5">Bass</TextBlock>
+                <TextBox x:Name="bassTxt" Text="0"></TextBox>
+                <TextBlock Margin="5">Mid</TextBlock>
+                <TextBox x:Name="midTxt" Text="1"></TextBox>
+                <TextBlock Margin="5">Treble</TextBlock>
+                <TextBox x:Name="trebleTxt" Text="0"></TextBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                <Button x:Name="test1Btn" Margin="0,0,10,0" Click="test1Btn_Click">Test 1</Button>
+                <Button x:Name="test2Btn" Margin="0,0,10,0" Click="test2Btn_Click">Test 2</Button>
+                <Button x:Name="test3Btn" Margin="0,0,10,0" Click="test3Btn_Click">Test 3</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>
