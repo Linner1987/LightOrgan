@@ -16,14 +16,12 @@
                 <TextBlock Margin="5">Bass</TextBlock>
                 <TextBox x:Name="bassTxt" Text="0"></TextBox>
                 <TextBlock Margin="5">Mid</TextBlock>
-                <TextBox x:Name="midTxt" Text="1"></TextBox>
+                <TextBox x:Name="midTxt" Text="255"></TextBox>
                 <TextBlock Margin="5">Treble</TextBlock>
                 <TextBox x:Name="trebleTxt" Text="0"></TextBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                <Button x:Name="test1Btn" Margin="0,0,10,0" Click="test1Btn_Click">Test 1</Button>
-                <Button x:Name="test2Btn" Margin="0,0,10,0" Click="test2Btn_Click">Test 2</Button>
-                <Button x:Name="test3Btn" Margin="0,0,10,0" Click="test3Btn_Click">Test 3</Button>
+                <Button x:Name="test1Btn" Width="110" Click="test1Btn_Click">Test</Button>                
             </StackPanel>
         </StackPanel>
     </Grid>

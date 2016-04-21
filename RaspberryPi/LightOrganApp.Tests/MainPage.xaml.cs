@@ -54,10 +54,9 @@ namespace LightOrganApp.Tests
             }
         }
 
-        private async void SendMessage(string message)
+        private async void SendBytes(byte[] bytes)
         {
-            _writer.WriteUInt32(_writer.MeasureString(message));
-            _writer.WriteString(message);
+            _writer.WriteBytes(bytes);
             await _writer.StoreAsync();
         }
 
@@ -68,21 +67,11 @@ namespace LightOrganApp.Tests
 
         private void test1Btn_Click(object sender, RoutedEventArgs e)
         {
-            var bassValue = Convert.ToDouble(bassTxt.Text, CultureInfo.InvariantCulture.NumberFormat);
-            var midValue = Convert.ToDouble(midTxt.Text, CultureInfo.InvariantCulture.NumberFormat);
-            var trebleValue = Convert.ToDouble(trebleTxt.Text, CultureInfo.InvariantCulture.NumberFormat);
-
-            SendMessage($"{bassValue}|{midValue}|{trebleValue}");
-        }
-
-        private void test2Btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void test3Btn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+            byte bassValue = Convert.ToByte(bassTxt.Text);
+            byte midValue = Convert.ToByte(midTxt.Text);
+            byte trebleValue = Convert.ToByte(trebleTxt.Text);
+           
+            SendBytes(new byte[] { bassValue, midValue, trebleValue });
+        }        
     }
 }

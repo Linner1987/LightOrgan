@@ -58,17 +58,14 @@ namespace LightOrganApp
 
         private void SendCommand(object sender, MessageSentEventArgs e)
         {
-            var message = e.Message;
+            if (e.Bytes == null || e.Bytes.Length != 3)
+                return;
 
-            if (!string.IsNullOrEmpty(message))
-            {
-                var parsedCommand = e.Message.Split('|');
-                var bassValue = Convert.ToDouble(parsedCommand[0], CultureInfo.InvariantCulture.NumberFormat);
-                var midValue = Convert.ToDouble(parsedCommand[1], CultureInfo.InvariantCulture.NumberFormat);
-                var trebleValue = Convert.ToDouble(parsedCommand[2], CultureInfo.InvariantCulture.NumberFormat);
+            var bassValue = e.Bytes[0] / 255d;
+            var midValue = e.Bytes[1] / 255d;
+            var trebleValue = e.Bytes[2] / 255d;
 
-                _controller.SetValues(bassValue, midValue, trebleValue);
-            }           
+            _controller.SetValues(bassValue, midValue, trebleValue);
         }
 
         protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)

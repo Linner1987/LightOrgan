@@ -30,22 +30,16 @@ namespace LightOrganApp
             {
                 while (true)
                 {
-                    uint sizeFieldCount = await reader.LoadAsync(sizeof(uint));
-                    if (sizeFieldCount != sizeof(uint))
+                    uint bytesLoaded = await reader.LoadAsync(3);
+                    if (bytesLoaded != 3)
                     {
                         return;
                     }
 
-                    uint stringLength = reader.ReadUInt32();
-                    uint actualStringLength = await reader.LoadAsync(stringLength);
-                    if (stringLength != actualStringLength)
-                    {
-                        return;
-                    }
+                    var bytes = new byte[3];
+                    reader.ReadBytes(bytes);
 
-                    var message = reader.ReadString(actualStringLength);
-
-                    NewMessageReady?.Invoke(this, new MessageSentEventArgs { Message = message });
+                    NewMessageReady?.Invoke(this, new MessageSentEventArgs { Bytes = bytes });
                 }
             }
             catch
@@ -62,8 +56,8 @@ namespace LightOrganApp
     }
 
     public class MessageSentEventArgs : EventArgs
-    {
-        public string Message;
+    {        
+        public byte[] Bytes;
     }
 
 }
