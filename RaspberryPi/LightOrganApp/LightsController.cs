@@ -21,11 +21,6 @@ namespace LightOrganApp
 
         public async Task InitAsync()
         {
-            //if (LightningProvider.IsLightningEnabled)
-            //{
-            //    LowLevelDevicesController.DefaultProvider = LightningProvider.GetAggregateProvider();
-            //}
-
             pwmController = (await PwmController.GetControllersAsync(PwmSoftware.PwmProviderSoftware.GetPwmProvider()))[0];
             pwmController.SetDesiredFrequency(100);
 
