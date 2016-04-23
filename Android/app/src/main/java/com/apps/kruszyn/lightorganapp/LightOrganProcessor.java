@@ -9,9 +9,9 @@ import com.apps.kruszyn.lightorganapp.model.LightOrganData;
  */
 public class LightOrganProcessor {
 
-    private static final float LOW_MAX_VALUE = 3000;
-    private static final float MID_MAX_VALUE = 3000;
-    private static final float HIGH_MAX_VALUE = 1500;
+    private static final float LOW_MAX_VALUE = 5000;
+    private static final float MID_MAX_VALUE = 6000;
+    private static final float HIGH_MAX_VALUE = 2000;
 
     private static final int LOW_FREQUENCY = 50;
     private static final int MID_FREQUENCY = 3000;

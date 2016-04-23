@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.IdRes;
 import android.support.v7.widget.Toolbar;
 import android.support.v4.content.LocalBroadcastManager;
@@ -43,10 +44,7 @@ public class MainActivity extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        //test
-//        setLight(R.id.bass_light, 0.05f);
-//        setLight(R.id.mid_light, 0.05f);
-//        setLight(R.id.treble_light, 0.05f);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override
@@ -87,6 +85,9 @@ public class MainActivity extends BaseActivity {
                 return true;
 
             case R.id.action_settings:
+
+                Intent intent2 = new Intent(this, SettingsActivity.class);
+                startActivity(intent2);
 
                 return true;
         }

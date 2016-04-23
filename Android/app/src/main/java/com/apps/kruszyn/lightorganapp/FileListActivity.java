@@ -166,11 +166,10 @@ public class FileListActivity extends BaseActivity implements SearchView.OnQuery
         switch (item.getItemId()) {
             case R.id.action_search:
 
-
-
                 return true;
 
             case R.id.action_settings:
+
                 return true;
         }
 

@@ -14,4 +14,10 @@
     <string name="not_all_permissions_msg">Some Permission is Denied.</string>
     <string name="permission_denied_msg">%1$s permission denied.</string>
     <string name="no_metadata_msg">Unable to retrieve metadata.</string>
+    <string name="settings_activity_name">Settings</string>
+    <string name="pref_title_use_remote_device">Use external lighting</string>
+    <string name="pref_title_remote_device_host">Host</string>
+    <string name="pref_title_remote_device_port">Port</string>
+    <string name="pref_summary_use_remote_device">Send lighting control data to the remote device</string>
+    <string name="pref_no_data">Undefined</string>
 </resources>

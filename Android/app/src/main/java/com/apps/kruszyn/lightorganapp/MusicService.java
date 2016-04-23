@@ -24,6 +24,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.audiofx.Visualizer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -47,7 +48,11 @@ import com.apps.kruszyn.lightorganapp.playback.QueueManager;
 
 import com.apps.kruszyn.lightorganapp.utils.LogHelper;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.ref.WeakReference;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.List;
 
 
@@ -145,6 +150,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     private LightOrganProcessor mLightOrganProcessor;
 
+    private Socket mCommandSocket;
+    private OutputStream mOutputStream;
 
     /*
      * (non-Javadoc)
@@ -174,7 +181,6 @@ public class MusicService extends MediaBrowserServiceCompat implements
             String msg = getResources().getString(R.string.permission_denied_msg, "READ_EXTERNAL_STORAGE");
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         }
-
 
         mPackageValidator = new PackageValidator(this);
 
@@ -248,6 +254,10 @@ public class MusicService extends MediaBrowserServiceCompat implements
      */
     @Override
     public int onStartCommand(Intent startIntent, int flags, int startId) {
+
+        Runnable connect = new ConnectSocket();
+        new Thread(connect).start();
+
         if (startIntent != null) {
             String action = startIntent.getAction();
             String command = startIntent.getStringExtra(CMD_NAME);
@@ -274,6 +284,20 @@ public class MusicService extends MediaBrowserServiceCompat implements
     @Override
     public void onDestroy() {
         LogHelper.d(TAG, "onDestroy");
+
+        try {
+            if (mOutputStream != null)
+                mOutputStream.close();
+
+            if (mCommandSocket != null)
+                mCommandSocket.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mOutputStream = null;
+        mCommandSocket = null;
+
         // Service is being killed, so make sure we release our resources
         mPlaybackManager.handleStopRequest(null);
         mMediaNotificationManager.stopNotification();
@@ -353,12 +377,35 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     @Override
     public void onLightOrganDataUpdated(LightOrganData data) {
+
         Intent broadcastIntent = new Intent();
         broadcastIntent.setAction(MusicService.ACTION_LIGHT_ORGAN_DATA_CHANGED);
         broadcastIntent.putExtra(BASS_LEVEL, data.bassLevel);
         broadcastIntent.putExtra(MID_LEVEL, data.midLevel);
         broadcastIntent.putExtra(TREBLE_LEVEL, data.trebleLevel);
         LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent);
+
+        byte bassValue = (byte)Math.round(255 * data.bassLevel);
+        byte midValue = (byte)Math.round(255 * data.midLevel);
+        byte trebleValue = (byte)Math.round(255 * data.trebleLevel);
+
+        //new SendCommandAsyncTask().execute(bassValue, midValue, trebleValue);
+
+        byte[] bytes = new byte[3];
+        bytes[0] = bassValue;
+        bytes[1] = midValue;
+        bytes[2] = trebleValue;
+
+        try {
+
+            if (mOutputStream != null) {
+                mOutputStream.write(bytes);
+                mOutputStream.flush();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -382,6 +429,24 @@ public class MusicService extends MediaBrowserServiceCompat implements
                 }
                 LogHelper.d(TAG, "Stopping service with delay handler.");
                 service.stopSelf();
+            }
+        }
+    }
+
+    public class ConnectSocket implements Runnable {
+
+        @Override
+        public void run() {
+
+            try {
+
+                mCommandSocket = new Socket("192.168.1.101", 8181);
+                mOutputStream = mCommandSocket.getOutputStream();
+
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
