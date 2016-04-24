@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.apps.kruszyn.lightorganapp.R;
+import com.apps.kruszyn.lightorganapp.utils.PreferencesHelper;
 
 /**
  * Created by nazyw on 4/23/2016.
@@ -15,17 +16,14 @@ import com.apps.kruszyn.lightorganapp.R;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    public static final String KEY_PREF_REMOTE_DEVICE_HOST = "pref_remote_device_host";
-    public static final String KEY_PREF_REMOTE_DEVICE_PORT = "pref_remote_device_port";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
         SharedPreferences sharedPreferences = getPreferenceManager().getSharedPreferences();
-        onSharedPreferenceChanged(sharedPreferences, KEY_PREF_REMOTE_DEVICE_HOST);
-        onSharedPreferenceChanged(sharedPreferences, KEY_PREF_REMOTE_DEVICE_PORT);
+        onSharedPreferenceChanged(sharedPreferences, PreferencesHelper.KEY_PREF_REMOTE_DEVICE_HOST);
+        onSharedPreferenceChanged(sharedPreferences, PreferencesHelper.KEY_PREF_REMOTE_DEVICE_PORT);
     }
 
     @Override
@@ -43,7 +41,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
-        if (key.equals(KEY_PREF_REMOTE_DEVICE_HOST)) {
+        if (key.equals(PreferencesHelper.KEY_PREF_REMOTE_DEVICE_HOST)) {
             Preference hostPref = findPreference(key);
 
             String value = sharedPreferences.getString(key, "");
@@ -53,7 +51,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             else
                 hostPref.setSummary(value);
         }
-        else if (key.equals(KEY_PREF_REMOTE_DEVICE_PORT)) {
+        else if (key.equals(PreferencesHelper.KEY_PREF_REMOTE_DEVICE_PORT)) {
             Preference portPref = findPreference(key);
 
             int value = sharedPreferences.getInt(key, 0);

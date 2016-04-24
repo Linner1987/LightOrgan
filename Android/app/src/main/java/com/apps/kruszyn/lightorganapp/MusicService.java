@@ -22,6 +22,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.media.audiofx.Visualizer;
 import android.os.AsyncTask;
@@ -29,6 +30,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.media.MediaBrowserCompat.MediaItem;
@@ -38,6 +40,7 @@ import android.support.v4.media.session.MediaButtonReceiver;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.apps.kruszyn.lightorganapp.model.LightOrganData;
@@ -47,6 +50,7 @@ import com.apps.kruszyn.lightorganapp.playback.PlaybackManager;
 import com.apps.kruszyn.lightorganapp.playback.QueueManager;
 
 import com.apps.kruszyn.lightorganapp.utils.LogHelper;
+import com.apps.kruszyn.lightorganapp.utils.PreferencesHelper;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -153,6 +157,8 @@ public class MusicService extends MediaBrowserServiceCompat implements
     private Socket mCommandSocket;
     private OutputStream mOutputStream;
 
+    private PreferenceListener mPrefListener;
+
     /*
      * (non-Javadoc)
      * @see android.app.Service#onCreate()
@@ -255,8 +261,17 @@ public class MusicService extends MediaBrowserServiceCompat implements
     @Override
     public int onStartCommand(Intent startIntent, int flags, int startId) {
 
-        Runnable connect = new ConnectSocket();
-        new Thread(connect).start();
+        Context context = getApplicationContext();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+
+        boolean useRemoteDevice = preferences.getBoolean(PreferencesHelper.KEY_PREF_USE_REMOTE_DEVICE, false);
+
+        if (useRemoteDevice)
+            createNewSocket(preferences);
+
+        mPrefListener = new PreferenceListener();
+        preferences.registerOnSharedPreferenceChangeListener(mPrefListener);
+
 
         if (startIntent != null) {
             String action = startIntent.getAction();
@@ -285,18 +300,7 @@ public class MusicService extends MediaBrowserServiceCompat implements
     public void onDestroy() {
         LogHelper.d(TAG, "onDestroy");
 
-        try {
-            if (mOutputStream != null)
-                mOutputStream.close();
-
-            if (mCommandSocket != null)
-                mCommandSocket.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        mOutputStream = null;
-        mCommandSocket = null;
+        releaseSocket();
 
         // Service is being killed, so make sure we release our resources
         mPlaybackManager.handleStopRequest(null);
@@ -389,13 +393,15 @@ public class MusicService extends MediaBrowserServiceCompat implements
         byte midValue = (byte)Math.round(255 * data.midLevel);
         byte trebleValue = (byte)Math.round(255 * data.trebleLevel);
 
-        //new SendCommandAsyncTask().execute(bassValue, midValue, trebleValue);
-
         byte[] bytes = new byte[3];
         bytes[0] = bassValue;
         bytes[1] = midValue;
         bytes[2] = trebleValue;
 
+        sendCommand(bytes);
+    }
+
+    private void sendCommand(byte[] bytes) {
         try {
 
             if (mOutputStream != null) {
@@ -404,6 +410,62 @@ public class MusicService extends MediaBrowserServiceCompat implements
             }
 
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createNewSocket(SharedPreferences preferences) {
+
+        String host = preferences.getString(PreferencesHelper.KEY_PREF_REMOTE_DEVICE_HOST, "");
+        int port = preferences.getInt(PreferencesHelper.KEY_PREF_REMOTE_DEVICE_PORT, 0);
+
+        if (!TextUtils.isEmpty(host) && port > 0) {
+            Runnable connect = new ConnectSocket(host,port);
+            new Thread(connect).start();
+        }
+    }
+
+    private void releaseSocket() {
+        try {
+            byte[] bytes = new byte[3];
+            bytes[0] = 13;
+            bytes[1] = 13;
+            bytes[2] = 13;
+
+            sendCommand(bytes);
+
+            if (mOutputStream != null)
+                mOutputStream.close();
+
+            if (mCommandSocket != null)
+                mCommandSocket.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mOutputStream = null;
+        mCommandSocket = null;
+    }
+
+    private void onPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        try {
+
+            boolean useRemoteDevice = sharedPreferences.getBoolean(PreferencesHelper.KEY_PREF_USE_REMOTE_DEVICE, false);
+
+            if (key.equals(PreferencesHelper.KEY_PREF_USE_REMOTE_DEVICE)) {
+                if (mCommandSocket != null && !useRemoteDevice) {
+                    releaseSocket();
+                } else if (mCommandSocket == null && useRemoteDevice) {
+                    createNewSocket(sharedPreferences);
+                }
+            } else if (key.equals(PreferencesHelper.KEY_PREF_REMOTE_DEVICE_HOST) || key.equals(PreferencesHelper.KEY_PREF_REMOTE_DEVICE_PORT)) {
+                if (useRemoteDevice) {
+                    releaseSocket();
+                    createNewSocket(sharedPreferences);
+                }
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -435,12 +497,20 @@ public class MusicService extends MediaBrowserServiceCompat implements
 
     public class ConnectSocket implements Runnable {
 
+        private String mHost;
+        private int mPort;
+
+        public ConnectSocket(String host, int port) {
+            mHost = host;
+            mPort = port;
+        }
+
         @Override
         public void run() {
 
             try {
 
-                mCommandSocket = new Socket("192.168.1.101", 8181);
+                mCommandSocket = new Socket(mHost, mPort);
                 mOutputStream = mCommandSocket.getOutputStream();
 
             } catch (UnknownHostException e) {
@@ -448,6 +518,13 @@ public class MusicService extends MediaBrowserServiceCompat implements
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    private class PreferenceListener implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            onPreferenceChanged(sharedPreferences, key);
         }
     }
 }
