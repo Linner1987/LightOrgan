@@ -32,17 +32,16 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV1-Va-fwl">
-                                                    <rect key="frame" x="78" y="6" width="85" height="21"/>
+                                                    <rect key="frame" x="120" y="6" width="0.0" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="centerY" secondItem="gX6-Rk-xNC" secondAttribute="centerY" id="8qx-gc-KzO"/>
-                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="top" secondItem="gX6-Rk-xNC" secondAttribute="top" constant="6" id="SSt-qn-0pd"/>
-                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="centerX" secondItem="gX6-Rk-xNC" secondAttribute="centerX" id="aDh-B7-TeX"/>
-                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="leading" secondItem="gX6-Rk-xNC" secondAttribute="leading" constant="78" id="dzm-S6-gtw"/>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="centerX" secondItem="gX6-Rk-xNC" secondAttribute="centerX" id="9mj-Ul-VpY"/>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="top" secondItem="gX6-Rk-xNC" secondAttribute="top" constant="6" id="CvV-ED-oQA"/>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="centerY" secondItem="gX6-Rk-xNC" secondAttribute="centerY" id="xWr-Vl-OfQ"/>
                                             </constraints>
                                         </view>
                                     </barButtonItem>
