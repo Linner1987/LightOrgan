@@ -61,18 +61,19 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
     func mediaPicker(mediaPicker: MPMediaPickerController, didPickMediaItems mediaItemCollection: MPMediaItemCollection) {
         self.dismissViewControllerAnimated(true, completion: nil)
         
-        if self.collection != nil {
-            let oldItems: NSArray = self.collection.items
-            let newItems: NSArray = oldItems.arrayByAddingObjectsFromArray(mediaItemCollection.items)
-            self.collection = MPMediaItemCollection(items: newItems as! [MPMediaItem])
-        } else {
-            self.collection = mediaItemCollection
-            self.player.setQueueWithItemCollection(self.collection)            
+        self.collection = mediaItemCollection
+        self.player.setQueueWithItemCollection(self.collection)        
+        
+        var playbackState = self.player.playbackState as MPMusicPlaybackState
+        if playbackState == .Playing {
+            self.player.pause()
         }
         
         let item = self.collection.items[0] as MPMediaItem
         self.player.nowPlayingItem = item
-        self.playPausePressed(self)
+        
+        playbackState = self.player.playbackState as MPMusicPlaybackState
+        self.player.play()
     }
     
     @IBAction func playPausePressed(sender: AnyObject) {
