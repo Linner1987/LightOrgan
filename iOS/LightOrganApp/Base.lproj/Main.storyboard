@@ -16,7 +16,46 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-g9-9E6">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="play" id="wNV-91-RGI">
+                                        <connections>
+                                            <action selector="playPausePressed:" destination="BYZ-38-t0r" id="qj4-66-zFn"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Pea-YL-bjW"/>
+                                    <barButtonItem style="plain" id="HaC-Pn-FmN">
+                                        <view key="customView" opaque="NO" alpha="0.0" contentMode="scaleToFill" id="gX6-Rk-xNC">
+                                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV1-Va-fwl">
+                                                    <rect key="frame" x="78" y="6" width="85" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="centerY" secondItem="gX6-Rk-xNC" secondAttribute="centerY" id="8qx-gc-KzO"/>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="top" secondItem="gX6-Rk-xNC" secondAttribute="top" constant="6" id="SSt-qn-0pd"/>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="centerX" secondItem="gX6-Rk-xNC" secondAttribute="centerX" id="aDh-B7-TeX"/>
+                                                <constraint firstItem="AV1-Va-fwl" firstAttribute="leading" secondItem="gX6-Rk-xNC" secondAttribute="leading" constant="78" id="dzm-S6-gtw"/>
+                                            </constraints>
+                                        </view>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="n6d-il-kOF"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="JEf-g9-9E6" secondAttribute="trailing" id="Sfy-Oc-fQm"/>
+                            <constraint firstItem="JEf-g9-9E6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VRx-iL-ofP"/>
+                            <constraint firstItem="JEf-g9-9E6" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="fIb-BJ-HG7"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Light Organ" id="G1V-9d-2Ho">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="w4e-lc-EQL">
@@ -25,6 +64,11 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="playButton" destination="wNV-91-RGI" id="S73-ih-OQV"/>
+                        <outlet property="song" destination="AV1-Va-fwl" id="Plb-Id-5Zz"/>
+                        <outlet property="toolbar" destination="JEf-g9-9E6" id="Zpq-f2-G5S"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
