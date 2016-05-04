@@ -14,6 +14,7 @@
 		D1243FF31CD3315400483959 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1243FF11CD3315400483959 /* LaunchScreen.storyboard */; };
 		D1243FFE1CD3315400483959 /* LightOrganAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1243FFD1CD3315400483959 /* LightOrganAppTests.swift */; };
 		D12440091CD3315400483959 /* LightOrganAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D12440081CD3315400483959 /* LightOrganAppUITests.swift */; };
+		D13B04031CD891FE00B7DFF5 /* FileListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13B04021CD891FE00B7DFF5 /* FileListViewController.swift */; };
 		D17649751CD332EC00E724AB /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D17649741CD332EC00E724AB /* .gitignore */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +49,7 @@
 		D12440041CD3315400483959 /* LightOrganAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightOrganAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D12440081CD3315400483959 /* LightOrganAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightOrganAppUITests.swift; sourceTree = "<group>"; };
 		D124400A1CD3315400483959 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D13B04021CD891FE00B7DFF5 /* FileListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileListViewController.swift; sourceTree = "<group>"; };
 		D17649741CD332EC00E724AB /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -106,6 +108,7 @@
 				D1243FEF1CD3315400483959 /* Assets.xcassets */,
 				D1243FF11CD3315400483959 /* LaunchScreen.storyboard */,
 				D1243FF41CD3315400483959 /* Info.plist */,
+				D13B04021CD891FE00B7DFF5 /* FileListViewController.swift */,
 			);
 			path = LightOrganApp;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			files = (
 				D1243FEB1CD3315400483959 /* ViewController.swift in Sources */,
 				D1243FE91CD3315400483959 /* AppDelegate.swift in Sources */,
+				D13B04031CD891FE00B7DFF5 /* FileListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

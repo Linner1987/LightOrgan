@@ -45,6 +45,7 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: MPMusicPlayerControllerPlaybackStateDidChangeNotification, object: self.player)
     }
     
+    /*
     @IBAction func search(sender: AnyObject) {
         
         let picker = MPMediaPickerController(mediaTypes: MPMediaType.Music)
@@ -74,6 +75,27 @@ class ViewController: UIViewController, MPMediaPickerControllerDelegate {
         
         playbackState = self.player.playbackState as MPMusicPlaybackState
         self.player.play()
+    }*/
+    
+    @IBAction func unwindToPlayer(sender: UIStoryboardSegue) {
+        
+        if let sourceViewController = sender.sourceViewController as? FileListViewController,
+            mediaItemCollection = sourceViewController.didPickMediaItems {
+            
+            self.collection = mediaItemCollection
+            self.player.setQueueWithItemCollection(self.collection)
+            
+            var playbackState = self.player.playbackState as MPMusicPlaybackState
+            if playbackState == .Playing {
+                self.player.pause()
+            }
+            
+            let item = self.collection.items[0] as MPMediaItem
+            self.player.nowPlayingItem = item
+            
+            playbackState = self.player.playbackState as MPMusicPlaybackState
+            self.player.play()            
+        }
     }
     
     @IBAction func playPausePressed(sender: AnyObject) {

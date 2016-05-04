@@ -59,7 +59,7 @@
                     <navigationItem key="navigationItem" title="Light Organ" id="G1V-9d-2Ho">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="w4e-lc-EQL">
                             <connections>
-                                <action selector="search:" destination="BYZ-38-t0r" id="s8J-bR-s3M"/>
+                                <segue destination="zYo-ga-gsc" kind="presentation" id="coU-VB-9gc"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -71,7 +71,73 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1113" y="346"/>
+            <point key="canvasLocation" x="623" y="1332"/>
+        </scene>
+        <!--Songs-->
+        <scene sceneID="yoR-Uc-ngd">
+            <objects>
+                <tableViewController title="Songs" id="wRk-mh-QFm" customClass="FileListViewController" customModule="LightOrganApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PIR-XO-9JM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" white="0.33333333333333331" alpha="0.66360452586206897" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseIdentifier" textLabel="hmW-a2-2gs" detailTextLabel="O45-QC-3Cd" imageView="Zdv-jM-x77" style="IBUITableViewCellStyleSubtitle" id="AY7-6e-TNk">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="AY7-6e-TNk" id="B8T-oj-noP">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hmW-a2-2gs">
+                                            <rect key="frame" x="66" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="O45-QC-3Cd">
+                                            <rect key="frame" x="66" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="AudioIcon" id="Zdv-jM-x77">
+                                            <rect key="frame" x="15" y="3" width="36" height="36"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </imageView>
+                                    </subviews>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="wRk-mh-QFm" id="kif-l2-q8t"/>
+                            <outlet property="delegate" destination="wRk-mh-QFm" id="2aw-QR-isN"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Songs" id="q6f-N0-9uH">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wUu-4O-IRN">
+                            <connections>
+                                <action selector="cancel:" destination="wRk-mh-QFm" id="KaI-Lv-iyU"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="pe8-vM-R0t">
+                            <connections>
+                                <segue destination="sVX-WO-eYW" kind="unwind" unwindAction="unwindToPlayer:" id="Ezo-gc-a25"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="doneButton" destination="pe8-vM-R0t" id="zg1-uV-b9k"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A73-HS-SwH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="sVX-WO-eYW" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="1628" y="1332"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="UIA-Mw-e12">
@@ -89,7 +155,28 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J4e-oD-bWu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="1006"/>
+            <point key="canvasLocation" x="351" y="532"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Onb-zo-evP">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zYo-ga-gsc" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="UYN-Ux-ppe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="wRk-mh-QFm" kind="relationship" relationship="rootViewController" id="ia2-1J-oo3"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cek-Z7-lHb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1540" y="532"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="AudioIcon" width="36" height="36"/>
+    </resources>
 </document>
