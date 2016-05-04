@@ -18,7 +18,9 @@ class FileListViewController: UITableViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        super.viewDidLoad()        
+       
+        self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
         
         self.tableView.tableFooterView = UIView()
         doneButton.enabled = false
