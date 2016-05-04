@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class ViewController: UIViewController, MPMediaPickerControllerDelegate {
+class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
 
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var song: UILabel!

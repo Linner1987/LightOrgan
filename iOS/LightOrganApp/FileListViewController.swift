@@ -9,23 +9,36 @@
 import UIKit
 import MediaPlayer
 
-class FileListViewController: UITableViewController {
+class FileListViewController: UITableViewController, UISearchResultsUpdating {
     
     @IBOutlet var doneButton: UIBarButtonItem!
     
-    var mediaItems: [MPMediaItem]?
+    var allMediaItems: [MPMediaItem]?
+    var filteredMediaItems: [MPMediaItem]?
     var didPickMediaItems: MPMediaItemCollection?
+    
+    var searchController: UISearchController!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
         
+        self.configureSearchController()
         self.tableView.tableFooterView = UIView()
         doneButton.enabled = false
         
         self.loadMediaItemsForMediaType(.Music)
+    }
+    
+    func configureSearchController() {
+        searchController = UISearchController(searchResultsController: nil)
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.sizeToFit()
+        searchController.searchBar.barTintColor = .blackColor()
+        searchController.searchBar.placeholder = "Search Music"
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
     }
     
     func loadMediaItemsForMediaType(mediaType: MPMediaType){
@@ -38,7 +51,16 @@ class FileListViewController: UITableViewController {
             let predicate = MPMediaPropertyPredicate(value: mediaTypeNumber,
                                                      forProperty: MPMediaItemPropertyMediaType)
             query.addFilterPredicate(predicate)
-            self.mediaItems = query.items
+            
+            self.allMediaItems = query.items
+        }
+    }
+    
+    private func getMediaItems() -> [MPMediaItem]? {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredMediaItems
+        } else {
+            return allMediaItems
         }
     }
     
@@ -52,8 +74,9 @@ class FileListViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if self.mediaItems != nil {
-            return self.mediaItems!.count;
+        let mediaItems = getMediaItems()
+        if mediaItems != nil {
+            return mediaItems!.count;
         } else {
             return 0
         }
@@ -67,7 +90,8 @@ class FileListViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
         let row = indexPath.row
-        let item = self.mediaItems![row] as MPMediaItem
+        let mediaItems = getMediaItems()
+        let item = mediaItems![row] as MPMediaItem
         cell.textLabel?.text = item.valueForProperty(MPMediaItemPropertyTitle) as! String?
         
         var artist = NSLocalizedString("Unknown Artist", comment: "Unknown Artist")
@@ -126,8 +150,9 @@ class FileListViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if doneButton === sender {
+            let mediaItems = getMediaItems()
             
-            if self.mediaItems == nil {
+            if mediaItems == nil {
                 return
             }
             
@@ -141,7 +166,7 @@ class FileListViewController: UITableViewController {
                 for i in 0 ..< selectedRows.count {
                     
                     let index = selectedRows[i]
-                    let item = self.mediaItems![index.row]
+                    let item = mediaItems![index.row]
                     items.append(item)
                 }
                 
@@ -155,4 +180,34 @@ class FileListViewController: UITableViewController {
         
         dismissViewControllerAnimated(true, completion: nil)
     }
-}
+    
+    func mediaItemContainsString(item: MPMediaItem, searchText: String) -> Bool {
+        var b1 = false
+        if let title = item.valueForProperty(MPMediaItemPropertyTitle) as? String {
+            b1 = title.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+        var b2 = false
+        if let artist = item.valueForProperty(MPMediaItemPropertyArtist) as? String {
+            b2 = artist.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        
+        return b1 || b2
+    }
+    
+    
+    func filterContentForSearchText(searchText: String) {
+        if self.allMediaItems == nil {
+            return
+        }
+        
+        self.filteredMediaItems = self.allMediaItems!.filter { item in
+            return mediaItemContainsString(item, searchText: searchText)
+        }
+        
+        tableView.reloadData()
+    }
+    
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }}
