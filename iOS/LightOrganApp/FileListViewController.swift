@@ -18,7 +18,7 @@ class FileListViewController: UITableViewController {
     
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
        
         self.tableView.contentInset = UIEdgeInsetsMake(5, 0, 0, 0);
         
@@ -29,12 +29,17 @@ class FileListViewController: UITableViewController {
     }
     
     func loadMediaItemsForMediaType(mediaType: MPMediaType){
-        let query = MPMediaQuery()
-        let mediaTypeNumber =  Int(mediaType.rawValue)
-        let predicate = MPMediaPropertyPredicate(value: mediaTypeNumber,
-                                                 forProperty: MPMediaItemPropertyMediaType)
-        query.addFilterPredicate(predicate)
-        self.mediaItems = query.items
+        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        
+        dispatch_async(queue) {
+            let query = MPMediaQuery()
+            let mediaTypeNumber =  Int(mediaType.rawValue)
+            let predicate = MPMediaPropertyPredicate(value: mediaTypeNumber,
+                                                     forProperty: MPMediaItemPropertyMediaType)
+            query.addFilterPredicate(predicate)
+            self.mediaItems = query.items
+        }
     }
     
     override func didReceiveMemoryWarning() {
