@@ -15,6 +15,7 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     
     var allMediaItems: [MPMediaItem]?
     var filteredMediaItems: [MPMediaItem]?
+    var selectedMediaItems: [MPMediaItem]?
     var didPickMediaItems: MPMediaItemCollection?
     
     var searchController: UISearchController!
@@ -27,6 +28,8 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundView = UIView()
         doneButton.enabled = false
+        
+        selectedMediaItems = [MPMediaItem]()
         
         self.loadMediaItemsForMediaType(.Music)
     }
@@ -73,11 +76,11 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let mediaItems = getMediaItems()
         if mediaItems != nil {
@@ -109,6 +112,11 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         
         cell.detailTextLabel?.text = "\(artist)  \(getDisplayTime(length))"
         
+        if selectedMediaItems!.contains(item) {
+            cell.accessoryType = .Checkmark
+        } else {
+            cell.accessoryType = .None
+        }
         
         cell.tag = row
         return cell
@@ -131,51 +139,33 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
-        cell!.accessoryType = .Checkmark
+        
+        let row = indexPath.row
+        let mediaItems = getMediaItems()
+        let item = mediaItems![row] as MPMediaItem
+        
+        if !selectedMediaItems!.contains(item) {
+            selectedMediaItems!.append(item)
+        } else {
+            if let index = selectedMediaItems!.indexOf(item) {
+                selectedMediaItems!.removeAtIndex(index)
+            }
+        }
+        
+        tableView.reloadData()
         
         checkDoneButton()
-    }
-    
-    override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let cell = tableView.cellForRowAtIndexPath(indexPath)        
-        cell!.accessoryType = .None
-        
-        checkDoneButton()
-    }
+    }    
     
     private func checkDoneButton() {
-        
-        let selectedRows = self.tableView.indexPathsForSelectedRows ?? []
-        doneButton.enabled = !selectedRows.isEmpty
+        doneButton.enabled = selectedMediaItems!.count > 0
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
         if doneButton === sender {
-            let mediaItems = getMediaItems()
-            
-            if mediaItems == nil {
-                return
-            }
-            
-            let selectedRows = self.tableView.indexPathsForSelectedRows ?? []
-            let noItemsAreSelected = selectedRows.isEmpty
-            
-            if !noItemsAreSelected {
-                
-                var items = [MPMediaItem]()
-                
-                for i in 0 ..< selectedRows.count {
-                    
-                    let index = selectedRows[i]
-                    let item = mediaItems![index.row]
-                    items.append(item)
-                }
-                
-                self.didPickMediaItems = MPMediaItemCollection(items: items)
+            if selectedMediaItems!.count > 0 {
+                self.didPickMediaItems = MPMediaItemCollection(items: selectedMediaItems!)
             }
         }
     }
@@ -215,4 +205,10 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
-    }}
+    }
+}
+
+
+
+
+
