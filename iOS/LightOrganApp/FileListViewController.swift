@@ -25,6 +25,7 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         
         self.configureSearchController()
         self.tableView.tableFooterView = UIView()
+        self.tableView.backgroundView = UIView()
         doneButton.enabled = false
         
         self.loadMediaItemsForMediaType(.Music)
