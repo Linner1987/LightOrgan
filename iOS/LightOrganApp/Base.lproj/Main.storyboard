@@ -119,11 +119,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Songs" id="q6f-N0-9uH">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="wUu-4O-IRN">
-                            <connections>
-                                <action selector="cancel:" destination="wRk-mh-QFm" id="KaI-Lv-iyU"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="pe8-vM-R0t">
                             <connections>
                                 <segue destination="sVX-WO-eYW" kind="unwind" unwindAction="unwindToPlayer:" id="Ezo-gc-a25"/>

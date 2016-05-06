@@ -27,7 +27,6 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         self.configureSearchController()
         self.tableView.tableFooterView = UIView()
         self.tableView.backgroundView = UIView()
-        doneButton.enabled = false
         
         selectedMediaItems = [MPMediaItem]()
         
@@ -35,14 +34,15 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     func configureSearchController() {
-        searchController = UISearchController(searchResultsController: nil)
+        searchController = CustomSearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
         searchController.searchBar.barTintColor = .blackColor()
-        searchController.searchBar.placeholder = "Search Music"
+        searchController.searchBar.placeholder = "Search Music"        
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
+        navigationItem.titleView = searchController.searchBar
+        searchController.hidesNavigationBarDuringPresentation = false;
     }
     
     func loadMediaItemsForMediaType(mediaType: MPMediaType){
@@ -153,13 +153,8 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         }
         
         tableView.reloadData()
-        
-        checkDoneButton()
-    }    
-    
-    private func checkDoneButton() {
-        doneButton.enabled = selectedMediaItems!.count > 0
     }
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -170,11 +165,6 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         }
     }
     
-    
-    @IBAction func cancel(sender: UIBarButtonItem) {
-        
-        dismissViewControllerAnimated(true, completion: nil)
-    }
     
     func mediaItemContainsString(item: MPMediaItem, searchText: String) -> Bool {
         var b1 = false
