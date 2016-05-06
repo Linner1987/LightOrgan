@@ -40,6 +40,19 @@ class CustomSearchBar: UISearchBar {
             
             searchField.textColor = .whiteColor()
             searchField.backgroundColor = UIColor(red: 0.14, green: 0.14, blue: 0.14, alpha: 1.0)
+            
+            if let glassIconView = searchField.leftView as? UIImageView {
+                glassIconView.image = glassIconView.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                glassIconView.tintColor = UIColor.whiteColor()
+            }
+            
+            let textFieldInsideSearchBarLabel = searchField.valueForKey("placeholderLabel") as? UILabel
+            textFieldInsideSearchBarLabel?.textColor = .whiteColor()
+            
+            let clearButton = searchField.valueForKey("clearButton") as! UIButton
+            clearButton.setImage(clearButton.imageView?.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), forState: .Normal)
+            clearButton.setImage(clearButton.imageView?.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), forState: .Highlighted)
+            clearButton.tintColor = UIColor.whiteColor()
         }
         
         super.drawRect(rect)
