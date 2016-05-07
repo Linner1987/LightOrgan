@@ -8,7 +8,7 @@
         <!--Light Organ-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="LightOrganApp" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayerViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="ViewController" customModule="LightOrganApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -76,7 +76,7 @@
         <!--Songs-->
         <scene sceneID="yoR-Uc-ngd">
             <objects>
-                <tableViewController title="Songs" id="wRk-mh-QFm" customClass="FileListViewController" customModule="LightOrganApp" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="FileListViewController" title="Songs" useStoryboardIdentifierAsRestorationIdentifier="YES" id="wRk-mh-QFm" customClass="FileListViewController" customModule="LightOrganApp" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PIR-XO-9JM">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -137,7 +137,7 @@
         <!--Navigation Controller-->
         <scene sceneID="UIA-Mw-e12">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Ye6-Xi-atL" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PlayerNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ye6-Xi-atL" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="9AR-Kk-fTa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -155,7 +155,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Onb-zo-evP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="zYo-ga-gsc" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FileListNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zYo-ga-gsc" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="UYN-Ux-ppe">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

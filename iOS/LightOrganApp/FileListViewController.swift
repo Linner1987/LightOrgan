@@ -9,7 +9,19 @@
 import UIKit
 import MediaPlayer
 
-class FileListViewController: UITableViewController, UISearchResultsUpdating {
+class FileListViewController: UITableViewController, UISearchBarDelegate, UISearchResultsUpdating {
+    
+    enum RestorationKeys : String {
+        case searchControllerIsActive
+        case searchBarText
+        case searchBarIsFirstResponder
+    }
+    
+    struct SearchControllerRestorableState {
+        var wasActive = false
+        var wasFirstResponder = false
+    }
+    
     
     @IBOutlet var doneButton: UIBarButtonItem!
     
@@ -19,6 +31,8 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     var didPickMediaItems: MPMediaItemCollection?
     
     var searchController: UISearchController!
+    
+    var restoredState = SearchControllerRestorableState()
     
     
     override func viewDidLoad() {
@@ -33,13 +47,32 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         self.loadMediaItemsForMediaType(.Music)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if restoredState.wasActive {
+            searchController.active = restoredState.wasActive
+            restoredState.wasActive = false
+            
+            if restoredState.wasFirstResponder {
+                searchController.searchBar.becomeFirstResponder()
+                restoredState.wasFirstResponder = false
+            }
+        }
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    
     func configureSearchController() {
         searchController = CustomSearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
         searchController.searchBar.barTintColor = .blackColor()
-        searchController.searchBar.placeholder = "Search Music"        
+        searchController.searchBar.placeholder = "Search Music"
+        searchController.searchBar.delegate = self
         definesPresentationContext = true
         navigationItem.titleView = searchController.searchBar
         searchController.hidesNavigationBarDuringPresentation = false;
@@ -65,7 +98,7 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     }
     
     private func getMediaItems() -> [MPMediaItem]? {
-        if searchController.active && searchController.searchBar.text != "" {
+        if (searchController.active || restoredState.wasActive) && searchController.searchBar.text != "" {
             return filteredMediaItems
         } else {
             return allMediaItems
@@ -99,6 +132,8 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
         let row = indexPath.row
         let mediaItems = getMediaItems()
+        
+        
         let item = mediaItems![row] as MPMediaItem
         cell.textLabel?.text = item.valueForProperty(MPMediaItemPropertyTitle) as! String?
         
@@ -118,7 +153,9 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
             cell.accessoryType = .None
         }
         
+        
         cell.tag = row
+        
         return cell
     }
     
@@ -195,6 +232,29 @@ class FileListViewController: UITableViewController, UISearchResultsUpdating {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+    }
+    
+    
+    override func encodeRestorableStateWithCoder(coder: NSCoder) {
+        super.encodeRestorableStateWithCoder(coder)
+        
+        
+        coder.encodeBool(searchController.active, forKey:RestorationKeys.searchControllerIsActive.rawValue)
+        
+        coder.encodeBool(searchController.searchBar.isFirstResponder(), forKey:RestorationKeys.searchBarIsFirstResponder.rawValue)
+        
+        coder.encodeObject(searchController.searchBar.text, forKey:RestorationKeys.searchBarText.rawValue)
+    }
+    
+    override func decodeRestorableStateWithCoder(coder: NSCoder) {
+        super.decodeRestorableStateWithCoder(coder)        
+        
+        
+        restoredState.wasActive = coder.decodeBoolForKey(RestorationKeys.searchControllerIsActive.rawValue)
+        
+        restoredState.wasFirstResponder = coder.decodeBoolForKey(RestorationKeys.searchBarIsFirstResponder.rawValue)
+        
+        searchController.searchBar.text = coder.decodeObjectForKey(RestorationKeys.searchBarText.rawValue) as? String
     }
 }
 
