@@ -20,6 +20,7 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
     var player: MPMusicPlayerController!
     var collection: MPMediaItemCollection!
     
+    @IBOutlet var toolbarHeightConstraint: NSLayoutConstraint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,6 +121,7 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         let playbackState = self.player.playbackState as MPMusicPlaybackState
         
         self.toolbar.hidden = playbackState != .Playing && playbackState != .Paused
+        toolbarHeightConstraint.priority = (playbackState != .Playing && playbackState != .Paused) ? 999 : 250
         
         var items = self.toolbar.items!
         if playbackState == .Stopped || playbackState == .Paused {

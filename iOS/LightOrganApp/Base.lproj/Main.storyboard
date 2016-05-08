@@ -18,7 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-g9-9E6">
-                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="600" width="600" height="0.0"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="999" id="dVv-4s-MAN"/>
+                                </constraints>
                                 <items>
                                     <barButtonItem systemItem="play" id="wNV-91-RGI">
                                         <connections>
@@ -28,7 +31,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Pea-YL-bjW"/>
                                     <barButtonItem style="plain" id="HaC-Pn-FmN">
                                         <view key="customView" opaque="NO" alpha="0.0" contentMode="scaleToFill" id="gX6-Rk-xNC">
-                                            <rect key="frame" x="180" y="6" width="240" height="33"/>
+                                            <rect key="frame" x="180" y="-17" width="240" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV1-Va-fwl">
@@ -48,12 +51,51 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="n6d-il-kOF"/>
                                 </items>
                             </toolbar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJv-Kt-tNJ" customClass="CircleView" customModule="LightOrganApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="84" width="600" height="152"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                        <color key="value" red="0.98431372549019602" green="0.12941176470588237" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vbe-3Z-Wma" customClass="CircleView" customModule="LightOrganApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="256" width="600" height="152"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                        <color key="value" red="0.99607843137254903" green="0.76470588235294112" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idL-g5-f30" customClass="CircleView" customModule="LightOrganApp" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="428" width="600" height="152"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                        <color key="value" red="0.050980392156862744" green="0.37647058823529411" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="top" secondItem="TJv-Kt-tNJ" secondAttribute="bottom" constant="20" id="1Dp-0n-nSc"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="idL-g5-f30" secondAttribute="leading" id="9PQ-Rz-gdE"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="height" secondItem="TJv-Kt-tNJ" secondAttribute="height" id="Gcc-aS-RZa"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="height" secondItem="TJv-Kt-tNJ" secondAttribute="height" id="Kc2-JT-diN"/>
                             <constraint firstAttribute="trailing" secondItem="JEf-g9-9E6" secondAttribute="trailing" id="Sfy-Oc-fQm"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U7Q-Je-RPp"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ucj-hE-Vqu"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VRx-iL-ofP"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="fIb-BJ-HG7"/>
+                            <constraint firstItem="JEf-g9-9E6" firstAttribute="top" secondItem="idL-g5-f30" secondAttribute="bottom" constant="20" id="gKo-dB-060"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kW7-a5-WUB"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="Vbe-3Z-Wma" secondAttribute="leading" id="sZI-Zf-Rx2"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uEG-pt-QcM"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="Vbe-3Z-Wma" secondAttribute="bottom" constant="20" id="wJU-bP-bAZ"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="yeg-Cp-bmI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Light Organ" id="G1V-9d-2Ho">
@@ -67,6 +109,7 @@
                         <outlet property="playButton" destination="wNV-91-RGI" id="S73-ih-OQV"/>
                         <outlet property="song" destination="AV1-Va-fwl" id="Plb-Id-5Zz"/>
                         <outlet property="toolbar" destination="JEf-g9-9E6" id="Zpq-f2-G5S"/>
+                        <outlet property="toolbarHeightConstraint" destination="dVv-4s-MAN" id="PXB-9q-hZg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
