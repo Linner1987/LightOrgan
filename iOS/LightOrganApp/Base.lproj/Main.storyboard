@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Light Organ-->
@@ -101,11 +100,11 @@
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="top" secondItem="idL-g5-f30" secondAttribute="bottom" constant="20" id="gKo-dB-060"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kW7-a5-WUB"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="oNo-Ux-q83"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="idL-g5-f30" secondAttribute="trailing" constant="20" id="q06-8p-KoG"/>
+                            <constraint firstAttribute="trailing" secondItem="idL-g5-f30" secondAttribute="trailing" constant="20" id="q06-8p-KoG"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="Vbe-3Z-Wma" secondAttribute="leading" id="sZI-Zf-Rx2"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uEG-pt-QcM"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="Vbe-3Z-Wma" secondAttribute="bottom" constant="20" id="wJU-bP-bAZ"/>
-                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="y3C-eP-DQQ"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="y3C-eP-DQQ"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="yeg-Cp-bmI"/>
                         </constraints>
                         <variation key="default">
