@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Light Organ-->
@@ -17,10 +18,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-g9-9E6">
-                                <rect key="frame" x="0.0" y="600" width="600" height="0.0"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-g9-9E6">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" priority="999" id="dVv-4s-MAN"/>
+                                    <constraint firstAttribute="height" priority="250" id="dVv-4s-MAN"/>
                                 </constraints>
                                 <items>
                                     <barButtonItem systemItem="play" id="wNV-91-RGI">
@@ -31,7 +32,7 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Pea-YL-bjW"/>
                                     <barButtonItem style="plain" id="HaC-Pn-FmN">
                                         <view key="customView" opaque="NO" alpha="0.0" contentMode="scaleToFill" id="gX6-Rk-xNC">
-                                            <rect key="frame" x="180" y="-17" width="240" height="33"/>
+                                            <rect key="frame" x="180" y="6" width="240" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV1-Va-fwl">
@@ -52,7 +53,7 @@
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJv-Kt-tNJ" customClass="CircleView" customModule="LightOrganApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="84" width="600" height="152"/>
+                                <rect key="frame" x="0.0" y="84" width="600" height="137"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -61,7 +62,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vbe-3Z-Wma" customClass="CircleView" customModule="LightOrganApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="256" width="600" height="152"/>
+                                <rect key="frame" x="0.0" y="241" width="600" height="138"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -70,7 +71,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idL-g5-f30" customClass="CircleView" customModule="LightOrganApp" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="428" width="600" height="152"/>
+                                <rect key="frame" x="0.0" y="399" width="600" height="137"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
@@ -81,22 +82,70 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="width" secondItem="TJv-Kt-tNJ" secondAttribute="width" id="0XR-dZ-ldZ"/>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="top" secondItem="TJv-Kt-tNJ" secondAttribute="bottom" constant="20" id="1Dp-0n-nSc"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="idL-g5-f30" secondAttribute="leading" id="9PQ-Rz-gdE"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="width" secondItem="TJv-Kt-tNJ" secondAttribute="width" id="Bkm-WT-z26"/>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="height" secondItem="TJv-Kt-tNJ" secondAttribute="height" id="Gcc-aS-RZa"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="height" secondItem="TJv-Kt-tNJ" secondAttribute="height" id="Kc2-JT-diN"/>
                             <constraint firstAttribute="trailing" secondItem="JEf-g9-9E6" secondAttribute="trailing" id="Sfy-Oc-fQm"/>
+                            <constraint firstItem="JEf-g9-9E6" firstAttribute="top" secondItem="TJv-Kt-tNJ" secondAttribute="bottom" constant="20" id="U5P-sy-0Wj"/>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U7Q-Je-RPp"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="leading" secondItem="TJv-Kt-tNJ" secondAttribute="trailing" constant="20" id="UW3-in-y75"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ucj-hE-Vqu"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VRx-iL-ofP"/>
+                            <constraint firstItem="JEf-g9-9E6" firstAttribute="top" secondItem="Vbe-3Z-Wma" secondAttribute="bottom" constant="20" id="VvF-xk-94J"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="aD0-1c-nYs"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="leading" secondItem="Vbe-3Z-Wma" secondAttribute="trailing" constant="20" id="ccR-rn-5EC"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="fIb-BJ-HG7"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="top" secondItem="idL-g5-f30" secondAttribute="bottom" constant="20" id="gKo-dB-060"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kW7-a5-WUB"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="oNo-Ux-q83"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="idL-g5-f30" secondAttribute="trailing" constant="20" id="q06-8p-KoG"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="Vbe-3Z-Wma" secondAttribute="leading" id="sZI-Zf-Rx2"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uEG-pt-QcM"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="Vbe-3Z-Wma" secondAttribute="bottom" constant="20" id="wJU-bP-bAZ"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="y3C-eP-DQQ"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="yeg-Cp-bmI"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="y3C-eP-DQQ"/>
+                                <exclude reference="Bkm-WT-z26"/>
+                                <exclude reference="UW3-in-y75"/>
+                                <exclude reference="aD0-1c-nYs"/>
+                                <exclude reference="U5P-sy-0Wj"/>
+                                <exclude reference="VvF-xk-94J"/>
+                                <exclude reference="0XR-dZ-ldZ"/>
+                                <exclude reference="ccR-rn-5EC"/>
+                                <exclude reference="oNo-Ux-q83"/>
+                                <exclude reference="q06-8p-KoG"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="9PQ-Rz-gdE"/>
+                                <exclude reference="kW7-a5-WUB"/>
+                                <exclude reference="sZI-Zf-Rx2"/>
+                                <exclude reference="uEG-pt-QcM"/>
+                                <include reference="y3C-eP-DQQ"/>
+                                <exclude reference="1Dp-0n-nSc"/>
+                                <include reference="Bkm-WT-z26"/>
+                                <exclude reference="Gcc-aS-RZa"/>
+                                <exclude reference="U7Q-Je-RPp"/>
+                                <include reference="UW3-in-y75"/>
+                                <include reference="aD0-1c-nYs"/>
+                                <include reference="U5P-sy-0Wj"/>
+                                <include reference="VvF-xk-94J"/>
+                                <include reference="0XR-dZ-ldZ"/>
+                                <exclude reference="Kc2-JT-diN"/>
+                                <exclude reference="Ucj-hE-Vqu"/>
+                                <include reference="ccR-rn-5EC"/>
+                                <include reference="oNo-Ux-q83"/>
+                                <include reference="q06-8p-KoG"/>
+                                <exclude reference="wJU-bP-bAZ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Light Organ" id="G1V-9d-2Ho">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="w4e-lc-EQL">
