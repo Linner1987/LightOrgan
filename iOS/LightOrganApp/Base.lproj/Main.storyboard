@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Light Organ-->
@@ -82,21 +83,80 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="top" secondItem="TJv-Kt-tNJ" secondAttribute="bottom" constant="20" id="1Dp-0n-nSc"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="1Vi-6i-fUM"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="centerY" secondItem="Vbe-3Z-Wma" secondAttribute="centerY" id="2tY-3J-TgL"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="idL-g5-f30" secondAttribute="leading" id="9PQ-Rz-gdE"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="width" secondItem="TJv-Kt-tNJ" secondAttribute="width" id="Dda-RW-c37"/>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="height" secondItem="TJv-Kt-tNJ" secondAttribute="height" id="Gcc-aS-RZa"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="centerY" secondItem="TJv-Kt-tNJ" secondAttribute="centerY" id="Gcl-ln-NTJ"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="height" secondItem="TJv-Kt-tNJ" secondAttribute="height" id="Kc2-JT-diN"/>
                             <constraint firstAttribute="trailing" secondItem="JEf-g9-9E6" secondAttribute="trailing" id="Sfy-Oc-fQm"/>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="U7Q-Je-RPp"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ucj-hE-Vqu"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VRx-iL-ofP"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Vex-aL-aYX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="idL-g5-f30" secondAttribute="trailing" id="asD-F5-CMz"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="c1w-T1-9I8"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="fIb-BJ-HG7"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="leading" secondItem="TJv-Kt-tNJ" secondAttribute="trailing" constant="20" id="gAN-0J-vGv"/>
                             <constraint firstItem="JEf-g9-9E6" firstAttribute="top" secondItem="idL-g5-f30" secondAttribute="bottom" constant="20" id="gKo-dB-060"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="centerY" secondItem="TJv-Kt-tNJ" secondAttribute="centerY" id="jd1-e1-Pbj"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="kW7-a5-WUB"/>
+                            <constraint firstItem="idL-g5-f30" firstAttribute="leading" secondItem="Vbe-3Z-Wma" secondAttribute="trailing" constant="20" id="lry-Hh-K5q"/>
+                            <constraint firstItem="Vbe-3Z-Wma" firstAttribute="width" secondItem="TJv-Kt-tNJ" secondAttribute="width" id="nQJ-Sq-APU"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="leading" secondItem="Vbe-3Z-Wma" secondAttribute="leading" id="sZI-Zf-Rx2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="TJv-Kt-tNJ" secondAttribute="bottom" id="slb-Cc-EqA"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="uEG-pt-QcM"/>
                             <constraint firstItem="idL-g5-f30" firstAttribute="top" secondItem="Vbe-3Z-Wma" secondAttribute="bottom" constant="20" id="wJU-bP-bAZ"/>
+                            <constraint firstItem="TJv-Kt-tNJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="xPu-9d-rlN"/>
                             <constraint firstItem="TJv-Kt-tNJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="yeg-Cp-bmI"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1Vi-6i-fUM"/>
+                                <exclude reference="xPu-9d-rlN"/>
+                                <exclude reference="Vex-aL-aYX"/>
+                                <exclude reference="gAN-0J-vGv"/>
+                                <exclude reference="jd1-e1-Pbj"/>
+                                <exclude reference="nQJ-Sq-APU"/>
+                                <exclude reference="slb-Cc-EqA"/>
+                                <exclude reference="2tY-3J-TgL"/>
+                                <exclude reference="Dda-RW-c37"/>
+                                <exclude reference="Gcl-ln-NTJ"/>
+                                <exclude reference="asD-F5-CMz"/>
+                                <exclude reference="c1w-T1-9I8"/>
+                                <exclude reference="lry-Hh-K5q"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="1Vi-6i-fUM"/>
+                                <exclude reference="9PQ-Rz-gdE"/>
+                                <exclude reference="kW7-a5-WUB"/>
+                                <exclude reference="sZI-Zf-Rx2"/>
+                                <exclude reference="uEG-pt-QcM"/>
+                                <include reference="xPu-9d-rlN"/>
+                                <exclude reference="yeg-Cp-bmI"/>
+                                <exclude reference="1Dp-0n-nSc"/>
+                                <exclude reference="Gcc-aS-RZa"/>
+                                <exclude reference="U7Q-Je-RPp"/>
+                                <include reference="Vex-aL-aYX"/>
+                                <include reference="gAN-0J-vGv"/>
+                                <include reference="jd1-e1-Pbj"/>
+                                <include reference="nQJ-Sq-APU"/>
+                                <exclude reference="gKo-dB-060"/>
+                                <include reference="slb-Cc-EqA"/>
+                                <include reference="2tY-3J-TgL"/>
+                                <include reference="Dda-RW-c37"/>
+                                <include reference="Gcl-ln-NTJ"/>
+                                <exclude reference="Kc2-JT-diN"/>
+                                <exclude reference="Ucj-hE-Vqu"/>
+                                <include reference="asD-F5-CMz"/>
+                                <include reference="c1w-T1-9I8"/>
+                                <include reference="lry-Hh-K5q"/>
+                                <exclude reference="wJU-bP-bAZ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Light Organ" id="G1V-9d-2Ho">
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="w4e-lc-EQL">
