@@ -17,6 +17,10 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
     @IBOutlet var playButton: UIBarButtonItem!
     var pauseButton: UIBarButtonItem!
     
+    @IBOutlet var bassLight: CircleView!
+    @IBOutlet var midLight: CircleView!
+    @IBOutlet var trebleLight: CircleView!
+    
     var player: MPMusicPlayerController!
     var collection: MPMediaItemCollection!
     
@@ -36,6 +40,12 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         notificationCenter.addObserver(self, selector: #selector(ViewController.nowPlayingItemChanged(_:)), name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification, object: self.player)
         notificationCenter.addObserver(self, selector: #selector(ViewController.playbackStateChanged(_:)), name: MPMusicPlayerControllerPlaybackStateDidChangeNotification, object: self.player)
         self.player.beginGeneratingPlaybackNotifications()
+        
+        
+        //test
+        //setLight(bassLight, ratio: 0.5)
+        //setLight(midLight, ratio: 0.1)
+        //setLight(trebleLight, ratio: 0.8)
     }
 
     override func didReceiveMemoryWarning() {
@@ -143,6 +153,29 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
             items[0] = self.pauseButton
         }
         self.toolbar.setItems(items, animated: false)
+    }
+    
+    func setLight(light: CircleView, ratio: CGFloat) {
+        light.circleColor = getColorWithAlpha(light.circleColor, ratio: ratio)
+    }
+    
+    func getColorWithAlpha(color: UIColor, ratio: CGFloat) -> UIColor {
+        var r: CGFloat = 0
+        var g: CGFloat = 0
+        var b: CGFloat = 0
+        var a: CGFloat = 0
+        
+        if color.getRed(&r, green: &g, blue: &b, alpha: &a) {
+            return UIColor(
+                red: r,
+                green: g,
+                blue: b,
+                alpha: ratio
+            )
+        }
+        
+        return color
+        
     }
 }
 

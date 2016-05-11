@@ -113,12 +113,12 @@
                                 <exclude reference="Bkm-WT-z26"/>
                                 <exclude reference="UW3-in-y75"/>
                                 <exclude reference="aD0-1c-nYs"/>
-                                <exclude reference="U5P-sy-0Wj"/>
-                                <exclude reference="VvF-xk-94J"/>
                                 <exclude reference="0XR-dZ-ldZ"/>
                                 <exclude reference="ccR-rn-5EC"/>
                                 <exclude reference="oNo-Ux-q83"/>
                                 <exclude reference="q06-8p-KoG"/>
+                                <exclude reference="U5P-sy-0Wj"/>
+                                <exclude reference="VvF-xk-94J"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
@@ -134,8 +134,6 @@
                                 <exclude reference="U7Q-Je-RPp"/>
                                 <include reference="UW3-in-y75"/>
                                 <include reference="aD0-1c-nYs"/>
-                                <include reference="U5P-sy-0Wj"/>
-                                <include reference="VvF-xk-94J"/>
                                 <include reference="0XR-dZ-ldZ"/>
                                 <exclude reference="Kc2-JT-diN"/>
                                 <exclude reference="Ucj-hE-Vqu"/>
@@ -143,6 +141,8 @@
                                 <include reference="oNo-Ux-q83"/>
                                 <include reference="q06-8p-KoG"/>
                                 <exclude reference="wJU-bP-bAZ"/>
+                                <include reference="U5P-sy-0Wj"/>
+                                <include reference="VvF-xk-94J"/>
                             </mask>
                         </variation>
                     </view>
@@ -154,10 +154,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bassLight" destination="TJv-Kt-tNJ" id="3SP-MP-ZMx"/>
+                        <outlet property="midLight" destination="Vbe-3Z-Wma" id="2HD-bH-xv6"/>
                         <outlet property="playButton" destination="wNV-91-RGI" id="S73-ih-OQV"/>
                         <outlet property="song" destination="AV1-Va-fwl" id="Plb-Id-5Zz"/>
                         <outlet property="toolbar" destination="JEf-g9-9E6" id="Zpq-f2-G5S"/>
                         <outlet property="toolbarHeightConstraint" destination="dVv-4s-MAN" id="PXB-9q-hZg"/>
+                        <outlet property="trebleLight" destination="idL-g5-f30" id="1Ad-vg-i49"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
