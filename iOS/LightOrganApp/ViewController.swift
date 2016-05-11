@@ -46,6 +46,19 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: MPMusicPlayerControllerPlaybackStateDidChangeNotification, object: self.player)
     }
     
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransitionToSize(size, withTransitionCoordinator: coordinator)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        
+        coordinator.animateAlongsideTransition({ (ctx) -> Void in
+            
+            }, completion: { (ctx) -> Void in
+                CATransaction.commit()
+        })
+        
+    }
+    
     /*
     @IBAction func search(sender: AnyObject) {
         
