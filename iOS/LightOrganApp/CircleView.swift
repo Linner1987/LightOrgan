@@ -25,7 +25,7 @@ class CircleView: UIView {
     }
     
     func configure() {
-        contentMode = .ScaleAspectFit
+        contentMode = .Redraw
     }
     
     override func drawRect(rect: CGRect) {
