@@ -71,7 +71,7 @@ class FileListViewController: UITableViewController, UISearchBarDelegate, UISear
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.sizeToFit()
         searchController.searchBar.barTintColor = .blackColor()
-        searchController.searchBar.placeholder = "Search Music"
+        searchController.searchBar.placeholder = NSLocalizedString("searchMusic", comment: "Search Music")
         searchController.searchBar.delegate = self
         definesPresentationContext = true
         navigationItem.titleView = searchController.searchBar
@@ -137,7 +137,7 @@ class FileListViewController: UITableViewController, UISearchBarDelegate, UISear
         let item = mediaItems![row] as MPMediaItem
         cell.textLabel?.text = item.valueForProperty(MPMediaItemPropertyTitle) as! String?
         
-        var artist = NSLocalizedString("Unknown Artist", comment: "Unknown Artist")
+        var artist = NSLocalizedString("unknownArtist", comment: "Unknown Artist")
         if let artistVal = item.valueForProperty(MPMediaItemPropertyArtist) as? String {
             artist = artistVal
         }
