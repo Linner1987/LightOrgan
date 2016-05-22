@@ -47,7 +47,21 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         //setLight(midLight, ratio: 0.1)
         //setLight(trebleLight, ratio: 0.8)
     }
-
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.defaultsChanged()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.defaultsChanged), name: NSUserDefaultsDidChangeNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NSUserDefaultsDidChangeNotification, object: nil)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -176,6 +190,15 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         
         return color
         
+    }
+    
+    func defaultsChanged() {
+        //let defaults = NSUserDefaults.standardUserDefaults()
+        //let useRemoteDevice = defaults.boolForKey("use_remote_device_preference")
+        //let host = defaults.stringForKey("remote_device_host_preference")
+        //let port = defaults.integerForKey("remote_device_port_preference")
+        
+        //self.song.text = "\(useRemoteDevice) \(host) \(port)"
     }
 }
 

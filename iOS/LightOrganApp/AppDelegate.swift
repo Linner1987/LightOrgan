@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        
+        self.populateRegistrationDomain()
+        
         // Override point for customization after application launch.
         return true
     }
@@ -49,6 +52,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, shouldRestoreApplicationState coder: NSCoder) -> Bool {
         return true
     }
-
+    
+    func populateRegistrationDomain() {
+        let settingsBundleURL = NSBundle.mainBundle().URLForResource("Settings", withExtension: "bundle")
+        
+        let appDefaults = loadDefaultsFromSettingsPage("Root.plist", inSettingsBundleAtURL: settingsBundleURL!)
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.registerDefaults(appDefaults!)
+        defaults.synchronize()
+    }
+    
+    
+    func loadDefaultsFromSettingsPage(plistName: String, inSettingsBundleAtURL settingsBundleURL: NSURL) -> [String:AnyObject]? {
+        let settingsDict = NSDictionary(contentsOfURL: settingsBundleURL.URLByAppendingPathComponent(plistName))
+        
+        if settingsDict == nil {
+            return nil;
+        }
+        
+        let prefSpecifierArray = settingsDict!.valueForKey("PreferenceSpecifiers") as? [[String:AnyObject]]
+        
+        if prefSpecifierArray == nil {
+            return nil;
+        }
+        
+        var keyValuePairs: [String:AnyObject] = [:]
+        
+        for prefItem in prefSpecifierArray! {
+            let prefItemType = prefItem["Type"] as? String
+            let prefItemKey = prefItem["Key"] as? String
+            let prefItemDefaultValue = prefItem["DefaultValue"] as? String
+            
+            if prefItemType == "PSChildPaneSpecifier" {
+                let prefItemFile = prefItem["File"] as? String
+                if let childPageKeyValuePairs = loadDefaultsFromSettingsPage(prefItemFile!, inSettingsBundleAtURL: settingsBundleURL) {
+                    keyValuePairs += childPageKeyValuePairs
+                }
+            }
+            else if prefItemKey != nil && prefItemDefaultValue != nil {
+                keyValuePairs[prefItemKey!] = prefItemDefaultValue
+            }
+        }
+        
+        return keyValuePairs
+    }
 }
 
+
+func += <K, V> (inout left: [K:V], right: [K:V]) {
+    for (k, v) in right {
+        left.updateValue(v, forKey: k)
+    }
+}
