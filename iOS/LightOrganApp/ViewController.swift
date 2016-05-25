@@ -9,7 +9,7 @@
 import UIKit
 import MediaPlayer
 
-class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
+class ViewController: UIViewController, NSStreamDelegate /*, MPMediaPickerControllerDelegate*/ {
 
     @IBOutlet weak var toolbar: UIToolbar!
     @IBOutlet weak var song: UILabel!
@@ -26,6 +26,9 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
     
     @IBOutlet var toolbarHeightConstraint: NSLayoutConstraint!
     
+    var outStream: NSOutputStream?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -40,12 +43,6 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         notificationCenter.addObserver(self, selector: #selector(ViewController.nowPlayingItemChanged(_:)), name: MPMusicPlayerControllerNowPlayingItemDidChangeNotification, object: self.player)
         notificationCenter.addObserver(self, selector: #selector(ViewController.playbackStateChanged(_:)), name: MPMusicPlayerControllerPlaybackStateDidChangeNotification, object: self.player)
         self.player.beginGeneratingPlaybackNotifications()
-        
-        
-        //test
-        //setLight(bassLight, ratio: 0.5)
-        //setLight(midLight, ratio: 0.1)
-        //setLight(trebleLight, ratio: 0.8)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -54,6 +51,9 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         self.defaultsChanged()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.defaultsChanged), name: NSUserDefaultsDidChangeNotification, object: nil)
+    
+        //test
+        onLightOrganDataUpdated(0.1, midLevel: 1, trebleLevel: 0)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -192,13 +192,74 @@ class ViewController: UIViewController /*, MPMediaPickerControllerDelegate*/ {
         
     }
     
-    func defaultsChanged() {
-        //let defaults = NSUserDefaults.standardUserDefaults()
-        //let useRemoteDevice = defaults.boolForKey("use_remote_device_preference")
-        //let host = defaults.stringForKey("remote_device_host_preference")
-        //let port = defaults.integerForKey("remote_device_port_preference")
+    func onLightOrganDataUpdated(bassLevel: CGFloat, midLevel: CGFloat, trebleLevel: CGFloat) {
+        setLight(bassLight, ratio: bassLevel)
+        setLight(midLight, ratio: midLevel)
+        setLight(trebleLight, ratio: trebleLevel)
         
-        //self.song.text = "\(useRemoteDevice) \(host) \(port)"
+        let bassValue = UInt8(round(255 * bassLevel))
+        let midValue = UInt8(round(255 * midLevel))
+        let trebleValue = UInt8(round(255 * trebleLevel))
+        let bytes:[UInt8] = [bassValue, midValue, trebleValue]
+        
+        sendCommand(bytes)
+    }
+    
+    func sendCommand(bytes: [UInt8]) {
+        outStream?.write(UnsafePointer<UInt8>(bytes), maxLength: bytes.count)
+    }
+    
+    func createNewSocket(defaults: NSUserDefaults) {
+        let host = defaults.stringForKey("remote_device_host_preference")
+        let port = defaults.integerForKey("remote_device_port_preference")
+        
+        if host != nil && port > 0 {
+            NSStream.getStreamsToHostWithName(host!, port: port, inputStream: nil, outputStream: &outStream)
+            
+            outStream?.delegate = self
+            outStream?.scheduleInRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+            outStream?.open()
+        }
+    }
+    
+    func releaseOutStream() {
+        outStream?.close()
+        outStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        outStream = nil
+    }
+    
+    func stream(aStream: NSStream, handleEvent eventCode: NSStreamEvent) {
+        switch eventCode {
+        case NSStreamEvent.EndEncountered:
+            print("EndEncountered")
+            releaseOutStream()
+        case NSStreamEvent.ErrorOccurred:
+            print("ErrorOccurred")
+            releaseOutStream()
+        case NSStreamEvent.HasSpaceAvailable:
+            print("HasSpaceAvailable")
+        case NSStreamEvent.None:
+            print("None")
+        case NSStreamEvent.OpenCompleted:
+            print("OpenCompleted")
+        default:
+            print("Unknown")
+        }
+    }
+    
+    func defaultsChanged() {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let useRemoteDevice = defaults.boolForKey("use_remote_device_preference")
+        
+        if outStream != nil {
+            let bytes = [UInt8](count: 3, repeatedValue: 13)
+            sendCommand(bytes)
+            releaseOutStream()
+        }
+        
+        if useRemoteDevice {
+            createNewSocket(defaults)
+        }
     }
 }
 
