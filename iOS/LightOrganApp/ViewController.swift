@@ -53,7 +53,7 @@ class ViewController: UIViewController, NSStreamDelegate /*, MPMediaPickerContro
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.defaultsChanged), name: NSUserDefaultsDidChangeNotification, object: nil)
     
         //test
-        onLightOrganDataUpdated(0.1, midLevel: 1, trebleLevel: 0)
+        onLightOrganDataUpdated(0.3, midLevel: 1, trebleLevel: 0)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -205,8 +205,12 @@ class ViewController: UIViewController, NSStreamDelegate /*, MPMediaPickerContro
         sendCommand(bytes)
     }
     
-    func sendCommand(bytes: [UInt8]) {
-        outStream?.write(UnsafePointer<UInt8>(bytes), maxLength: bytes.count)
+    func sendCommand(bytes: [UInt8]) {        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+        
+        dispatch_async(queue) {
+            self.outStream?.write(UnsafePointer<UInt8>(bytes), maxLength: bytes.count)
+        }
     }
     
     func createNewSocket(defaults: NSUserDefaults) {
@@ -223,8 +227,9 @@ class ViewController: UIViewController, NSStreamDelegate /*, MPMediaPickerContro
     }
     
     func releaseOutStream() {
-        outStream?.close()
+        outStream?.delegate = nil
         outStream?.removeFromRunLoop(NSRunLoop.currentRunLoop(), forMode: NSDefaultRunLoopMode)
+        outStream?.close()
         outStream = nil
     }
     
@@ -252,8 +257,6 @@ class ViewController: UIViewController, NSStreamDelegate /*, MPMediaPickerContro
         let useRemoteDevice = defaults.boolForKey("use_remote_device_preference")
         
         if outStream != nil {
-            let bytes = [UInt8](count: 3, repeatedValue: 13)
-            sendCommand(bytes)
             releaseOutStream()
         }
         
