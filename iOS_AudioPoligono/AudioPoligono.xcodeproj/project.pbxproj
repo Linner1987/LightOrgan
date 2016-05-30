@@ -1,0 +1,714 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		270D76C2955F29A212528288 /* Pods_AudioPoligonoUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8E390FD5CB20CE7D1300A076 /* Pods_AudioPoligonoUITests.framework */; };
+		8A8C2AF582BB6387F4DF67FD /* Pods_AudioPoligonoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B55A090C183DC3B5C8E1367 /* Pods_AudioPoligonoTests.framework */; };
+		D14046191CF849AE000D6E74 /* CustomPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14046181CF849AE000D6E74 /* CustomPlayer.swift */; };
+		D1DF1F5F1CF8DA55006321F9 /* CustomAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DF1F5E1CF8DA55006321F9 /* CustomAudioPlayer.swift */; };
+		D1E396641CF750DD0000A4E7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E396631CF750DD0000A4E7 /* AppDelegate.swift */; };
+		D1E396661CF750DD0000A4E7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E396651CF750DD0000A4E7 /* ViewController.swift */; };
+		D1E396691CF750DD0000A4E7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E396671CF750DD0000A4E7 /* Main.storyboard */; };
+		D1E3966B1CF750DE0000A4E7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1E3966A1CF750DE0000A4E7 /* Assets.xcassets */; };
+		D1E3966E1CF750DE0000A4E7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D1E3966C1CF750DE0000A4E7 /* LaunchScreen.storyboard */; };
+		D1E396791CF750DE0000A4E7 /* AudioPoligonoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E396781CF750DE0000A4E7 /* AudioPoligonoTests.swift */; };
+		D1E396841CF750DE0000A4E7 /* AudioPoligonoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1E396831CF750DE0000A4E7 /* AudioPoligonoUITests.swift */; };
+		D1EE0EE61CFB0A0000ED684B /* EZAudioPlayerEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1EE0EE51CFB0A0000ED684B /* EZAudioPlayerEx.swift */; };
+		DA8E1F71F73AA39476480909 /* Pods_AudioPoligono.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E700307B033C05CC7A23A8 /* Pods_AudioPoligono.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D1E396751CF750DE0000A4E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1E396581CF750DD0000A4E7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1E3965F1CF750DD0000A4E7;
+			remoteInfo = AudioPoligono;
+		};
+		D1E396801CF750DE0000A4E7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1E396581CF750DD0000A4E7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1E3965F1CF750DD0000A4E7;
+			remoteInfo = AudioPoligono;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		06DDD6126247A0113BF5E5C9 /* Pods-AudioPoligonoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPoligonoUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPoligonoUITests/Pods-AudioPoligonoUITests.release.xcconfig"; sourceTree = "<group>"; };
+		407C062B26C06E37C9C5C146 /* Pods-AudioPoligono.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPoligono.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPoligono/Pods-AudioPoligono.release.xcconfig"; sourceTree = "<group>"; };
+		4B1B3BB43A19FBB27608A40C /* Pods-AudioPoligonoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPoligonoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPoligonoTests/Pods-AudioPoligonoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		52942EED1B227247FD0B460C /* Pods-AudioPoligonoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPoligonoUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPoligonoUITests/Pods-AudioPoligonoUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5B55A090C183DC3B5C8E1367 /* Pods_AudioPoligonoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioPoligonoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64E700307B033C05CC7A23A8 /* Pods_AudioPoligono.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioPoligono.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8E390FD5CB20CE7D1300A076 /* Pods_AudioPoligonoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AudioPoligonoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C470F57B5DBC063AB625BBF6 /* Pods-AudioPoligono.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPoligono.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPoligono/Pods-AudioPoligono.debug.xcconfig"; sourceTree = "<group>"; };
+		D13190B61CFB20320076BB2E /* AudioPoligono-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AudioPoligono-Bridging-Header.h"; sourceTree = "<group>"; };
+		D14046181CF849AE000D6E74 /* CustomPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPlayer.swift; sourceTree = "<group>"; };
+		D1DF1F5E1CF8DA55006321F9 /* CustomAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomAudioPlayer.swift; sourceTree = "<group>"; };
+		D1E396601CF750DD0000A4E7 /* AudioPoligono.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AudioPoligono.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1E396631CF750DD0000A4E7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		D1E396651CF750DD0000A4E7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D1E396681CF750DD0000A4E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		D1E3966A1CF750DE0000A4E7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D1E3966D1CF750DE0000A4E7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		D1E3966F1CF750DE0000A4E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1E396741CF750DE0000A4E7 /* AudioPoligonoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioPoligonoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1E396781CF750DE0000A4E7 /* AudioPoligonoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPoligonoTests.swift; sourceTree = "<group>"; };
+		D1E3967A1CF750DE0000A4E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1E3967F1CF750DE0000A4E7 /* AudioPoligonoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AudioPoligonoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1E396831CF750DE0000A4E7 /* AudioPoligonoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPoligonoUITests.swift; sourceTree = "<group>"; };
+		D1E396851CF750DE0000A4E7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D1EE0EE51CFB0A0000ED684B /* EZAudioPlayerEx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EZAudioPlayerEx.swift; sourceTree = "<group>"; };
+		DC62FC0F1B2CF38F43937833 /* Pods-AudioPoligonoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AudioPoligonoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AudioPoligonoTests/Pods-AudioPoligonoTests.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D1E3965D1CF750DD0000A4E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA8E1F71F73AA39476480909 /* Pods_AudioPoligono.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E396711CF750DE0000A4E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A8C2AF582BB6387F4DF67FD /* Pods_AudioPoligonoTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E3967C1CF750DE0000A4E7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				270D76C2955F29A212528288 /* Pods_AudioPoligonoUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4A03F8B43212ED04C45293BF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				64E700307B033C05CC7A23A8 /* Pods_AudioPoligono.framework */,
+				5B55A090C183DC3B5C8E1367 /* Pods_AudioPoligonoTests.framework */,
+				8E390FD5CB20CE7D1300A076 /* Pods_AudioPoligonoUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		661A667D759EB7E5246DC0D0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C470F57B5DBC063AB625BBF6 /* Pods-AudioPoligono.debug.xcconfig */,
+				407C062B26C06E37C9C5C146 /* Pods-AudioPoligono.release.xcconfig */,
+				4B1B3BB43A19FBB27608A40C /* Pods-AudioPoligonoTests.debug.xcconfig */,
+				DC62FC0F1B2CF38F43937833 /* Pods-AudioPoligonoTests.release.xcconfig */,
+				52942EED1B227247FD0B460C /* Pods-AudioPoligonoUITests.debug.xcconfig */,
+				06DDD6126247A0113BF5E5C9 /* Pods-AudioPoligonoUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		D1E396571CF750DD0000A4E7 = {
+			isa = PBXGroup;
+			children = (
+				D1E396621CF750DD0000A4E7 /* AudioPoligono */,
+				D1E396771CF750DE0000A4E7 /* AudioPoligonoTests */,
+				D1E396821CF750DE0000A4E7 /* AudioPoligonoUITests */,
+				D1E396611CF750DD0000A4E7 /* Products */,
+				661A667D759EB7E5246DC0D0 /* Pods */,
+				4A03F8B43212ED04C45293BF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		D1E396611CF750DD0000A4E7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1E396601CF750DD0000A4E7 /* AudioPoligono.app */,
+				D1E396741CF750DE0000A4E7 /* AudioPoligonoTests.xctest */,
+				D1E3967F1CF750DE0000A4E7 /* AudioPoligonoUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D1E396621CF750DD0000A4E7 /* AudioPoligono */ = {
+			isa = PBXGroup;
+			children = (
+				D1E396631CF750DD0000A4E7 /* AppDelegate.swift */,
+				D1E396651CF750DD0000A4E7 /* ViewController.swift */,
+				D1E396671CF750DD0000A4E7 /* Main.storyboard */,
+				D1E3966A1CF750DE0000A4E7 /* Assets.xcassets */,
+				D1E3966C1CF750DE0000A4E7 /* LaunchScreen.storyboard */,
+				D1E3966F1CF750DE0000A4E7 /* Info.plist */,
+				D14046181CF849AE000D6E74 /* CustomPlayer.swift */,
+				D1DF1F5E1CF8DA55006321F9 /* CustomAudioPlayer.swift */,
+				D1EE0EE51CFB0A0000ED684B /* EZAudioPlayerEx.swift */,
+				D13190B61CFB20320076BB2E /* AudioPoligono-Bridging-Header.h */,
+			);
+			path = AudioPoligono;
+			sourceTree = "<group>";
+		};
+		D1E396771CF750DE0000A4E7 /* AudioPoligonoTests */ = {
+			isa = PBXGroup;
+			children = (
+				D1E396781CF750DE0000A4E7 /* AudioPoligonoTests.swift */,
+				D1E3967A1CF750DE0000A4E7 /* Info.plist */,
+			);
+			path = AudioPoligonoTests;
+			sourceTree = "<group>";
+		};
+		D1E396821CF750DE0000A4E7 /* AudioPoligonoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D1E396831CF750DE0000A4E7 /* AudioPoligonoUITests.swift */,
+				D1E396851CF750DE0000A4E7 /* Info.plist */,
+			);
+			path = AudioPoligonoUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D1E3965F1CF750DD0000A4E7 /* AudioPoligono */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1E396881CF750DE0000A4E7 /* Build configuration list for PBXNativeTarget "AudioPoligono" */;
+			buildPhases = (
+				72DFDF980FC02BF6B8C36101 /* 📦 Check Pods Manifest.lock */,
+				D1E3965C1CF750DD0000A4E7 /* Sources */,
+				D1E3965D1CF750DD0000A4E7 /* Frameworks */,
+				D1E3965E1CF750DD0000A4E7 /* Resources */,
+				165942349C4C7FEABB02019D /* 📦 Embed Pods Frameworks */,
+				050272EE2A8DD5D61EADD36E /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AudioPoligono;
+			productName = AudioPoligono;
+			productReference = D1E396601CF750DD0000A4E7 /* AudioPoligono.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D1E396731CF750DE0000A4E7 /* AudioPoligonoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1E3968B1CF750DE0000A4E7 /* Build configuration list for PBXNativeTarget "AudioPoligonoTests" */;
+			buildPhases = (
+				3BE9FECD2814BD3497262442 /* 📦 Check Pods Manifest.lock */,
+				D1E396701CF750DE0000A4E7 /* Sources */,
+				D1E396711CF750DE0000A4E7 /* Frameworks */,
+				D1E396721CF750DE0000A4E7 /* Resources */,
+				1686664E55C9B74CF55C3114 /* 📦 Embed Pods Frameworks */,
+				A99DD2FECE725D4A70E15A86 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D1E396761CF750DE0000A4E7 /* PBXTargetDependency */,
+			);
+			name = AudioPoligonoTests;
+			productName = AudioPoligonoTests;
+			productReference = D1E396741CF750DE0000A4E7 /* AudioPoligonoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		D1E3967E1CF750DE0000A4E7 /* AudioPoligonoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D1E3968E1CF750DE0000A4E7 /* Build configuration list for PBXNativeTarget "AudioPoligonoUITests" */;
+			buildPhases = (
+				BD0E2E9EECEDFAA5DA60C418 /* 📦 Check Pods Manifest.lock */,
+				D1E3967B1CF750DE0000A4E7 /* Sources */,
+				D1E3967C1CF750DE0000A4E7 /* Frameworks */,
+				D1E3967D1CF750DE0000A4E7 /* Resources */,
+				50CBED74362772BD413DDA21 /* 📦 Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D1E396811CF750DE0000A4E7 /* PBXTargetDependency */,
+			);
+			name = AudioPoligonoUITests;
+			productName = AudioPoligonoUITests;
+			productReference = D1E3967F1CF750DE0000A4E7 /* AudioPoligonoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D1E396581CF750DD0000A4E7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0730;
+				LastUpgradeCheck = 0730;
+				ORGANIZATIONNAME = "Marcin Kruszyński";
+				TargetAttributes = {
+					D1E3965F1CF750DD0000A4E7 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = NVFFLJ4MD8;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
+					D1E396731CF750DE0000A4E7 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = NVFFLJ4MD8;
+						TestTargetID = D1E3965F1CF750DD0000A4E7;
+					};
+					D1E3967E1CF750DE0000A4E7 = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = NVFFLJ4MD8;
+						TestTargetID = D1E3965F1CF750DD0000A4E7;
+					};
+				};
+			};
+			buildConfigurationList = D1E3965B1CF750DD0000A4E7 /* Build configuration list for PBXProject "AudioPoligono" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = D1E396571CF750DD0000A4E7;
+			productRefGroup = D1E396611CF750DD0000A4E7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D1E3965F1CF750DD0000A4E7 /* AudioPoligono */,
+				D1E396731CF750DE0000A4E7 /* AudioPoligonoTests */,
+				D1E3967E1CF750DE0000A4E7 /* AudioPoligonoUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D1E3965E1CF750DD0000A4E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1E3966E1CF750DE0000A4E7 /* LaunchScreen.storyboard in Resources */,
+				D1E3966B1CF750DE0000A4E7 /* Assets.xcassets in Resources */,
+				D1E396691CF750DD0000A4E7 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E396721CF750DE0000A4E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E3967D1CF750DE0000A4E7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		050272EE2A8DD5D61EADD36E /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioPoligono/Pods-AudioPoligono-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		165942349C4C7FEABB02019D /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioPoligono/Pods-AudioPoligono-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1686664E55C9B74CF55C3114 /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioPoligonoTests/Pods-AudioPoligonoTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3BE9FECD2814BD3497262442 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		50CBED74362772BD413DDA21 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioPoligonoUITests/Pods-AudioPoligonoUITests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		72DFDF980FC02BF6B8C36101 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A99DD2FECE725D4A70E15A86 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-AudioPoligonoTests/Pods-AudioPoligonoTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD0E2E9EECEDFAA5DA60C418 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D1E3965C1CF750DD0000A4E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1EE0EE61CFB0A0000ED684B /* EZAudioPlayerEx.swift in Sources */,
+				D1DF1F5F1CF8DA55006321F9 /* CustomAudioPlayer.swift in Sources */,
+				D1E396661CF750DD0000A4E7 /* ViewController.swift in Sources */,
+				D1E396641CF750DD0000A4E7 /* AppDelegate.swift in Sources */,
+				D14046191CF849AE000D6E74 /* CustomPlayer.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E396701CF750DE0000A4E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1E396791CF750DE0000A4E7 /* AudioPoligonoTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1E3967B1CF750DE0000A4E7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D1E396841CF750DE0000A4E7 /* AudioPoligonoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D1E396761CF750DE0000A4E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1E3965F1CF750DD0000A4E7 /* AudioPoligono */;
+			targetProxy = D1E396751CF750DE0000A4E7 /* PBXContainerItemProxy */;
+		};
+		D1E396811CF750DE0000A4E7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1E3965F1CF750DD0000A4E7 /* AudioPoligono */;
+			targetProxy = D1E396801CF750DE0000A4E7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D1E396671CF750DD0000A4E7 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D1E396681CF750DD0000A4E7 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D1E3966C1CF750DE0000A4E7 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D1E3966D1CF750DE0000A4E7 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D1E396861CF750DE0000A4E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D1E396871CF750DE0000A4E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D1E396891CF750DE0000A4E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C470F57B5DBC063AB625BBF6 /* Pods-AudioPoligono.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = AudioPoligono/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = emka.AudioPoligono;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioPoligono/AudioPoligono-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D1E3968A1CF750DE0000A4E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 407C062B26C06E37C9C5C146 /* Pods-AudioPoligono.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				INFOPLIST_FILE = AudioPoligono/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = emka.AudioPoligono;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AudioPoligono/AudioPoligono-Bridging-Header.h";
+			};
+			name = Release;
+		};
+		D1E3968C1CF750DE0000A4E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4B1B3BB43A19FBB27608A40C /* Pods-AudioPoligonoTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = AudioPoligonoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = emka.AudioPoligonoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioPoligono.app/AudioPoligono";
+			};
+			name = Debug;
+		};
+		D1E3968D1CF750DE0000A4E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC62FC0F1B2CF38F43937833 /* Pods-AudioPoligonoTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = AudioPoligonoTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = emka.AudioPoligonoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AudioPoligono.app/AudioPoligono";
+			};
+			name = Release;
+		};
+		D1E3968F1CF750DE0000A4E7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 52942EED1B227247FD0B460C /* Pods-AudioPoligonoUITests.debug.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = AudioPoligonoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = emka.AudioPoligonoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = AudioPoligono;
+			};
+			name = Debug;
+		};
+		D1E396901CF750DE0000A4E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06DDD6126247A0113BF5E5C9 /* Pods-AudioPoligonoUITests.release.xcconfig */;
+			buildSettings = {
+				INFOPLIST_FILE = AudioPoligonoUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = emka.AudioPoligonoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = AudioPoligono;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D1E3965B1CF750DD0000A4E7 /* Build configuration list for PBXProject "AudioPoligono" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1E396861CF750DE0000A4E7 /* Debug */,
+				D1E396871CF750DE0000A4E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1E396881CF750DE0000A4E7 /* Build configuration list for PBXNativeTarget "AudioPoligono" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1E396891CF750DE0000A4E7 /* Debug */,
+				D1E3968A1CF750DE0000A4E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1E3968B1CF750DE0000A4E7 /* Build configuration list for PBXNativeTarget "AudioPoligonoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1E3968C1CF750DE0000A4E7 /* Debug */,
+				D1E3968D1CF750DE0000A4E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D1E3968E1CF750DE0000A4E7 /* Build configuration list for PBXNativeTarget "AudioPoligonoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D1E3968F1CF750DE0000A4E7 /* Debug */,
+				D1E396901CF750DE0000A4E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D1E396581CF750DD0000A4E7 /* Project object */;
+}
