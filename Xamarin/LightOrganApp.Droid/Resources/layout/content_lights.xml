@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <com.apps.kruszyn.lightorganapp.ui.CircleView
+        android:id="@+id/bass_light"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        app:circleColor="#d50000"/>
+
+    <com.apps.kruszyn.lightorganapp.ui.CircleView
+        android:id="@+id/mid_light"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        app:circleColor="#ffab00"/>
+
+    <com.apps.kruszyn.lightorganapp.ui.CircleView
+        android:id="@+id/treble_light"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        app:circleColor="#6200ea"/>
+
+</LinearLayout>
+
+
+
+
+

@@ -1,5 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="Hello">Hello World, Click Me!</string>
-    <string name="ApplicationName">LightOrganApp.Droid</string>
+    <string name="app_name">Light Organ X</string>
+    <string name="file_list_activity_name">Music library</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_media_files">Music library</string>
+    <string name="browse_musics_by_genre_subtitle">%1$s songs</string>
+    <string name="search_queue_title">Search results</string>
+    <string name="random_queue_title">Random music</string>
+    <string name="currently_playing_song">Song currently playing</string>
+    <string name="currently_playing_artist">Artist of currently playing song</string>
+    <string name="currently_playing_extra_info">Extra info for currently playing song</string>
+    <string name="play_pause">play or pause</string>
+    <string name="search_songs">search songs</string>
+    <string name="not_all_permissions_msg">Some Permission is Denied.</string>
+    <string name="permission_denied_msg">%1$s permission denied.</string>
+    <string name="no_metadata_msg">Unable to retrieve metadata.</string>
+    <string name="settings_activity_name">Settings</string>
+    <string name="pref_title_use_remote_device">Use external lighting</string>
+    <string name="pref_title_remote_device_host">Host</string>
+    <string name="pref_title_remote_device_port">Port</string>
+    <string name="pref_summary_use_remote_device">Send lighting control data to the remote device</string>
+    <string name="pref_no_data">Undefined</string>
 </resources>

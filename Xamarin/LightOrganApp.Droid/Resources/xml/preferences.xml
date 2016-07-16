@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:key="pref_use_remote_device"
+        android:defaultValue="false"
+        android:title="@string/pref_title_use_remote_device"
+        android:summary="@string/pref_summary_use_remote_device" />
+
+    <EditTextPreference
+        android:key="pref_remote_device_host"
+        android:dependency="pref_use_remote_device"
+        android:defaultValue=""
+        android:inputType="text"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:title="@string/pref_title_remote_device_host" />
+
+    <com.apps.kruszyn.lightorganapp.ui.NumberPickerPreference
+        android:key="pref_remote_device_port"
+        android:dependency="pref_use_remote_device"
+        android:defaultValue="8181"
+        android:title="@string/pref_title_remote_device_port" />
+
+</PreferenceScreen>

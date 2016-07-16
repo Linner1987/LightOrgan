@@ -1,30 +1,56 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Android.Support.V7.Widget;
+using Android.Views;
+using LightOrganApp.Droid.UI;
 
 namespace LightOrganApp.Droid
 {
-    [Activity(Label = "LightOrganApp.Droid", MainLauncher = true, Icon = "@drawable/icon")]
-    public class MainActivity : Activity
-    {
-        int count = 1;
+    [Activity(Label = "@string/app_name", MainLauncher = true, Theme="@style/AppTheme.NoActionBar")]
+    public class MainActivity : BaseActivity
+    {   
 
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(bundle);
+            base.OnCreate(savedInstanceState);            
+            SetContentView(Resource.Layout.activity_main);
+            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);            
+            SetSupportActionBar(toolbar);
+        }
+        
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            // Inflate the menu; this adds items to the action bar if it is present.
+            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
 
-            // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            return true;
+        }
+       
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            // Handle action bar item clicks here. The action bar will
+            // automatically handle clicks on the Home/Up button, so long
+            // as you specify a parent activity in AndroidManifest.xml.
 
-            // Get our button from the layout resource,
-            // and attach an event to it
-            Button button = FindViewById<Button>(Resource.Id.MyButton);
+            switch (item.ItemId)
+            {
+                case Resource.Id.action_media_files:
 
-            button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
+                    //var intent = new Intent(this, FileListActivity.class);
+                    //StartActivity(intent);
+
+                    return true;
+
+                case Resource.Id.action_settings:
+
+                    //Intent intent2 = new Intent(this, SettingsActivity.class);
+                    //startActivity(intent2);
+
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }
