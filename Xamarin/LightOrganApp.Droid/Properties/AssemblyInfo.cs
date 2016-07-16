@@ -28,3 +28,9 @@ using Android.App;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]
+
+[assembly: Application(AllowBackup = true,
+                        Icon = "@mipmap/ic_launcher",
+                        Label = "@string/app_name",
+                        SupportsRtl = true,
+                        Theme = "@style/AppTheme")]
