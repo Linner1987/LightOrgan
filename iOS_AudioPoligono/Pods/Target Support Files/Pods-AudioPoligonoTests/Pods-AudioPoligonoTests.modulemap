@@ -1,6 +1,0 @@
-framework module Pods_AudioPoligonoTests {
-  umbrella header "Pods-AudioPoligonoTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
