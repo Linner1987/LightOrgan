@@ -1,5 +1,4 @@
-﻿using Android.App;
-using Android.Content;
+using Android.App;
 using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -7,26 +6,26 @@ using LightOrganApp.Droid.UI;
 
 namespace LightOrganApp.Droid
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true, Theme="@style/AppTheme.NoActionBar")]
-    public class MainActivity : BaseActivity
-    {   
-
+    [Activity(Label = "@string/file_list_activity_name", Theme = "@style/AppTheme.NoActionBar")]
+    public class FileListActivity : BaseActivity
+    {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnCreate(savedInstanceState);            
-            SetContentView(Resource.Layout.activity_main);
-            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);            
+            base.OnCreate(savedInstanceState);
+            SetContentView(Resource.Layout.activity_file_list);
+
+            var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             SetSupportActionBar(toolbar);
         }
-        
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             // Inflate the menu; this adds items to the action bar if it is present.
-            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
+            MenuInflater.Inflate(Resource.Menu.menu_file_list, menu);
 
             return true;
         }
-       
+
         public override bool OnOptionsItemSelected(IMenuItem item)
         {
             // Handle action bar item clicks here. The action bar will
@@ -35,17 +34,11 @@ namespace LightOrganApp.Droid
 
             switch (item.ItemId)
             {
-                case Resource.Id.action_media_files:
-
-                    var intent = new Intent(this, typeof(FileListActivity));
-                    StartActivity(intent);
+                case Resource.Id.action_search:                    
 
                     return true;
 
-                case Resource.Id.action_settings:
-
-                    //Intent intent2 = new Intent(this, SettingsActivity.class);
-                    //startActivity(intent2);
+                case Resource.Id.action_settings:                   
 
                     return true;
             }
@@ -54,4 +47,3 @@ namespace LightOrganApp.Droid
         }
     }
 }
-
