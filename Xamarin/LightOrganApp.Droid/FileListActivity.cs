@@ -11,13 +11,23 @@ using System;
 using Android.Text.Format;
 using Android.Content;
 using Android.Provider;
+using Android.Support.V4.View;
+using Android.Runtime;
+using Android.Text;
 
 namespace LightOrganApp.Droid
 {
     [Activity(Label = "@string/file_list_activity_name", Theme = "@style/AppTheme.NoActionBar")]
-    public class FileListActivity : BaseActivity
+    public class FileListActivity : BaseActivity, Android.Support.V7.Widget.SearchView.IOnQueryTextListener
     {
         static readonly string Tag = LogHelper.MakeLogTag(typeof(FileListActivity));
+
+        public const string QueryString = "queryString";
+        public const string SearchOpen = "searchOpen";
+        private string searchText = null;
+        private string queryToSave = null;
+        private bool searchOpen = false;
+        private Android.Support.V7.Widget.SearchView mSearchView;        
 
         private RecyclerView mRecyclerView;
         private List<MediaBrowserCompat.MediaItem> mModel;
@@ -42,7 +52,7 @@ namespace LightOrganApp.Droid
 
             mAdapter = new SimpleItemRecyclerViewAdapter(mModel);
             mAdapter.ItemClick += OnItemClick;
-            mRecyclerView.SetAdapter(mAdapter);
+            mRecyclerView.SetAdapter(mAdapter);            
         }
 
 
@@ -68,8 +78,8 @@ namespace LightOrganApp.Droid
                 };
 
                 var selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + "!= 0";
-                //if (!string.IsNullOrEmpty(searchText))
-                //    selection += " AND " + MediaStore.Audio.Media.TITLE + " LIKE '%" + searchText + "%'";
+                if (!TextUtils.IsEmpty(searchText))
+                    selection += " AND " + MediaStore.Audio.Media.InterfaceConsts.Title + " LIKE '%" + searchText + "%'";
 
                 var sortOrder = MediaStore.Audio.Media.InterfaceConsts.DateAdded + " DESC";
 
@@ -128,6 +138,25 @@ namespace LightOrganApp.Droid
             // Inflate the menu; this adds items to the action bar if it is present.
             MenuInflater.Inflate(Resource.Menu.menu_file_list, menu);
 
+            var item = menu.FindItem(Resource.Id.action_search);
+            var searchView = MenuItemCompat.GetActionView(item);
+            mSearchView = searchView.JavaCast<Android.Support.V7.Widget.SearchView>(); 
+            mSearchView.MaxWidth = int.MaxValue;
+            mSearchView.QueryHint = Resources.GetText(Resource.String.search_songs);
+            mSearchView.SetOnQueryTextListener(this);
+
+            MenuItemCompat.SetOnActionExpandListener(item, new FileListSearchViewExpandListener(this));
+
+            if (searchOpen)
+            {
+                MenuItemCompat.ExpandActionView(item);
+
+                if (!TextUtils.IsEmpty(queryToSave))
+                    mSearchView.SetQuery(queryToSave, false);
+
+                mSearchView.ClearFocus();
+            }
+
             return true;
         }
 
@@ -149,12 +178,42 @@ namespace LightOrganApp.Droid
             }
 
             return base.OnOptionsItemSelected(item);
+        }        
+
+        public bool OnQueryTextSubmit(string query)
+        {
+            return false;
+        }
+
+        public bool OnQueryTextChange(string newText)
+        {
+            searchText = newText;
+
+            SearchFiles();
+
+            return true;
+        }       
+
+        protected override void OnSaveInstanceState(Bundle savedInstanceState)
+        {
+            savedInstanceState.PutBoolean(SearchOpen, searchOpen);
+            savedInstanceState.PutString(QueryString, searchText);
+
+            base.OnSaveInstanceState(savedInstanceState);
+        }
+
+        protected override void OnRestoreInstanceState(Bundle savedInstanceState)
+        {
+            base.OnRestoreInstanceState(savedInstanceState);
+
+            searchOpen = savedInstanceState.GetBoolean(SearchOpen);
+            searchText = savedInstanceState.GetString(QueryString);
         }
 
         private List<MediaBrowserCompat.MediaItem> Filter(List<MediaBrowserCompat.MediaItem> items, string query)
         {
 
-            if (string.IsNullOrEmpty(query))
+            if (TextUtils.IsEmpty(query))
                 return items;
 
             query = query.Trim().ToLower();
@@ -174,7 +233,7 @@ namespace LightOrganApp.Droid
 
         private void SearchFiles()
         {
-            var filteredList = Filter(mModel, null /*searchText*/);
+            var filteredList = Filter(mModel, searchText);
             mAdapter.SetFilter(filteredList);
         }
 
@@ -189,8 +248,39 @@ namespace LightOrganApp.Droid
                 StartActivity(intent);
             }
         }        
+
+        private class FileListSearchViewExpandListener: Java.Lang.Object, MenuItemCompat.IOnActionExpandListener
+        {
+            private readonly FileListActivity _activity;
+
+            public FileListSearchViewExpandListener(FileListActivity activity)
+            {
+                _activity = activity;
+            }
+
+            public bool OnMenuItemActionCollapse(IMenuItem item)
+            {
+                _activity.searchOpen = false;
+
+                _activity.mAdapter.SetFilter(_activity.mModel);
+
+                return true;
+            }
+
+            public bool OnMenuItemActionExpand(IMenuItem item)
+            {
+                _activity.searchOpen = true;
+
+                if (_activity.searchText != null)
+                {
+                    _activity.queryToSave = _activity.searchText;
+                }
+
+                return true;
+            }
+        }
     }
-    
+
     public class MediaItemViewHolder : RecyclerView.ViewHolder
     {
         public TextView TitleView { get; private set; }
