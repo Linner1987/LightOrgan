@@ -3,12 +3,19 @@ using Android.OS;
 using Android.Support.V7.Widget;
 using Android.Views;
 using LightOrganApp.Droid.UI;
+using LightOrganApp.Droid.Utils;
 
 namespace LightOrganApp.Droid
 {
     [Activity(Label = "@string/file_list_activity_name", Theme = "@style/AppTheme.NoActionBar")]
     public class FileListActivity : BaseActivity
     {
+        static readonly string Tag = LogHelper.MakeLogTag(typeof(FileListActivity));
+
+        private RecyclerView mRecyclerView;
+        //private SimpleItemRecyclerViewAdapter mAdapter;
+        private RecyclerView.LayoutManager mLayoutManager;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
