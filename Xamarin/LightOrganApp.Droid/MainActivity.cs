@@ -42,7 +42,7 @@ namespace LightOrganApp.Droid
                 SetLight(Resource.Id.mid_light, m);
                 SetLight(Resource.Id.treble_light, t);
 
-                //SetTitle("b=" + b + " m=" + m + " t=" + t);
+                //Title = "b=" + b + " m=" + m + " t=" + t;
             };
         }
 
