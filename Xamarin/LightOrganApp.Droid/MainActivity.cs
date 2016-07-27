@@ -97,18 +97,18 @@ namespace LightOrganApp.Droid
 
         private void SetLight(int id, float ratio)
         {
-            //CircleView light = (CircleView)findViewById(id);
-            //light.setCircleColor(getColorWithAlpha(light.getCircleColor(), ratio));
+            var light = FindViewById<CircleView>(id);
+            light.CircleColor = GetColorWithAlpha(light.CircleColor, ratio);
         }
 
-        private static int GetColorWithAlpha(int color, float ratio)
-        {
-            int newColor = 0;
+        private static Color GetColorWithAlpha(int color, float ratio)
+        {            
             int alpha = (int) Math.Round(255 * ratio, MidpointRounding.AwayFromZero);
             int r = Color.GetRedComponent(color);
             int g = Color.GetGreenComponent(color);
             int b = Color.GetBlueComponent(color);
-            newColor = Color.Argb(alpha, r, g, b);
+            var newColor = Color.Argb(alpha, r, g, b);
+
             return newColor;
         }
     }
