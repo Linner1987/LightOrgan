@@ -14,9 +14,9 @@ namespace LightOrganApp.Droid
         private const int MidFreguency = 3000;
         private const int HighFrequency = 16000;
 
-        private double bassLevelAcc;
-        private double midLevelAcc;
-        private double trebleLevelAcc;
+        private float bassLevelAcc;
+        private float midLevelAcc;
+        private float trebleLevelAcc;
 
         private int numberOfSamplesInOneSec;
         private long systemTimeStartSec;
@@ -31,7 +31,8 @@ namespace LightOrganApp.Droid
                 systemTimeStartSec = (long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds;
 
             //bass
-            double energySum = 0;            
+            int energySum = 0;
+            //energySum = Math.abs(fft[0]);
             int k = 2;
             double captureSize = visualizer.CaptureSize / 2;
             int sampleRate = visualizer.SamplingRate / 2000;
@@ -39,62 +40,64 @@ namespace LightOrganApp.Droid
             double nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             while (nextFrequency < LowFrequency)
             {
-                energySum += GetAmplitude(fft[k], fft[k + 1]);
+                energySum += (int)GetAmplitude(fft[k], fft[k + 1]);
                 k += 2;
                 nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             }
-            double sampleAvgAudioEnergy = energySum / ((k * 1.0) / 2.0);
-            bassLevelAcc += GetRatioAmplitude(sampleAvgAudioEnergy, LowMaxValue);
+            double sampleAvgAudioEnergy = (double)energySum / (double)((k * 1.0) / 2.0);
+            bassLevelAcc += (float)GetRatioAmplitude(sampleAvgAudioEnergy, LowMaxValue);
 
 
             //mid
             energySum = 0;
             while (nextFrequency < MidFreguency)
             {
-                energySum += GetAmplitude(fft[k], fft[k + 1]);
+                energySum += (int)GetAmplitude(fft[k], fft[k + 1]);
                 k += 2;
                 nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             }
-            sampleAvgAudioEnergy = energySum / ((k * 1.0) / 2.0);
-            midLevelAcc += GetRatioAmplitude(sampleAvgAudioEnergy, MidMaxValue);
+            sampleAvgAudioEnergy = (double)energySum / (double)((k * 1.0) / 2.0);
+            midLevelAcc += (float)GetRatioAmplitude(sampleAvgAudioEnergy, MidMaxValue);
 
 
-            //treble            
+            //treble
+            //energySum = Math.abs(fft[1]);
             energySum = 0;
+
             while ((nextFrequency < HighFrequency) && (k < fft.Length))
             {
-                energySum += GetAmplitude(fft[k], fft[k + 1]);
+                energySum += (int)GetAmplitude(fft[k], fft[k + 1]);
                 k += 2;
                 nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             }
-            sampleAvgAudioEnergy = energySum / ((k * 1.0) / 2.0);
-            trebleLevelAcc += GetRatioAmplitude(sampleAvgAudioEnergy, HighMaxValue);
+            sampleAvgAudioEnergy = (double)energySum / (double)((k * 1.0) / 2.0);
+            trebleLevelAcc += (float)GetRatioAmplitude(sampleAvgAudioEnergy, HighMaxValue);
 
 
             numberOfSamplesInOneSec++;
 
-            if ((((long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds) - systemTimeStartSec) > 100)
             {
-                var data = new LightOrganData
-                {
-                    BassLevel = (float) bassLevelAcc / numberOfSamplesInOneSec,
-                    MidLevel = (float) midLevelAcc / numberOfSamplesInOneSec,
-                    TrebleLevel = (float) trebleLevelAcc / numberOfSamplesInOneSec
-                };                
 
-                LightOrganDataUpdated?.Invoke(this, new LightOrganEventArgs(data));                
+                LightOrganData data = new LightOrganData
+                {
+                    BassLevel = bassLevelAcc / numberOfSamplesInOneSec,
+                    MidLevel = midLevelAcc / numberOfSamplesInOneSec,
+                    TrebleLevel = trebleLevelAcc / numberOfSamplesInOneSec
+                };
+
+                LightOrganDataUpdated?.Invoke(this, new LightOrganEventArgs(data));
 
                 numberOfSamplesInOneSec = 0;
                 bassLevelAcc = 0;
                 midLevelAcc = 0;
                 trebleLevelAcc = 0;
-                systemTimeStartSec = (long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds; 
+                systemTimeStartSec = (long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds;
             }
         }
 
         private static double GetAmplitude(byte r, byte i)
         {
-            return System.Math.Sqrt(r * r + i * i);
+            return Math.Sqrt(r * r + i * i);
         }
 
         private static double GetRatioAmplitude(double energy, double maxValue)
@@ -109,7 +112,7 @@ namespace LightOrganApp.Droid
                 v = 0.05;
 
             return v;
-        }
+        }        
     }
 
     public class LightOrganEventArgs : EventArgs
