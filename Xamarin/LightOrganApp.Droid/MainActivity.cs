@@ -101,13 +101,10 @@ namespace LightOrganApp.Droid
             light.CircleColor = GetColorWithAlpha(light.CircleColor, ratio);
         }
 
-        private static Color GetColorWithAlpha(int color, float ratio)
+        private static Color GetColorWithAlpha(Color color, float ratio)
         {            
-            int alpha = (int) Math.Round(255 * ratio, MidpointRounding.AwayFromZero);
-            int r = Color.GetRedComponent(color);
-            int g = Color.GetGreenComponent(color);
-            int b = Color.GetBlueComponent(color);
-            var newColor = Color.Argb(alpha, r, g, b);
+            int alpha = (int) Math.Round(255 * ratio);           
+            var newColor = Color.Argb(alpha, color.R, color.G, color.B);
 
             return newColor;
         }
