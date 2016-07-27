@@ -76,7 +76,7 @@ namespace LightOrganApp.Droid
 
             numberOfSamplesInOneSec++;
 
-            if (((long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds - systemTimeStartSec) > 400)
+            if (((long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds - systemTimeStartSec) > 100)
             {
 
                 LightOrganData data = new LightOrganData
