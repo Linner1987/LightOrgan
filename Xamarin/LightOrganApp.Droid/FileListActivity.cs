@@ -14,6 +14,7 @@ using Android.Provider;
 using Android.Support.V4.View;
 using Android.Runtime;
 using Android.Text;
+using Android.Support.V4.Media.Session;
 
 namespace LightOrganApp.Droid
 {
@@ -34,6 +35,46 @@ namespace LightOrganApp.Droid
         private SimpleItemRecyclerViewAdapter mAdapter;
         private RecyclerView.LayoutManager mLayoutManager;
 
+        private string mediaId;
+
+        class Callback: MediaControllerCompat.Callback
+        {
+            public Action<MediaMetadataCompat> OnMetadataChangedImpl { get; set; }
+            public Action<PlaybackStateCompat> OnPlaybackStateChangedImpl { get; set; }
+
+            public override void OnMetadataChanged(MediaMetadataCompat metadata)
+            {
+                base.OnMetadataChanged(metadata);
+                OnMetadataChangedImpl(metadata);
+            }
+
+            public override void OnPlaybackStateChanged(PlaybackStateCompat state)
+            {
+                base.OnPlaybackStateChanged(state);
+                OnPlaybackStateChangedImpl(state);
+            }
+        }
+
+        class SubscriptionCallback : MediaBrowserCompat.SubscriptionCallback
+        {
+            public Action<string, IList<MediaBrowserCompat.MediaItem>> OnChildrenLoadedImpl { get; set; }
+            public Action<string> OnErrorImpl { get; set; }
+
+            public override void OnChildrenLoaded(string parentId, IList<MediaBrowserCompat.MediaItem> children)
+            {
+                OnChildrenLoadedImpl(parentId, children);
+            }
+
+            public override void OnError(string id)
+            {
+                OnErrorImpl(id);
+            }
+        }
+
+        readonly Callback mediaControllerCallback = new Callback();
+        readonly SubscriptionCallback subscriptionCallback = new SubscriptionCallback();
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -52,86 +93,43 @@ namespace LightOrganApp.Droid
 
             mAdapter = new SimpleItemRecyclerViewAdapter(mModel);
             mAdapter.ItemClick += OnItemClick;
-            mRecyclerView.SetAdapter(mAdapter);            
-        }
+            mRecyclerView.SetAdapter(mAdapter);
 
-
-        //TEMP!!!
-        public const string CustomMetadataTrackSource = "__SOURCE__";
-        protected override void OnStart()
-        {
-            base.OnStart();
-
-            try
-            {
-
-                mModel = new List<MediaBrowserCompat.MediaItem>();
-
-                var projection = new String[]
+            mediaControllerCallback.OnMetadataChangedImpl = (metadata) =>
+            {               
+                if (metadata == null)
                 {
-                    MediaStore.Audio.Media.InterfaceConsts.Id,
-                    MediaStore.Audio.Media.InterfaceConsts.Artist,
-                    MediaStore.Audio.Media.InterfaceConsts.Title,
-                    MediaStore.Audio.Media.InterfaceConsts.Duration,
-                    MediaStore.Audio.Media.InterfaceConsts.Data,
-                    MediaStore.Audio.Media.InterfaceConsts.MimeType
-                };
-
-                var selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + "!= 0";
-                if (!TextUtils.IsEmpty(searchText))
-                    selection += " AND " + MediaStore.Audio.Media.InterfaceConsts.Title + " LIKE '%" + searchText + "%'";
-
-                var sortOrder = MediaStore.Audio.Media.InterfaceConsts.DateAdded + " DESC";
-
-                var cursor = ContentResolver.Query(MediaStore.Audio.Media.ExternalContentUri, projection, selection, null, sortOrder);                
-
-                if (cursor != null && cursor.MoveToFirst())
-                {
-                    do
-                    {
-                        int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Id);
-                        int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
-                        int titleColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Title);
-                        int durationColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Duration);
-                        int filePathIndex = cursor.GetColumnIndexOrThrow(MediaStore.Audio.Media.InterfaceConsts.Data);
-
-                        var id = cursor.GetLong(idColumn).ToString();
-
-                        MediaMetadataCompat metadata = new MediaMetadataCompat.Builder()
-                                .PutString(MediaMetadataCompat.MetadataKeyMediaId, id)
-                                .PutString(CustomMetadataTrackSource, cursor.GetString(filePathIndex))
-                                .PutString(MediaMetadataCompat.MetadataKeyArtist, cursor.GetString(artistColumn))
-                                .PutString(MediaMetadataCompat.MetadataKeyTitle, cursor.GetString(titleColumn))
-                                .PutLong(MediaMetadataCompat.MetadataKeyDuration, cursor.GetInt(durationColumn))
-                                .Build();
-
-                        var id2 = metadata.Description.MediaId;
-
-                        Bundle playExtras = new Bundle();
-                        playExtras.PutLong(MediaMetadataCompat.MetadataKeyDuration, metadata.GetLong(MediaMetadataCompat.MetadataKeyDuration));
-
-                        MediaDescriptionCompat desc =
-                            new MediaDescriptionCompat.Builder()
-                                    .SetMediaId(id2)
-                                    .SetTitle(metadata.GetString(MediaMetadataCompat.MetadataKeyTitle))
-                                    .SetSubtitle(metadata.GetString(MediaMetadataCompat.MetadataKeyArtist))
-                                    .SetExtras(playExtras)
-                                    .Build();
-
-                        mModel.Add(new MediaBrowserCompat.MediaItem(desc, MediaBrowserCompat.MediaItem.FlagPlayable));
-
-                    } while (cursor.MoveToNext());
+                    return;
                 }
+                LogHelper.Debug(Tag, "Received metadata change to media ",
+                        metadata.Description.MediaId);
+                mAdapter.NotifyDataSetChanged();
+            };
 
-            }
-            catch (Exception e)
+            mediaControllerCallback.OnPlaybackStateChangedImpl = (state) =>
             {
-                
-            }
+                LogHelper.Debug(Tag, "Received state change: ", state);
+                mAdapter.NotifyDataSetChanged();
+            };
 
-            SearchFiles();
+            subscriptionCallback.OnChildrenLoadedImpl = (parentId, children) =>
+            {
+                try
+                {
+                    mModel = new List<MediaBrowserCompat.MediaItem>(children);
+                    SearchFiles();
+                }
+                catch (Exception ex)
+                {
+                    LogHelper.Error(Tag, "Error on childrenloaded", ex);
+                }
+            };
+
+            subscriptionCallback.OnErrorImpl = (id) =>
+            {
+                LogHelper.Error(Tag, "browse subscription onError, id=" + id);
+            };
         }
-
 
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -178,7 +176,57 @@ namespace LightOrganApp.Droid
             }
 
             return base.OnOptionsItemSelected(item);
-        }        
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+
+            // fetch browsing information to fill the listview:
+            var mediaBrowser = MediaBrowser;
+
+            LogHelper.Debug(Tag, "fragment.onStart, mediaId=", mediaId,
+                    "  onConnected=" + mediaBrowser.IsConnected);
+
+            if (mediaBrowser.IsConnected)
+            {
+                OnConnected();
+            }
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            var mediaBrowser = MediaBrowser;
+            if (mediaBrowser != null && mediaBrowser.IsConnected && mediaId != null)
+            {
+                mediaBrowser.Unsubscribe(mediaId);
+            }            
+
+            SupportMediaController?.UnregisterCallback(mediaControllerCallback);            
+        }
+
+        public void OnConnected()
+        {
+
+            mediaId = MediaBrowser.Root;
+
+            // Unsubscribing before subscribing is required if this mediaId already has a subscriber
+            // on this MediaBrowser instance. Subscribing to an already subscribed mediaId will replace
+            // the callback, but won't trigger the initial callback.onChildrenLoaded.
+            //
+            // This is temporary: A bug is being fixed that will make subscribe
+            // consistently call onChildrenLoaded initially, no matter if it is replacing an existing
+            // subscriber or not. Currently this only happens if the mediaID has no previous
+            // subscriber or if the media content changes on the service side, so we need to
+            // unsubscribe first.
+            MediaBrowser.Unsubscribe(mediaId);
+
+            MediaBrowser.Subscribe(mediaId, subscriptionCallback);
+
+            // Add MediaController callback so we can redraw the list when metadata changes: 
+            SupportMediaController?.RegisterCallback(mediaControllerCallback);            
+        }
 
         public bool OnQueryTextSubmit(string query)
         {
@@ -237,12 +285,18 @@ namespace LightOrganApp.Droid
             mAdapter.SetFilter(filteredList);
         }
 
+        
+        protected override void OnMediaControllerConnected()
+        {
+            OnConnected();
+        }
+
         private void OnItemClick(object sender, MediaBrowserCompat.MediaItem item)
         {
             if (item.IsPlayable)
             {
-                //getSupportMediaController().getTransportControls()
-                //        .playFromMediaId(item.MediaId, null);
+                SupportMediaController.GetTransportControls()
+                        .PlayFromMediaId(item.MediaId, null);
 
                 var intent = new Intent(this, typeof(MainActivity));
                 StartActivity(intent);

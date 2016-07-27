@@ -16,7 +16,7 @@
         android:singleLine="true"
         android:title="@string/pref_title_remote_device_host" />
 
-    <com.apps.kruszyn.lightorganapp.ui.NumberPickerPreference
+    <com.apps.kruszyn.lightorganapp.droid.ui.NumberPickerPreference
         android:key="pref_remote_device_port"
         android:dependency="pref_use_remote_device"
         android:defaultValue="8181"

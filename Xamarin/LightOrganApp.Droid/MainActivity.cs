@@ -1,15 +1,29 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
+using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using LightOrganApp.Droid.UI;
+using System;
 
 namespace LightOrganApp.Droid
 {
     [Activity(Label = "@string/app_name", MainLauncher = true, Theme="@style/AppTheme.NoActionBar")]
     public class MainActivity : BaseActivity
-    {   
+    {
+        readonly BroadcastReceiver mLightOrganReceiver = new BroadcastReceiver();
+
+        class BroadcastReceiver : Android.Content.BroadcastReceiver
+        {
+            public Action<Context, Intent> OnReceiveImpl { get; set; }
+
+            public override void OnReceive(Context context, Intent intent)
+            {
+                OnReceiveImpl(context, intent);
+            }
+        }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -17,8 +31,36 @@ namespace LightOrganApp.Droid
             SetContentView(Resource.Layout.activity_main);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);            
             SetSupportActionBar(toolbar);
+
+            mLightOrganReceiver.OnReceiveImpl = (context, intent) =>
+            {
+                float b = intent.GetFloatExtra(MusicService.BassLevel, 0);
+                float m = intent.GetFloatExtra(MusicService.MidLevel, 0);
+                float t = intent.GetFloatExtra(MusicService.TrebleLevel, 0);
+
+                SetLight(Resource.Id.bass_light, b);
+                SetLight(Resource.Id.mid_light, m);
+                SetLight(Resource.Id.treble_light, t);
+
+                //SetTitle("b=" + b + " m=" + m + " t=" + t);
+            };
         }
-        
+
+        protected override void OnResume()
+        {
+            base.OnResume();
+
+            IntentFilter intentFilter = new IntentFilter(MusicService.ActionLightOrganDataChanged);
+            LocalBroadcastManager.GetInstance(this).RegisterReceiver(mLightOrganReceiver, intentFilter);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+
+            LocalBroadcastManager.GetInstance(this).UnregisterReceiver(mLightOrganReceiver);
+        }
+
         public override bool OnCreateOptionsMenu(IMenu menu)
         {
             // Inflate the menu; this adds items to the action bar if it is present.
@@ -51,6 +93,23 @@ namespace LightOrganApp.Droid
             }
 
             return base.OnOptionsItemSelected(item);
+        }
+
+        private void SetLight(int id, float ratio)
+        {
+            //CircleView light = (CircleView)findViewById(id);
+            //light.setCircleColor(getColorWithAlpha(light.getCircleColor(), ratio));
+        }
+
+        private static int GetColorWithAlpha(int color, float ratio)
+        {
+            int newColor = 0;
+            int alpha = (int) Math.Round(255 * ratio, MidpointRounding.AwayFromZero);
+            int r = Color.GetRedComponent(color);
+            int g = Color.GetGreenComponent(color);
+            int b = Color.GetBlueComponent(color);
+            newColor = Color.Argb(alpha, r, g, b);
+            return newColor;
         }
     }
 }

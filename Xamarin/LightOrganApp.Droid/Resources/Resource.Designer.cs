@@ -1043,32 +1043,32 @@ namespace LightOrganApp.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f0b004c
-			public const int abc_background_cache_hint_selector_material_dark = 2131427404;
-			
 			// aapt resource value: 0x7f0b004d
-			public const int abc_background_cache_hint_selector_material_light = 2131427405;
+			public const int abc_background_cache_hint_selector_material_dark = 2131427405;
 			
 			// aapt resource value: 0x7f0b004e
-			public const int abc_color_highlight_material = 2131427406;
+			public const int abc_background_cache_hint_selector_material_light = 2131427406;
+			
+			// aapt resource value: 0x7f0b004f
+			public const int abc_color_highlight_material = 2131427407;
 			
 			// aapt resource value: 0x7f0b0004
 			public const int abc_input_method_navigation_guard = 2131427332;
 			
-			// aapt resource value: 0x7f0b004f
-			public const int abc_primary_text_disable_only_material_dark = 2131427407;
-			
 			// aapt resource value: 0x7f0b0050
-			public const int abc_primary_text_disable_only_material_light = 2131427408;
+			public const int abc_primary_text_disable_only_material_dark = 2131427408;
 			
 			// aapt resource value: 0x7f0b0051
-			public const int abc_primary_text_material_dark = 2131427409;
+			public const int abc_primary_text_disable_only_material_light = 2131427409;
 			
 			// aapt resource value: 0x7f0b0052
-			public const int abc_primary_text_material_light = 2131427410;
+			public const int abc_primary_text_material_dark = 2131427410;
 			
 			// aapt resource value: 0x7f0b0053
-			public const int abc_search_url_text = 2131427411;
+			public const int abc_primary_text_material_light = 2131427411;
+			
+			// aapt resource value: 0x7f0b0054
+			public const int abc_search_url_text = 2131427412;
 			
 			// aapt resource value: 0x7f0b0005
 			public const int abc_search_url_text_normal = 2131427333;
@@ -1079,11 +1079,11 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f0b0007
 			public const int abc_search_url_text_selected = 2131427335;
 			
-			// aapt resource value: 0x7f0b0054
-			public const int abc_secondary_text_material_dark = 2131427412;
-			
 			// aapt resource value: 0x7f0b0055
-			public const int abc_secondary_text_material_light = 2131427413;
+			public const int abc_secondary_text_material_dark = 2131427413;
+			
+			// aapt resource value: 0x7f0b0056
+			public const int abc_secondary_text_material_light = 2131427414;
 			
 			// aapt resource value: 0x7f0b0008
 			public const int accent_material_dark = 2131427336;
@@ -1295,17 +1295,20 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f0b003b
 			public const int switch_thumb_disabled_material_light = 2131427387;
 			
-			// aapt resource value: 0x7f0b0056
-			public const int switch_thumb_material_dark = 2131427414;
-			
 			// aapt resource value: 0x7f0b0057
-			public const int switch_thumb_material_light = 2131427415;
+			public const int switch_thumb_material_dark = 2131427415;
+			
+			// aapt resource value: 0x7f0b0058
+			public const int switch_thumb_material_light = 2131427416;
 			
 			// aapt resource value: 0x7f0b003c
 			public const int switch_thumb_normal_material_dark = 2131427388;
 			
 			// aapt resource value: 0x7f0b003d
 			public const int switch_thumb_normal_material_light = 2131427389;
+			
+			// aapt resource value: 0x7f0b004c
+			public const int theme_devicedefault_background = 2131427404;
 			
 			static Color()
 			{
@@ -2045,8 +2048,8 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f09007b
 			public const int artist = 2131296379;
 			
-			// aapt resource value: 0x7f09006d
-			public const int bass_light = 2131296365;
+			// aapt resource value: 0x7f09006e
+			public const int bass_light = 2131296366;
 			
 			// aapt resource value: 0x7f09001b
 			public const int beginning = 2131296283;
@@ -2165,8 +2168,8 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f090038
 			public const int @fixed = 2131296312;
 			
-			// aapt resource value: 0x7f090070
-			public const int fragment_playback_controls = 2131296368;
+			// aapt resource value: 0x7f09006c
+			public const int fragment_playback_controls = 2131296364;
 			
 			// aapt resource value: 0x7f09006a
 			public const int frameLayout = 2131296362;
@@ -2192,8 +2195,8 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f09008c
 			public const int info = 2131296396;
 			
-			// aapt resource value: 0x7f09006c
-			public const int item_list = 2131296364;
+			// aapt resource value: 0x7f09006d
+			public const int item_list = 2131296365;
 			
 			// aapt resource value: 0x7f090000
 			public const int item_touch_helper_previous_elevation = 2131296256;
@@ -2216,8 +2219,8 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f090084
 			public const int media_actions = 2131296388;
 			
-			// aapt resource value: 0x7f09006e
-			public const int mid_light = 2131296366;
+			// aapt resource value: 0x7f09006f
+			public const int mid_light = 2131296367;
 			
 			// aapt resource value: 0x7f09001d
 			public const int middle = 2131296285;
@@ -2396,8 +2399,8 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f090071
 			public const int touch_outside = 2131296369;
 			
-			// aapt resource value: 0x7f09006f
-			public const int treble_light = 2131296367;
+			// aapt resource value: 0x7f090070
+			public const int treble_light = 2131296368;
 			
 			// aapt resource value: 0x7f090009
 			public const int up = 2131296265;

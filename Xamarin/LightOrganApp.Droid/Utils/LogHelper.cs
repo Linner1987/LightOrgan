@@ -97,7 +97,7 @@ namespace LightOrganApp.Droid.Utils
                     }
                     message = sb.ToString();
                 }
-                Android.Util.Log.WriteLine((LogPriority)level, tag, message);
+                Android.Util.Log.WriteLine(level, tag, message);
             }
         }
     }
