@@ -2846,6 +2846,9 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f0a015d
 			public const int AppTheme_AppBarOverlay = 2131362141;
 			
+			// aapt resource value: 0x7f0a015f
+			public const int AppTheme_CardView = 2131362143;
+			
 			// aapt resource value: 0x7f0a015c
 			public const int AppTheme_NoActionBar = 2131362140;
 			

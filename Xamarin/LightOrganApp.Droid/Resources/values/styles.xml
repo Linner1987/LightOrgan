@@ -17,6 +17,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark">
         <item name="android:colorBackground">#ff1b5e20</item>
-    </style>    
+    </style>
+
+    <style name="AppTheme.CardView" parent="Theme.AppCompat">    
+        <item name="cardBackgroundColor">#ff1b5e20</item>
+    </style>
 
 </resources>

@@ -20,7 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:cardElevation="8dp">
+        app:cardElevation="8dp"
+        style="@style/AppTheme.CardView">
         <fragment
             android:name="LightOrganApp.Droid.UI.PlaybackControlsFragment"
             android:id="@+id/fragment_playback_controls"
