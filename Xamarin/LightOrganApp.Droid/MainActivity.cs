@@ -2,6 +2,7 @@
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
+using Android.Preferences;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -31,6 +32,8 @@ namespace LightOrganApp.Droid
             SetContentView(Resource.Layout.activity_main);
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);            
             SetSupportActionBar(toolbar);
+
+            PreferenceManager.SetDefaultValues(this, Resource.Xml.preferences, false);
 
             mLightOrganReceiver.OnReceiveImpl = (context, intent) =>
             {
@@ -86,8 +89,8 @@ namespace LightOrganApp.Droid
 
                 case Resource.Id.action_settings:
 
-                    //Intent intent2 = new Intent(this, SettingsActivity.class);
-                    //startActivity(intent2);
+                    var intent2 = new Intent(this, typeof(SettingsActivity));
+                    StartActivity(intent2);
 
                     return true;
             }

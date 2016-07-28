@@ -16,10 +16,21 @@
         android:singleLine="true"
         android:title="@string/pref_title_remote_device_host" />
 
-    <com.apps.kruszyn.lightorganapp.droid.ui.NumberPickerPreference
+    <!--
+    <com.apps.kruszyn.lightorganapp.droid.NumberPickerPreference
         android:key="pref_remote_device_port"
         android:dependency="pref_use_remote_device"
         android:defaultValue="8181"
+        android:title="@string/pref_title_remote_device_port" />
+    -->
+
+    <EditTextPreference
+        android:key="pref_remote_device_port"
+        android:dependency="pref_use_remote_device"
+        android:defaultValue="8181"
+        android:inputType="number"
+        android:maxLines="1"
+        android:singleLine="true"
         android:title="@string/pref_title_remote_device_port" />
 
 </PreferenceScreen>

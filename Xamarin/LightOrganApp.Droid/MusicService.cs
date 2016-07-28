@@ -19,6 +19,8 @@ using Android.Support.V4.App;
 using Android;
 using Android.Content.PM;
 using Android.Support.V4.Content;
+using Android.Preferences;
+using Android.Text;
 
 namespace LightOrganApp.Droid
 {
@@ -49,6 +51,8 @@ namespace LightOrganApp.Droid
         PackageValidator packageValidator;
 
         LightOrganProcessor lightOrganProcessor;
+
+        PreferenceListener prefListener;
 
 
         public MusicService()
@@ -147,6 +151,18 @@ namespace LightOrganApp.Droid
         
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
+            var preferences = PreferenceManager.GetDefaultSharedPreferences(ApplicationContext);
+
+            var useRemoteDevice = preferences.GetBoolean(PreferencesHelper.KeyPrefUseRemoteDevice, false);
+
+            if (useRemoteDevice)
+                CreateNewSocket(preferences);
+
+            prefListener = new PreferenceListener();
+            prefListener.OnSharedPreferenceChangedImpl = OnPreferenceChanged;
+            preferences.RegisterOnSharedPreferenceChangeListener(prefListener);
+
+
             if (intent != null)
             {
                 var action = intent.Action;
@@ -267,6 +283,52 @@ namespace LightOrganApp.Droid
             //SendCommand(bytes);
         }
 
+        private void CreateNewSocket(ISharedPreferences preferences)
+        {
+            var host = preferences.GetString(PreferencesHelper.KeyPrefRemoteDeviceHost, "");
+            //int port = preferences.GetInt(PreferencesHelper.KeyPrefRemoteDevicePort, 0);
+            int port = 0;
+            int.TryParse(preferences.GetString(PreferencesHelper.KeyPrefRemoteDevicePort, "0"), out port);
+
+            if (!TextUtils.IsEmpty(host) && port > 0)
+            {
+                //to do
+            }
+        }
+
+        private void OnPreferenceChanged(ISharedPreferences sharedPreferences, string key)
+        {
+            try
+            {
+
+                bool useRemoteDevice = sharedPreferences.GetBoolean(PreferencesHelper.KeyPrefUseRemoteDevice, false);
+
+                if (key == PreferencesHelper.KeyPrefUseRemoteDevice)
+                {
+                    if (!useRemoteDevice)
+                    {
+                        //to do: release
+                    }
+                    else if (useRemoteDevice)
+                    {
+                        CreateNewSocket(sharedPreferences);
+                    }
+                }
+                else if (key == PreferencesHelper.KeyPrefRemoteDeviceHost || key == PreferencesHelper.KeyPrefRemoteDevicePort)
+                {
+                    if (useRemoteDevice)
+                    {
+                        //to do: release
+                        CreateNewSocket(sharedPreferences);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                LogHelper.Error(Tag, e);
+            }
+        }
+
 
         class DelayedStopHandler : Handler
         {
@@ -293,5 +355,15 @@ namespace LightOrganApp.Droid
                 }
             }
         }
-    }
+
+        class PreferenceListener: Java.Lang.Object, ISharedPreferencesOnSharedPreferenceChangeListener
+        {  
+            public Action<ISharedPreferences,string> OnSharedPreferenceChangedImpl { get; set; }
+
+            public void OnSharedPreferenceChanged(ISharedPreferences sharedPreferences, string key)
+            {
+                OnSharedPreferenceChangedImpl(sharedPreferences, key);
+            }
+        }
+}
 }

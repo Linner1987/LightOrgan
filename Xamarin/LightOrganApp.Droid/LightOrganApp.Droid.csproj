@@ -44,6 +44,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -96,14 +97,18 @@
     <Compile Include="Playback\QueueManager.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SettingsActivity.cs" />
     <Compile Include="UI\BaseActivity.cs" />
     <Compile Include="UI\CircleView.cs" />
     <Compile Include="UI\IMediaBrowserProvider.cs" />
+    <Compile Include="UI\NumberPickerPreference.cs" />
     <Compile Include="UI\PlaybackControlsFragment.cs" />
+    <Compile Include="UI\SettingsFragment.cs" />
     <Compile Include="Utils\BitmapHelper.cs" />
     <Compile Include="Utils\ListShufflerExtensionMethods.cs" />
     <Compile Include="Utils\LogHelper.cs" />
     <Compile Include="Utils\LruCache.cs" />
+    <Compile Include="Utils\PreferencesHelper.cs" />
     <Compile Include="Utils\QueueHelper.cs" />
     <Compile Include="Utils\ResourceHelper.cs" />
     <Compile Include="Utils\SynchronizedList.cs" />
@@ -324,13 +329,13 @@
     <AndroidResource Include="Resources\layout\fragment_playback_controls.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\numberpicker_dialog.xml" />
+    <AndroidResource Include="Resources\layout\numberpicker_dialog.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout-land\content_lights.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout-w600dp\file_list_item.xml" />
+    <AndroidResource Include="Resources\layout-w600dp\file_list_item.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\menu_file_list.xml" />
