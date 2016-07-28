@@ -2831,6 +2831,9 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f0a008b
 			public const int AlertDialog_AppCompat_Light = 2131361931;
 			
+			// aapt resource value: 0x7f0a0160
+			public const int AlertDialogStyle = 2131362144;
+			
 			// aapt resource value: 0x7f0a008c
 			public const int Animation_AppCompat_Dialog = 2131361932;
 			
