@@ -1,13 +1,8 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
 using Android.Support.V4.Media;
 using LightOrganApp.Droid.Playback;
@@ -21,6 +16,8 @@ using Android.Content.PM;
 using Android.Support.V4.Content;
 using Android.Preferences;
 using Android.Text;
+using LightOrganApp.Shared;
+using System.Threading.Tasks;
 
 namespace LightOrganApp.Droid
 {
@@ -51,6 +48,8 @@ namespace LightOrganApp.Droid
         PackageValidator packageValidator;
 
         LightOrganProcessor lightOrganProcessor;
+
+        LightsRemoteController remoteController;
 
         PreferenceListener prefListener;
 
@@ -156,7 +155,7 @@ namespace LightOrganApp.Droid
             var useRemoteDevice = preferences.GetBoolean(PreferencesHelper.KeyPrefUseRemoteDevice, false);
 
             if (useRemoteDevice)
-                CreateNewSocket(preferences);
+                Task.Run(async () => await CreateNewRemoteController(preferences));
 
             prefListener = new PreferenceListener();
             prefListener.OnSharedPreferenceChangedImpl = OnPreferenceChanged;
@@ -188,9 +187,11 @@ namespace LightOrganApp.Droid
             return StartCommandResult.Sticky;
         }
 
-        public override void OnDestroy()
+        public async override void OnDestroy()
         {
             LogHelper.Debug(Tag, "onDestroy");
+
+            await ReleaseRemoteController();
 
             // Service is being killed, so make sure we release our resources
             playbackManager.HandleStopRequest(null);
@@ -262,7 +263,7 @@ namespace LightOrganApp.Droid
             lightOrganProcessor.ProcessFftData(visualizer, fft, samplingRate);
         }
 
-        private void OnLightOrganDataUpdated(LightOrganData data)
+        private async void OnLightOrganDataUpdated(LightOrganData data)
         {
             Intent broadcastIntent = new Intent();
             broadcastIntent.SetAction(ActionLightOrganDataChanged);
@@ -280,10 +281,10 @@ namespace LightOrganApp.Droid
             bytes[1] = midValue;
             bytes[2] = trebleValue;
 
-            //SendCommand(bytes);
+            await SendCommand(bytes);
         }
 
-        private void CreateNewSocket(ISharedPreferences preferences)
+        private async Task CreateNewRemoteController(ISharedPreferences preferences)
         {
             var host = preferences.GetString(PreferencesHelper.KeyPrefRemoteDeviceHost, "");
             //int port = preferences.GetInt(PreferencesHelper.KeyPrefRemoteDevicePort, 0);
@@ -292,11 +293,27 @@ namespace LightOrganApp.Droid
 
             if (!TextUtils.IsEmpty(host) && port > 0)
             {
-                //to do
+                remoteController = new LightsRemoteController();
+                await remoteController.ConnectAsync(host, port);
             }
         }
 
-        private void OnPreferenceChanged(ISharedPreferences sharedPreferences, string key)
+        private async Task SendCommand(byte[] bytes)
+        {
+            if (remoteController != null)
+                await remoteController.SendCommandAsync(bytes);
+        }
+
+        private async Task ReleaseRemoteController()
+        {
+            if (remoteController != null)
+            {
+                await remoteController.CloseAsync();
+                remoteController = null;
+            }
+        }
+
+        private async void OnPreferenceChanged(ISharedPreferences sharedPreferences, string key)
         {
             try
             {
@@ -305,21 +322,21 @@ namespace LightOrganApp.Droid
 
                 if (key == PreferencesHelper.KeyPrefUseRemoteDevice)
                 {
-                    if (!useRemoteDevice)
+                    if (remoteController != null && !useRemoteDevice)
                     {
-                        //to do: release
+                        await ReleaseRemoteController();
                     }
-                    else if (useRemoteDevice)
+                    else if (remoteController == null && useRemoteDevice)
                     {
-                        CreateNewSocket(sharedPreferences);
+                        await CreateNewRemoteController(sharedPreferences);
                     }
                 }
                 else if (key == PreferencesHelper.KeyPrefRemoteDeviceHost || key == PreferencesHelper.KeyPrefRemoteDevicePort)
                 {
                     if (useRemoteDevice)
                     {
-                        //to do: release
-                        CreateNewSocket(sharedPreferences);
+                        await ReleaseRemoteController();
+                        await CreateNewRemoteController(sharedPreferences);
                     }
                 }
             }
