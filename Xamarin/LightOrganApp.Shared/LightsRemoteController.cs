@@ -32,7 +32,7 @@ namespace LightOrganApp.Shared
             {
                 if (writeStream != null)
                 {
-                    await writeStream.WriteAsync(bytes, 0, bytes.Length);
+                    writeStream.Write(bytes, 0, bytes.Length);
                     await writeStream.FlushAsync();
                 }
             }
