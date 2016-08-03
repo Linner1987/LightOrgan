@@ -1,11 +1,14 @@
 using System;
 using LightOrganApp.Droid.Model;
 using Android.Media.Audiofx;
+using LightOrganApp.Droid.Utils;
 
 namespace LightOrganApp.Droid
 {
     public class LightOrganProcessor
     {
+        static readonly string Tag = LogHelper.MakeLogTag(typeof(LightOrganProcessor));
+
         private const float LowMaxValue = 5000;
         private const float MidMaxValue = 6000;
         private const float HighMaxValue = 2000;
@@ -25,7 +28,7 @@ namespace LightOrganApp.Droid
 
         public void ProcessFftData(Visualizer visualizer, byte[] fft, int samplingRate)
         {
-            var beginningOfTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var beginningOfTime = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);            
 
             if (systemTimeStartSec == 0)
                 systemTimeStartSec = (long)(DateTime.UtcNow - beginningOfTime).TotalMilliseconds;
@@ -40,7 +43,7 @@ namespace LightOrganApp.Droid
             double nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             while (nextFrequency < LowFrequency)
             {
-                energySum += (int)GetAmplitude(fft[k], fft[k + 1]);
+                energySum += (int)GetAmplitude((sbyte)fft[k], (sbyte)fft[k + 1]);
                 k += 2;
                 nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             }
@@ -52,7 +55,7 @@ namespace LightOrganApp.Droid
             energySum = 0;
             while (nextFrequency < MidFreguency)
             {
-                energySum += (int)GetAmplitude(fft[k], fft[k + 1]);
+                energySum += (int)GetAmplitude((sbyte)fft[k], (sbyte)fft[k + 1]);
                 k += 2;
                 nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             }
@@ -66,7 +69,7 @@ namespace LightOrganApp.Droid
 
             while ((nextFrequency < HighFrequency) && (k < fft.Length))
             {
-                energySum += (int)GetAmplitude(fft[k], fft[k + 1]);
+                energySum += (int)GetAmplitude((sbyte)fft[k], (sbyte)fft[k + 1]);
                 k += 2;
                 nextFrequency = ((k / 2) * sampleRate) / (captureSize);
             }
@@ -96,7 +99,7 @@ namespace LightOrganApp.Droid
             }
         }
 
-        private static double GetAmplitude(byte r, byte i)
+        private static double GetAmplitude(sbyte r, sbyte i)
         {
             return Math.Sqrt(r * r + i * i);
         }
