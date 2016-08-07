@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Foundation;
+using System;
 
 using UIKit;
 
@@ -20,6 +21,12 @@ namespace LightOrganApp.iOS
         {
             base.DidReceiveMemoryWarning();
             // Release any cached data, images, etc that aren't in use.
+        }
+
+        [Action("unwindToPlayer:")]
+        public void UnwindToYellowViewController(UIStoryboardSegue segue)
+        {
+            
         }
     }
 }

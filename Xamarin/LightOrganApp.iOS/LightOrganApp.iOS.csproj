@@ -85,6 +85,11 @@
     <CodesignKey>iPhone Distribution</CodesignKey>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CircleView.cs" />
+    <Compile Include="FileListViewController.cs" />
+    <Compile Include="FileListViewController.designer.cs">
+      <DependentUpon>FileListViewController.cs</DependentUpon>
+    </Compile>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Info.plist" />
