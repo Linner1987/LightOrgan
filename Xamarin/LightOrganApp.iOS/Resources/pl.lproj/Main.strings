@@ -1,0 +1,15 @@
+
+/* Class = "UINavigationItem"; title = "Light Organ"; ObjectID = "G1V-9d-2Ho"; */
+"G1V-9d-2Ho.title" = "Kolorofon X";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "O45-QC-3Cd"; */
+"O45-QC-3Cd.text" = "Subtitle";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "hmW-a2-2gs"; */
+"hmW-a2-2gs.text" = "Title";
+
+/* Class = "UINavigationItem"; title = "Songs"; ObjectID = "q6f-N0-9uH"; */
+"q6f-N0-9uH.title" = "Utwory";
+
+/* Class = "UITableViewController"; title = "Songs"; ObjectID = "wRk-mh-QFm"; */
+"wRk-mh-QFm.title" = "Utwory";
