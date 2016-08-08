@@ -17,7 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" barStyle="black" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-g9-9E6">
+                            <toolbar hidden="YES" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JEf-g9-9E6" barStyle="black">
                                 <rect key="frame" x="0.0" y="600" width="600" height="0.0"/>
                                 <constraints>
                                     <constraint firstAttribute="height" priority="999" id="dVv-4s-MAN"/>
@@ -85,7 +85,7 @@
                                 -->
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.2" green="0.41176470588235292" blue="0.11764705882352941" alpha="1"/>
                         <constraints>
                             <constraint firstItem="idL-g5-f30" firstAttribute="width" secondItem="TJv-Kt-tNJ" secondAttribute="width" id="0XR-dZ-ldZ"/>
                             <constraint firstItem="Vbe-3Z-Wma" firstAttribute="top" secondItem="TJv-Kt-tNJ" secondAttribute="bottom" constant="20" id="1Dp-0n-nSc"/>
@@ -157,6 +157,7 @@
                             <connections>
                                 <segue destination="zYo-ga-gsc" kind="presentation" id="coU-VB-9gc"/>
                             </connections>
+                            <color key="tintColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -180,8 +181,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="PIR-XO-9JM">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="separatorColor" white="0.33333333333333331" alpha="0.66360452586206897" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" colorSpace="calibratedRGB" red="0.2" green="0.41176470588235292" blue="0.11764705882352941" alpha="1"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="reuseIdentifier" textLabel="hmW-a2-2gs" detailTextLabel="O45-QC-3Cd" imageView="Zdv-jM-x77" style="IBUITableViewCellStyleSubtitle" id="AY7-6e-TNk" rowHeight="44">
                                 <rect key="frame" x="0.0" y="28" width="600" height="44"/>
@@ -217,12 +217,14 @@
                             <outlet property="dataSource" destination="wRk-mh-QFm" id="kif-l2-q8t"/>
                             <outlet property="delegate" destination="wRk-mh-QFm" id="2aw-QR-isN"/>
                         </connections>
+                        <color key="separatorColor" colorSpace="calibratedRGB" red="0.15686274509803921" green="0.48627450980392156" blue="0.17647058823529413" alpha="1"/>
                     </tableView>
                     <navigationItem key="navigationItem" title="Songs" id="q6f-N0-9uH">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="pe8-vM-R0t">
                             <connections>
                                 <segue destination="sVX-WO-eYW" kind="unwind" unwindAction="unwindToPlayer:" id="Ezo-gc-a25"/>
                             </connections>
+                            <color key="tintColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -239,9 +241,13 @@
             <objects>
                 <navigationController storyboardIdentifier="PlayerNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ye6-Xi-atL" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="9AR-Kk-fTa">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="9AR-Kk-fTa" barStyle="black" translucent="NO">
                         <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" colorSpace="calibratedRGB" red="0.10980392156862745" green="0.36862745098039218" blue="0.12549019607843137" alpha="1"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" colorSpace="calibratedRGB" red="0.68235294117647061" green="0.83529411764705885" blue="0.50588235294117645" alpha="1"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -257,9 +263,13 @@
             <objects>
                 <navigationController storyboardIdentifier="FileListNavController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="zYo-ga-gsc" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="UYN-Ux-ppe">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="UYN-Ux-ppe" translucent="NO">
                         <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" colorSpace="calibratedRGB" red="0.10980392156862745" green="0.36862745098039218" blue="0.12549019607843137" alpha="1"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" colorSpace="calibratedRGB" red="0.68235294117647061" green="0.83529411764705885" blue="0.50588235294117645" alpha="1"/>
+                        </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
