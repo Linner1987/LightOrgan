@@ -246,7 +246,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" colorSpace="calibratedRGB" red="0.10980392156862745" green="0.36862745098039218" blue="0.12549019607843137" alpha="1"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" colorSpace="calibratedRGB" red="0.68235294117647061" green="0.83529411764705885" blue="0.50588235294117645" alpha="1"/>
+                            <color key="textColor" colorSpace="calibratedRGB" red="0.77254901960784317" green="0.88235294117647056" blue="0.6470588235294118" alpha="1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -268,7 +268,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" colorSpace="calibratedRGB" red="0.10980392156862745" green="0.36862745098039218" blue="0.12549019607843137" alpha="1"/>
                         <textAttributes key="titleTextAttributes">
-                            <color key="textColor" colorSpace="calibratedRGB" red="0.68235294117647061" green="0.83529411764705885" blue="0.50588235294117645" alpha="1"/>
+                            <color key="textColor" colorSpace="calibratedRGB" red="0.77254901960784317" green="0.88235294117647056" blue="0.6470588235294118" alpha="1"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
