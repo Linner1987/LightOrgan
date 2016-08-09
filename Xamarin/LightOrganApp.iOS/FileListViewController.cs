@@ -15,7 +15,7 @@ namespace LightOrganApp.iOS
         List<MPMediaItem> allMediaItems;
         List<MPMediaItem> filteredMediaItems;
         List<MPMediaItem> selectedMediaItems;
-        MPMediaItemCollection didPickMediaItems;
+        public MPMediaItemCollection didPickMediaItems;
 
         public FileListViewController (IntPtr handle) : base (handle)
         {
