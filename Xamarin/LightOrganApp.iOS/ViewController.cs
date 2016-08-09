@@ -27,6 +27,7 @@ namespace LightOrganApp.iOS
 
             pauseButton = new UIBarButtonItem(UIBarButtonSystemItem.Pause, PauseAction);
             pauseButton.Style = UIBarButtonItemStyle.Plain;
+            pauseButton.TintColor = UIColor.White;
 
             player = MPMusicPlayerController.SystemMusicPlayer;
             player.RepeatMode = MPMusicRepeatMode.All;

@@ -27,6 +27,7 @@
                                         <connections>
                                             <action selector="playPausePressed:" destination="BYZ-38-t0r" id="qj4-66-zFn"/>
                                         </connections>
+                                        <color key="tintColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Pea-YL-bjW"/>
                                     <barButtonItem style="plain" id="HaC-Pn-FmN">
@@ -37,7 +38,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="justified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AV1-Va-fwl">
                                                     <rect key="frame" x="120" y="6" width="0.0" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" colorSpace="calibratedRGB" red="0.77254901960784317" green="0.88235294117647056" blue="0.6470588235294118" alpha="1"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -50,6 +51,7 @@
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="n6d-il-kOF"/>
                                 </items>
+                                <color key="barTintColor" colorSpace="calibratedRGB" red="0.10980392156862745" green="0.36862745098039218" blue="0.12549019607843137" alpha="1"/>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJv-Kt-tNJ" customClass="CircleView" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="84" width="600" height="152"/>
