@@ -25,6 +25,8 @@ namespace LightOrganApp.iOS
             base.ViewDidLoad();
             // Perform any additional setup after loading the view, typically from a nib.
 
+            toolbar.Translucent = false;
+
             pauseButton = new UIBarButtonItem(UIBarButtonSystemItem.Pause, PauseAction);
             pauseButton.Style = UIBarButtonItemStyle.Plain;
             pauseButton.TintColor = UIColor.White;
