@@ -52,7 +52,8 @@ namespace LightOrganApp.iOS
                 WeakSearchResultsUpdater = this
             };
             searchController.DimsBackgroundDuringPresentation = false;
-            searchController.SearchBar.SizeToFit();            
+            searchController.SearchBar.SizeToFit();
+            UISearchBar.Appearance.TintColor = UIColor.FromRGB(197, 225, 165);
             searchController.SearchBar.Placeholder = NSBundle.MainBundle.LocalizedString("searchMusic", "Search Music");
             searchController.SearchBar.WeakDelegate = this;
             DefinesPresentationContext = true;
