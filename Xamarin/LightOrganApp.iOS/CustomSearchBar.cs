@@ -44,7 +44,7 @@ namespace LightOrganApp.iOS
             {
                 var searchField = Subviews[0].Subviews[index.Value] as UITextField;
 
-                searchField.TextColor = UIColor.FromRGB(197, 225, 165);
+                searchField.TextColor = UIColor.White;
                 searchField.BackgroundColor = UIColor.FromRGB(22, 64, 25);
 
                 var glassIconView = searchField.LeftView as UIImageView;
