@@ -17,6 +17,8 @@ namespace LightOrganApp.iOS
         List<MPMediaItem> selectedMediaItems;
         public MPMediaItemCollection didPickMediaItems;
 
+        UISearchController searchController;
+
         public FileListViewController (IntPtr handle) : base (handle)
         {
         }
@@ -24,6 +26,8 @@ namespace LightOrganApp.iOS
         public override void ViewDidLoad()
         {
             base.ViewDidLoad();
+
+            ConfigureSearchController();            
 
             TableView.Source = new TableSource(this);
 
@@ -33,6 +37,27 @@ namespace LightOrganApp.iOS
             selectedMediaItems = new List<MPMediaItem>();
 
             LoadMediaItemsForMediaTypeAsync(MPMediaType.Music);          
+        }
+
+        [Export("searchBarSearchButtonClicked:")]
+        public virtual void SearchButtonClicked(UISearchBar searchBar)
+        {
+            searchBar.ResignFirstResponder();
+        }
+
+        private void ConfigureSearchController()
+        {
+            searchController = new CustomSearchController((UIViewController)null)
+            {
+                WeakSearchResultsUpdater = this
+            };
+            searchController.DimsBackgroundDuringPresentation = false;
+            searchController.SearchBar.SizeToFit();            
+            searchController.SearchBar.Placeholder = NSBundle.MainBundle.LocalizedString("searchMusic", "Search Music");
+            searchController.SearchBar.WeakDelegate = this;
+            DefinesPresentationContext = true;
+            NavigationItem.TitleView = searchController.SearchBar;
+            searchController.HidesNavigationBarDuringPresentation = false;
         }
 
         private async void LoadMediaItemsForMediaTypeAsync(MPMediaType mediaType)
@@ -52,8 +77,11 @@ namespace LightOrganApp.iOS
         }
 
         private List<MPMediaItem> GetMediaItems()
-        {            
-            return allMediaItems;
+        {
+            if (searchController.Active && searchController.SearchBar.Text != "")
+                return filteredMediaItems;
+            else           
+                return allMediaItems;
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
@@ -63,6 +91,37 @@ namespace LightOrganApp.iOS
                 if (selectedMediaItems != null && selectedMediaItems.Count > 0)
                     didPickMediaItems = new MPMediaItemCollection(selectedMediaItems.ToArray());                
             }
+        }
+
+        private bool MediaItemContainsString(MPMediaItem item, string searchText)
+        {
+            var b1 = false;
+            var title = item.Title;
+            if (title != null)
+                b1 = title.ToString().ToLower().Contains(searchText.ToLower());
+
+            var b2 = false;
+            var artist = item.Artist;
+            if (artist != null)
+                b2 = artist.ToString().ToLower().Contains(searchText.ToLower());
+
+            return b1 || b2;
+        }
+
+        private void FilterContentForSearchText(string searchText)
+        {
+            if (allMediaItems == null)
+                return;
+
+            filteredMediaItems = allMediaItems.Where(item => MediaItemContainsString(item, searchText)).ToList();
+
+            TableView.ReloadData();
+        }
+
+        [Export("updateSearchResultsForSearchController:")]
+        public virtual void UpdateSearchResultsForSearchController(UISearchController searchController)
+        {
+            FilterContentForSearchText(searchController.SearchBar.Text);
         }
 
         class TableSource : UITableViewSource
@@ -154,6 +213,6 @@ namespace LightOrganApp.iOS
 
                 tableView.ReloadData();
             }
-        }
+        }        
     }
 }
