@@ -55,5 +55,15 @@ namespace LightOrganApp.iOS
         {
             // Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
         }
+
+        public override bool ShouldSaveApplicationState(UIApplication application, NSCoder coder)
+        {
+            return true;
+        }
+
+        public override bool ShouldRestoreApplicationState(UIApplication application, NSCoder coder)
+        {
+            return true;
+        }
     }
 }

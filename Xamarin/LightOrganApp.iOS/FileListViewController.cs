@@ -10,6 +10,19 @@ namespace LightOrganApp.iOS
 {
     public partial class FileListViewController : UITableViewController
     {
+        enum RestorationKeys
+        {
+            SearchControllerIsActive,
+            SearchBarText,
+            SearchBarIsFirstResponder
+        }
+
+        struct SearchControllerRestorableState
+        {
+            public bool WasActive { get; set; }
+            public bool WasFirstResponder { get; set; }
+        }
+
         static NSString cellId = new NSString("reuseIdentifier");
 
         List<MPMediaItem> allMediaItems;
@@ -18,6 +31,8 @@ namespace LightOrganApp.iOS
         public MPMediaItemCollection didPickMediaItems;
 
         UISearchController searchController;
+
+        SearchControllerRestorableState restoredState = new SearchControllerRestorableState();
 
         public FileListViewController (IntPtr handle) : base (handle)
         {
@@ -37,6 +52,23 @@ namespace LightOrganApp.iOS
             selectedMediaItems = new List<MPMediaItem>();
 
             LoadMediaItemsForMediaTypeAsync(MPMediaType.Music);          
+        }
+
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+
+            if (restoredState.WasActive)
+            {
+                searchController.Active = restoredState.WasActive;
+                restoredState.WasActive = false;
+
+                if (restoredState.WasFirstResponder)
+                {
+                    searchController.SearchBar.BecomeFirstResponder();
+                    restoredState.WasFirstResponder = false;
+                }
+            }
         }
 
         [Export("searchBarSearchButtonClicked:")]
@@ -79,7 +111,7 @@ namespace LightOrganApp.iOS
 
         private List<MPMediaItem> GetMediaItems()
         {
-            if (searchController.Active && searchController.SearchBar.Text != "")
+            if ((searchController.Active || restoredState.WasActive) && searchController.SearchBar.Text != "")
                 return filteredMediaItems;
             else           
                 return allMediaItems;
@@ -123,6 +155,15 @@ namespace LightOrganApp.iOS
         public virtual void UpdateSearchResultsForSearchController(UISearchController searchController)
         {
             FilterContentForSearchText(searchController.SearchBar.Text);
+        }
+
+        public override void EncodeRestorableState(NSCoder coder)
+        {
+            base.EncodeRestorableState(coder);
+
+            coder.Encode(searchController.Active, RestorationKeys.SearchControllerIsActive.ToString());
+            coder.Encode(searchController.SearchBar.IsFirstResponder, RestorationKeys.SearchBarIsFirstResponder.ToString());
+            coder.Encode(new NSString(searchController.SearchBar.Text), RestorationKeys.SearchBarText.ToString());
         }
 
         class TableSource : UITableViewSource
