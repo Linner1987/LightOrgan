@@ -166,6 +166,15 @@ namespace LightOrganApp.iOS
             coder.Encode(new NSString(searchController.SearchBar.Text), RestorationKeys.SearchBarText.ToString());
         }
 
+        public override void DecodeRestorableState(NSCoder coder)
+        {
+            base.DecodeRestorableState(coder);
+
+            restoredState.WasActive = coder.DecodeBool(RestorationKeys.SearchControllerIsActive.ToString());
+            restoredState.WasFirstResponder = coder.DecodeBool(RestorationKeys.SearchBarIsFirstResponder.ToString());
+            searchController.SearchBar.Text = (NSString)coder.DecodeObject(RestorationKeys.SearchBarText.ToString());
+        }
+
         class TableSource : UITableViewSource
         {
             FileListViewController controller;
