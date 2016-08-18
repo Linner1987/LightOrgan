@@ -3,6 +3,8 @@ using MediaPlayer;
 using System;
 
 using UIKit;
+using CoreGraphics;
+using CoreAnimation;
 
 namespace LightOrganApp.iOS
 {
@@ -38,7 +40,15 @@ namespace LightOrganApp.iOS
             notificationToken1 = notificationCenter.AddObserver(MPMusicPlayerController.NowPlayingItemDidChangeNotification, NowPlayingItemChanged, player);
             notificationToken2 = notificationCenter.AddObserver(MPMusicPlayerController.PlaybackStateDidChangeNotification, PlaybackStateChanged, player);
             player.BeginGeneratingPlaybackNotifications();
-        }            
+        }
+
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+
+            //test
+            //OnLightOrganDataUpdated(0.3f, 1, 0);            
+        }
 
         public override void DidReceiveMemoryWarning()
         {
@@ -49,8 +59,17 @@ namespace LightOrganApp.iOS
             notificationToken2.Dispose();
         }
 
+        public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
+        {
+            base.ViewWillTransitionToSize(toSize, coordinator);
+            CATransaction.Begin();
+            CATransaction.DisableActions = true;
+
+            coordinator.AnimateAlongsideTransition(ctx => {}, ctx => CATransaction.Commit());
+        }
+
         [Action("unwindToPlayer:")]
-        public void UnwindToYellowViewController(UIStoryboardSegue sender)
+        public void UnwindToPlayer(UIStoryboardSegue sender)
         {
             var sourceViewController = sender.SourceViewController as FileListViewController;
 
@@ -111,6 +130,26 @@ namespace LightOrganApp.iOS
             else if (playbackState == MPMusicPlaybackState.Playing)
                 items[0] = pauseButton;
             toolbar.SetItems(items, false);
+        }
+
+        private void SetLight(CircleView light, float ratio)
+        {
+            light.CircleColor = light.CircleColor.ColorWithAlpha(ratio);
+        }       
+
+        private void OnLightOrganDataUpdated(float bassLevel, float midLevel, float trebleLevel)
+        {
+            SetLight(bassLight, bassLevel);
+            SetLight(midLight, midLevel);
+            SetLight(trebleLight, trebleLevel);            
+
+            var bassValue = (byte)Math.Round(255 * bassLevel);
+            var midValue = (byte)Math.Round(255 * midLevel);
+            var trebleValue = (byte)Math.Round(255 * trebleLevel);
+
+            var bytes = new byte[] { bassValue, midValue, trebleValue };
+
+            //SendCommand(bytes);
         }
     }
 }

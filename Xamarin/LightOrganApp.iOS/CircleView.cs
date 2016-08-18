@@ -44,6 +44,8 @@ namespace LightOrganApp.iOS
 
         public override void Draw(CGRect rect)
         {
+            base.Draw(rect);
+
             DrawCircle(CircleColor);
         }
 
