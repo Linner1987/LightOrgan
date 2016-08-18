@@ -56,35 +56,29 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TJv-Kt-tNJ" customClass="CircleView" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="84" width="600" height="152"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <!--
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                    <userDefinedRuntimeAttribute type="color" keyPath="CircleColor">
                                         <color key="value" red="0.98431372549019602" green="0.12941176470588237" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                -->
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vbe-3Z-Wma" customClass="CircleView" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="256" width="600" height="152"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <!--
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                    <userDefinedRuntimeAttribute type="color" keyPath="CircleColor">
                                         <color key="value" red="0.99607843137254903" green="0.76470588235294112" blue="0.039215686274509803" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                -->
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idL-g5-f30" customClass="CircleView" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="428" width="600" height="152"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <!--
                                 <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="circleColor">
+                                    <userDefinedRuntimeAttribute type="color" keyPath="CircleColor">
                                         <color key="value" red="0.050980392156862744" green="0.37647058823529411" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                -->
                             </view>
                         </subviews>
                         <color key="backgroundColor" colorSpace="calibratedRGB" red="0.2" green="0.41176470588235292" blue="0.11764705882352941" alpha="1"/>
