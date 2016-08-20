@@ -19,6 +19,8 @@ namespace LightOrganApp.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+            PopulateRegistrationDomain();
+
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
 
@@ -64,6 +66,45 @@ namespace LightOrganApp.iOS
         public override bool ShouldRestoreApplicationState(UIApplication application, NSCoder coder)
         {
             return true;
+        }
+
+        private void PopulateRegistrationDomain()
+        {
+            var appDefaults = LoadDefaultsFromSettingsPage();
+
+            var defaults = NSUserDefaults.StandardUserDefaults;
+            defaults.RegisterDefaults(appDefaults);
+            defaults.Synchronize();
+        }
+
+        private NSDictionary LoadDefaultsFromSettingsPage() 
+        {
+            var settingsDict = new NSDictionary(NSBundle.MainBundle.PathForResource("Settings.bundle/Root.plist", null));
+
+            var prefSpecifierArray = settingsDict["PreferenceSpecifiers"] as NSArray;
+
+            if (prefSpecifierArray == null)
+                return null;
+
+            var keyValuePairs = new NSDictionary();
+
+            foreach (var prefItem in NSArray.FromArray<NSDictionary>(prefSpecifierArray))
+            {
+                var prefItemType = prefItem["Type"] as NSString;
+                var prefItemKey = prefItem["Key"] as NSString;
+                var prefItemDefaultValue = prefItem["DefaultValue"] as NSString;
+
+                if (prefItemType.ToString() == "PSChildPaneSpecifier")
+                {
+                    
+                }
+                else if (prefItemKey != null && prefItemDefaultValue != null)
+                {
+                    keyValuePairs[prefItemKey] = prefItemDefaultValue;
+                }
+            }
+
+            return keyValuePairs;
         }
     }
 }

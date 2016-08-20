@@ -101,6 +101,11 @@
     <BundleResource Include="Resources\pl.lproj\InfoPlist.strings" />
     <BundleResource Include="Resources\pl.lproj\Localizable.strings" />
     <BundleResource Include="Resources\pl.lproj\Main.strings" />
+    <Content Include="Settings.bundle\Root.plist">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Settings.bundle\en.lproj\Root.strings" />
+    <Content Include="Settings.bundle\pl.lproj\Root.strings" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ViewController.designer.cs">

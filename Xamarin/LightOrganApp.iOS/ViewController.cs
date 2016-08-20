@@ -17,6 +17,7 @@ namespace LightOrganApp.iOS
 
         NSObject notificationToken1;
         NSObject notificationToken2;
+        NSObject notificationToken3;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -46,8 +47,17 @@ namespace LightOrganApp.iOS
         {
             base.ViewWillAppear(animated);
 
+            notificationToken3 = NSNotificationCenter.DefaultCenter.AddObserver(NSUserDefaults.DidChangeNotification, DefaultsChanged);
+
             //test
             //OnLightOrganDataUpdated(0.3f, 1, 0);            
+        }
+
+        public override void ViewWillDisappear(bool animated)
+        {
+            base.ViewWillDisappear(animated);
+
+            notificationToken3.Dispose();
         }
 
         public override void DidReceiveMemoryWarning()
@@ -65,7 +75,7 @@ namespace LightOrganApp.iOS
             CATransaction.Begin();
             CATransaction.DisableActions = true;
 
-            coordinator.AnimateAlongsideTransition(ctx => {}, ctx => CATransaction.Commit());
+            coordinator.AnimateAlongsideTransition(ctx => { }, ctx => CATransaction.Commit());
         }
 
         [Action("unwindToPlayer:")]
@@ -102,8 +112,8 @@ namespace LightOrganApp.iOS
         partial void playPausePressed(UIKit.UIBarButtonItem sender)
         {
             var playbackState = player.PlaybackState;
-            if (playbackState == MPMusicPlaybackState.Stopped || playbackState == MPMusicPlaybackState.Paused) 
-                player.Play();        
+            if (playbackState == MPMusicPlaybackState.Stopped || playbackState == MPMusicPlaybackState.Paused)
+                player.Play();
             else if (playbackState == MPMusicPlaybackState.Playing)
                 player.Pause();
         }
@@ -135,13 +145,13 @@ namespace LightOrganApp.iOS
         private void SetLight(CircleView light, float ratio)
         {
             light.CircleColor = light.CircleColor.ColorWithAlpha(ratio);
-        }       
+        }
 
         private void OnLightOrganDataUpdated(float bassLevel, float midLevel, float trebleLevel)
         {
             SetLight(bassLight, bassLevel);
             SetLight(midLight, midLevel);
-            SetLight(trebleLight, trebleLevel);            
+            SetLight(trebleLight, trebleLevel);
 
             var bassValue = (byte)Math.Round(255 * bassLevel);
             var midValue = (byte)Math.Round(255 * midLevel);
@@ -150,6 +160,12 @@ namespace LightOrganApp.iOS
             var bytes = new byte[] { bassValue, midValue, trebleValue };
 
             //SendCommand(bytes);
+        }
+
+        private void DefaultsChanged(NSNotification notification)
+        {
+            var defaults = NSUserDefaults.StandardUserDefaults;
+            var useRemoteDevice = defaults.BoolForKey("use_remote_device_preference");
         }
     }
 }
