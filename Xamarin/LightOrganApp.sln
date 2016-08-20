@@ -11,6 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightOrganApp.iOS", "LightO
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		LightOrganApp.Shared\LightOrganApp.Shared.projitems*{95abaf7b-2010-45a6-b625-7eeb37d63f11}*SharedItemsImports = 4
 		LightOrganApp.Shared\LightOrganApp.Shared.projitems*{a6eb6a16-78b2-49fa-ae76-7112b752a672}*SharedItemsImports = 13
 		LightOrganApp.Shared\LightOrganApp.Shared.projitems*{ae9ff204-2cbd-42c9-bb4e-cd4a7e521865}*SharedItemsImports = 4
 	EndGlobalSection

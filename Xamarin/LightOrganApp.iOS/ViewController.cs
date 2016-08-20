@@ -5,6 +5,8 @@ using System;
 using UIKit;
 using CoreGraphics;
 using CoreAnimation;
+using LightOrganApp.Shared;
+using System.Threading.Tasks;
 
 namespace LightOrganApp.iOS
 {
@@ -18,6 +20,8 @@ namespace LightOrganApp.iOS
         NSObject notificationToken1;
         NSObject notificationToken2;
         NSObject notificationToken3;
+
+        LightsRemoteController remoteController;
 
         public ViewController(IntPtr handle) : base(handle)
         {
@@ -49,7 +53,7 @@ namespace LightOrganApp.iOS
             base.ViewWillAppear(animated);            
 
             //test
-            //OnLightOrganDataUpdated(0.3f, 1, 0);            
+            OnLightOrganDataUpdated(0.3f, 1, 0);            
         }       
 
         public override void DidReceiveMemoryWarning()
@@ -140,7 +144,7 @@ namespace LightOrganApp.iOS
             light.CircleColor = light.CircleColor.ColorWithAlpha(ratio);
         }
 
-        private void OnLightOrganDataUpdated(float bassLevel, float midLevel, float trebleLevel)
+        private async void OnLightOrganDataUpdated(float bassLevel, float midLevel, float trebleLevel)
         {
             SetLight(bassLight, bassLevel);
             SetLight(midLight, midLevel);
@@ -152,26 +156,53 @@ namespace LightOrganApp.iOS
 
             var bytes = new byte[] { bassValue, midValue, trebleValue };
 
-            //SendCommand(bytes);
-        }
+            await SendCommand(bytes);
+        }       
 
-        private void CreateNewSocket(NSUserDefaults defaults)
+        private async Task CreateNewRemoteController(NSUserDefaults defaults)
         {
             var host = defaults.StringForKey("remote_device_host_preference");
             var port = defaults.IntForKey("remote_device_port_preference");
 
-            //to do
+            if (!string.IsNullOrEmpty(host) && port > 0)
+            {
+                remoteController = new LightsRemoteController();
+                await remoteController.ConnectAsync(host, (int)port);
+            }
         }
 
-        private void DefaultsChanged(NSNotification notification)
+        private async Task SendCommand(byte[] bytes)
         {
-            var defaults = NSUserDefaults.StandardUserDefaults;
-            var useRemoteDevice = defaults.BoolForKey("use_remote_device_preference");
+            if (remoteController != null)
+                await remoteController.SendCommandAsync(bytes);
+        }
 
-            //to do
+        private async Task ReleaseRemoteController()
+        {
+            if (remoteController != null)
+            {
+                await remoteController.CloseAsync();
+                remoteController = null;
+            }
+        }
 
-            if (useRemoteDevice)
-                CreateNewSocket(defaults);            
+        private async void DefaultsChanged(NSNotification notification)
+        {
+            try
+            {
+                var defaults = NSUserDefaults.StandardUserDefaults;
+                var useRemoteDevice = defaults.BoolForKey("use_remote_device_preference");
+
+                if (remoteController != null)
+                    await ReleaseRemoteController();
+
+                if (useRemoteDevice)
+                    await CreateNewRemoteController(defaults);               
+            }
+            catch (Exception)
+            {
+                
+            }
         }
     }
 }
