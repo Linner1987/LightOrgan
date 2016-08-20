@@ -86,7 +86,7 @@ namespace LightOrganApp.iOS
             if (prefSpecifierArray == null)
                 return null;
 
-            var keyValuePairs = new NSDictionary();
+            var keyValuePairs = new NSMutableDictionary();
 
             foreach (var prefItem in NSArray.FromArray<NSDictionary>(prefSpecifierArray))
             {

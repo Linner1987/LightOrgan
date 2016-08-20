@@ -40,25 +40,17 @@ namespace LightOrganApp.iOS
             var notificationCenter = NSNotificationCenter.DefaultCenter;
             notificationToken1 = notificationCenter.AddObserver(MPMusicPlayerController.NowPlayingItemDidChangeNotification, NowPlayingItemChanged, player);
             notificationToken2 = notificationCenter.AddObserver(MPMusicPlayerController.PlaybackStateDidChangeNotification, PlaybackStateChanged, player);
+            notificationToken3 = notificationCenter.AddObserver(NSUserDefaults.DidChangeNotification, DefaultsChanged);
             player.BeginGeneratingPlaybackNotifications();
         }
 
         public override void ViewWillAppear(bool animated)
         {
-            base.ViewWillAppear(animated);
-
-            notificationToken3 = NSNotificationCenter.DefaultCenter.AddObserver(NSUserDefaults.DidChangeNotification, DefaultsChanged);
+            base.ViewWillAppear(animated);            
 
             //test
             //OnLightOrganDataUpdated(0.3f, 1, 0);            
-        }
-
-        public override void ViewWillDisappear(bool animated)
-        {
-            base.ViewWillDisappear(animated);
-
-            notificationToken3.Dispose();
-        }
+        }       
 
         public override void DidReceiveMemoryWarning()
         {
@@ -67,6 +59,7 @@ namespace LightOrganApp.iOS
 
             notificationToken1.Dispose();
             notificationToken2.Dispose();
+            notificationToken3.Dispose();
         }
 
         public override void ViewWillTransitionToSize(CGSize toSize, IUIViewControllerTransitionCoordinator coordinator)
@@ -162,10 +155,23 @@ namespace LightOrganApp.iOS
             //SendCommand(bytes);
         }
 
+        private void CreateNewSocket(NSUserDefaults defaults)
+        {
+            var host = defaults.StringForKey("remote_device_host_preference");
+            var port = defaults.IntForKey("remote_device_port_preference");
+
+            //to do
+        }
+
         private void DefaultsChanged(NSNotification notification)
         {
             var defaults = NSUserDefaults.StandardUserDefaults;
             var useRemoteDevice = defaults.BoolForKey("use_remote_device_preference");
+
+            //to do
+
+            if (useRemoteDevice)
+                CreateNewSocket(defaults);            
         }
     }
 }
