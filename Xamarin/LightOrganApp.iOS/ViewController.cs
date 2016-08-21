@@ -46,15 +46,7 @@ namespace LightOrganApp.iOS
             notificationToken2 = notificationCenter.AddObserver(MPMusicPlayerController.PlaybackStateDidChangeNotification, PlaybackStateChanged, player);
             notificationToken3 = notificationCenter.AddObserver(NSUserDefaults.DidChangeNotification, DefaultsChanged);
             player.BeginGeneratingPlaybackNotifications();
-        }
-
-        public override void ViewWillAppear(bool animated)
-        {
-            base.ViewWillAppear(animated);            
-
-            //test
-            OnLightOrganDataUpdated(0.3f, 1, 0);            
-        }       
+        }          
 
         public override void DidReceiveMemoryWarning()
         {
@@ -197,7 +189,12 @@ namespace LightOrganApp.iOS
                     await ReleaseRemoteController();
 
                 if (useRemoteDevice)
-                    await CreateNewRemoteController(defaults);               
+                {
+                    await CreateNewRemoteController(defaults);                   
+                }
+
+                //test
+                OnLightOrganDataUpdated(0.3f, 1, 0);
             }
             catch (Exception)
             {
