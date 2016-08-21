@@ -171,12 +171,6 @@
       <InProject>false</InProject>
     </ImageAsset>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\LightOrganApp.Droid\LightOrganApp.Droid.csproj">
-      <Project>{AE9FF204-2CBD-42C9-BB4E-CD4A7E521865}</Project>
-      <Name>LightOrganApp.Droid</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="..\LightOrganApp.Shared\LightOrganApp.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
