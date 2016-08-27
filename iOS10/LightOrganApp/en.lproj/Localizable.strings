@@ -1,0 +1,18 @@
+/* 
+  Localizable.strings
+  LightOrganApp
+
+  Created by Marcin Kruszyński on 14/05/16.
+  Copyright © 2016 Marcin Kruszyński. All rights reserved.
+*/
+
+
+/* Unknown artist */
+
+"unknownArtist" = "Unknown artist";
+
+
+/* Search Music */
+
+"searchMusic" = "Search music";
+
