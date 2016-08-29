@@ -52,6 +52,8 @@ class FileListViewController: UITableViewController, UISearchBarDelegate, UISear
                     self.displayMediaLibraryError()
                 }
             }
+        } else {
+            self.loadMediaItemsForMediaType(.music)
         }
     }
     
