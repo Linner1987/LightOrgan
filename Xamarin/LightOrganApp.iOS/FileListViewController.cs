@@ -38,7 +38,7 @@ namespace LightOrganApp.iOS
         {
         }
 
-        public override void ViewDidLoad()
+        public async override void ViewDidLoad()
         {
             base.ViewDidLoad();
 
@@ -51,7 +51,19 @@ namespace LightOrganApp.iOS
 
             selectedMediaItems = new List<MPMediaItem>();
 
-            LoadMediaItemsForMediaTypeAsync(MPMediaType.Music);          
+            if (UIDevice.CurrentDevice.CheckSystemVersion(9, 3))
+            {
+                var status = await MPMediaLibrary.RequestAuthorizationAsync();
+
+                if (status == MPMediaLibraryAuthorizationStatus.Authorized)
+                    LoadMediaItemsForMediaTypeAsync(MPMediaType.Music);
+                else
+                    DisplayMediaLibraryError();                
+            }
+            else
+            {
+                LoadMediaItemsForMediaTypeAsync(MPMediaType.Music);
+            }      
         }
 
         public override void ViewDidAppear(bool animated)
@@ -115,6 +127,29 @@ namespace LightOrganApp.iOS
                 return filteredMediaItems;
             else           
                 return allMediaItems;
+        }
+
+        private void DisplayMediaLibraryError()
+        {
+            string error;
+
+            switch (MPMediaLibrary.AuthorizationStatus)
+            {
+                case MPMediaLibraryAuthorizationStatus.Restricted:
+                    error = "Media library access restricted by corporate or parental settings";
+                    break;
+                case MPMediaLibraryAuthorizationStatus.Denied:
+                    error = "Media library access denied by user";
+                    break;
+                default:
+                    error = "Unknown error";
+                    break;
+            }
+
+            var controller = UIAlertController.Create("Error", error, UIAlertControllerStyle.Alert);
+            controller.AddAction(UIAlertAction.Create("OK", UIAlertActionStyle.Default, null));
+
+            PresentViewController(controller, true, null);               
         }
 
         public override void PrepareForSegue(UIStoryboardSegue segue, NSObject sender)
