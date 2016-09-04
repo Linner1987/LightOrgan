@@ -5,9 +5,9 @@
              xmlns:local="clr-namespace:LightOrganApp"
              x:Class="LightOrganApp.MainPage" Title="{i18n:Translate AppName}">
   <ContentPage.ToolbarItems>
-    <ToolbarItem Text="{i18n:Translate ActionMediaFiles}" Clicked="OnMediaFilesClicked">            
+    <ToolbarItem Text="{i18n:Translate ActionMediaFiles}" Clicked="OnMediaFilesClicked">      
       <ToolbarItem.Icon>
-        <OnPlatform x:TypeArguments="FileImageSource" Android="ic_library_music_white_48dp.png"/>
+        <OnPlatform x:TypeArguments="FileImageSource" Android="ic_library_music_white_48dp.png" iOS="Search.png"/>
       </ToolbarItem.Icon>      
     </ToolbarItem>
   </ContentPage.ToolbarItems>
