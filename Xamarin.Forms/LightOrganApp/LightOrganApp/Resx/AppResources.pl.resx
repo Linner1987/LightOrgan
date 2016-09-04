@@ -120,6 +120,9 @@
   <data name="ActionMediaFiles" xml:space="preserve">
     <value>Pliki audio</value>
   </data>
+  <data name="ActionSettings" xml:space="preserve">
+    <value>Ustawienia</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Kolorofon XF</value>
   </data>

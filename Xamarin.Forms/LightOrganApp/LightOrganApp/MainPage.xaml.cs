@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LightOrganApp.Resx;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,12 @@ namespace LightOrganApp
         public MainPage()
         {
             InitializeComponent();
+
+            if (Device.OS == TargetPlatform.Android)
+            {
+                var toolbarItem = new ToolbarItem(AppResources.ActionSettings, null, () => { }, ToolbarItemOrder.Secondary, 0);
+                ToolbarItems.Add(toolbarItem);
+            }
         }
 
         async void OnMediaFilesClicked(object sender, EventArgs e)

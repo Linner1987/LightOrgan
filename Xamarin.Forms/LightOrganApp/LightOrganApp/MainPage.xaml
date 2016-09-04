@@ -9,7 +9,7 @@
       <ToolbarItem.Icon>
         <OnPlatform x:TypeArguments="FileImageSource" Android="ic_library_music_white_48dp.png" iOS="Search.png"/>
       </ToolbarItem.Icon>      
-    </ToolbarItem>
+    </ToolbarItem>    
   </ContentPage.ToolbarItems>
 
   <Label Text="Welcome to Xamarin Forms!"

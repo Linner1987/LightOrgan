@@ -71,6 +71,15 @@ namespace LightOrganApp.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string ActionSettings {
+            get {
+                return ResourceManager.GetString("ActionSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Light Organ XF.
         /// </summary>
         internal static string AppName {

@@ -120,6 +120,9 @@
   <data name="ActionMediaFiles" xml:space="preserve">
     <value>Music library</value>
   </data>
+  <data name="ActionSettings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <data name="AppName" xml:space="preserve">
     <value>Light Organ XF</value>
   </data>
