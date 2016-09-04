@@ -11,7 +11,7 @@ namespace LightOrganApp
 	public class TranslateExtension : IMarkupExtension
 	{
         readonly CultureInfo ci = null;
-		const string ResourceId = "UsingResxLocalization.Resx.AppResources";
+		const string ResourceId = "LightOrganApp.Resx.AppResources";
 
 		public TranslateExtension() {
             if (Device.OS == TargetPlatform.iOS || Device.OS == TargetPlatform.Android)
