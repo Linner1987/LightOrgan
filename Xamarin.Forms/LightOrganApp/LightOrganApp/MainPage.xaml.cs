@@ -13,5 +13,12 @@ namespace LightOrganApp
         {
             InitializeComponent();
         }
+
+        async void OnMediaFilesClicked(object sender, EventArgs e)
+        {
+            var fileListPage = new FileListPage();
+                 
+            await Navigation.PushAsync(fileListPage);
+        }
     }
 }
