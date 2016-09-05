@@ -3985,6 +3985,9 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f05001b
 			public const int abc_toolbar_collapse_description = 2131034139;
 			
+			// aapt resource value: 0x7f050020
+			public const int app_name = 2131034144;
+			
 			// aapt resource value: 0x7f05001d
 			public const int appbar_scrolling_view_behavior = 2131034141;
 			
