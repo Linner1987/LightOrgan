@@ -3,17 +3,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i18n="clr-namespace:LightOrganApp"
              xmlns:local="clr-namespace:LightOrganApp"
-             x:Class="LightOrganApp.MainPage" Title="{i18n:Translate AppName}">
+             x:Class="LightOrganApp.MainPage" Title="{i18n:Translate AppName}"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="{i18n:Translate ActionMediaFiles}" Clicked="OnMediaFilesClicked">      
       <ToolbarItem.Icon>
         <OnPlatform x:TypeArguments="FileImageSource" Android="ic_library_music_white_48dp.png" iOS="Search.png"/>
       </ToolbarItem.Icon>      
     </ToolbarItem>    
-  </ContentPage.ToolbarItems>
-
-  <Label Text="Welcome to Xamarin Forms!"
-           VerticalOptions="Center"
-           HorizontalOptions="Center" />
+  </ContentPage.ToolbarItems>  
 
 </ContentPage>
