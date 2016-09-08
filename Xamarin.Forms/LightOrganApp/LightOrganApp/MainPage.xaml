@@ -5,12 +5,34 @@
              xmlns:local="clr-namespace:LightOrganApp"
              x:Class="LightOrganApp.MainPage" Title="{i18n:Translate AppName}"
              BackgroundColor="{StaticResource PageBackgroundColor}">
+  <ContentPage.Resources>
+    <ResourceDictionary>
+      <OnPlatform x:Key="AlbumArt" x:TypeArguments="View">        
+        <OnPlatform.Android>
+          <Image BackgroundColor="#ef9a9a" Source="ic_audiotrack_white_36dp.png" Aspect="AspectFit" WidthRequest="64" HeightRequest="64"/>
+        </OnPlatform.Android>        
+      </OnPlatform>
+    </ResourceDictionary>
+  </ContentPage.Resources>
+
   <ContentPage.ToolbarItems>
     <ToolbarItem Text="{i18n:Translate ActionMediaFiles}" Clicked="OnMediaFilesClicked">      
       <ToolbarItem.Icon>
         <OnPlatform x:TypeArguments="FileImageSource" Android="ic_library_music_white_48dp.png" iOS="Search.png"/>
       </ToolbarItem.Icon>      
     </ToolbarItem>    
-  </ContentPage.ToolbarItems>  
-
+  </ContentPage.ToolbarItems>
+  <Grid>
+    <RelativeLayout VerticalOptions="End" BackgroundColor="#e57373">
+      <RelativeLayout.HeightRequest>
+        <OnPlatform Android="80" iOS="48" x:TypeArguments="x:Double"/>
+      </RelativeLayout.HeightRequest>
+      <ContentView Content="{StaticResource AlbumArt}"
+                   RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=8}"
+                   RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=8}"
+                   RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-16}">        
+      </ContentView>      
+      
+    </RelativeLayout>
+  </Grid>
 </ContentPage>
