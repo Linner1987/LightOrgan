@@ -18,7 +18,7 @@ namespace LightOrganApp
             {
                 var toolbarItem = new ToolbarItem(AppResources.ActionSettings, null, () => { }, ToolbarItemOrder.Secondary, 0);
                 ToolbarItems.Add(toolbarItem);
-            }
+            }           
         }
 
         async void OnMediaFilesClicked(object sender, EventArgs e)

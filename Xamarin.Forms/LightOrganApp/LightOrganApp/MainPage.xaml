@@ -23,7 +23,14 @@
     </ToolbarItem>    
   </ContentPage.ToolbarItems>
   <Grid>
-    <RelativeLayout VerticalOptions="End" BackgroundColor="#e57373">
+    <RelativeLayout VerticalOptions="End" BackgroundColor="#e57373">      
+      <RelativeLayout.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:TypeArguments="ConstraintType" Android="RelativeToParent" iOS="Constant" x:Key="XType" /> 
+            <OnPlatform x:TypeArguments="x:Double" Android="-52" iOS="8" x:Key="XConstant" /> 
+            <OnPlatform x:TypeArguments="x:Double" Android="22" iOS="8" x:Key="YConstant" /> 
+        </ResourceDictionary>
+    </RelativeLayout.Resources>    
       <RelativeLayout.HeightRequest>
         <OnPlatform Android="80" iOS="48" x:TypeArguments="x:Double"/>
       </RelativeLayout.HeightRequest>
@@ -32,7 +39,12 @@
                    RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=8}"
                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-16}">        
       </ContentView>      
-      
+      <Image RelativeLayout.XConstraint="{ConstraintExpression Type={StaticResource XType}, Property=Width, Factor=1, Constant={StaticResource XConstant}}"
+              RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant={StaticResource YConstant}}">
+        <Image.Source>
+          <OnPlatform x:TypeArguments="ImageSource" Android="ic_play_arrow_white_36dp.png" iOS="Play.png"/>
+        </Image.Source>      
+      </Image>      
     </RelativeLayout>
   </Grid>
 </ContentPage>
