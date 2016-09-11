@@ -12,13 +12,16 @@ namespace LightOrganApp
     {
         public MainPage()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             if (Device.OS == TargetPlatform.Android)
             {
                 var toolbarItem = new ToolbarItem(AppResources.ActionSettings, null, () => { }, ToolbarItemOrder.Secondary, 0);
                 ToolbarItems.Add(toolbarItem);
-            }           
+            }
+
+            Title.Text = "Gang Albanii - Napad na bank";
+            Artist.Text = "<unknown>";      
         }
 
         async void OnMediaFilesClicked(object sender, EventArgs e)
