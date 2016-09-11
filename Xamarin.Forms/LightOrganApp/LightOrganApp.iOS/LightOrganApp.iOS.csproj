@@ -50,7 +50,7 @@
     <CodesignKey>iPhone Developer: nazywoalenazywo@o2.pl (Y2L499XAMD)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>d7358829-e24a-4431-bb1c-15edeab229c9</CodesignProvision>
+    <CodesignProvision>7d96cea1-35f0-4e3c-b3b5-9cc90287aaf7</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
