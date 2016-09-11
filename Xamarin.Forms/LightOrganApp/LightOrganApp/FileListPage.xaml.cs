@@ -1,8 +1,5 @@
-﻿using System;
+﻿using LightOrganApp.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 
@@ -14,5 +11,18 @@ namespace LightOrganApp
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+
+            var items = new List<MediaItem>();
+
+            for (int i = 0; i < 15; i++)
+                items.Add(new MediaItem($"Kawa {i}", $"Gang {i}", i * 1000));
+
+            listView.ItemsSource = items;
+        }       
     }
 }
