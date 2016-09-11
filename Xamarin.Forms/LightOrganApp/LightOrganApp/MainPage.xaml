@@ -22,13 +22,14 @@
       </ToolbarItem.Icon>      
     </ToolbarItem>    
   </ContentPage.ToolbarItems>
-  <Grid>  
+  <Grid>    
     <RelativeLayout VerticalOptions="End" BackgroundColor="#e57373">      
       <RelativeLayout.Resources>
         <ResourceDictionary>
             <OnPlatform x:TypeArguments="ConstraintType" Android="RelativeToParent" iOS="Constant" x:Key="XType" /> 
             <OnPlatform x:TypeArguments="x:Double" Android="-52" iOS="8" x:Key="XConstant" /> 
             <OnPlatform x:TypeArguments="x:Double" Android="22" iOS="8" x:Key="YConstant" /> 
+            <OnPlatform x:TypeArguments="x:String" Android="AlbumArt" iOS="PlayIcon" x:Key="PlayRelativeElement" />
         </ResourceDictionary>
     </RelativeLayout.Resources>    
       <RelativeLayout.HeightRequest>
@@ -39,15 +40,23 @@
                    RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=8}"
                    RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=8}"
                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-16}">        
-      </ContentView> 
-      <Label x:Name="Title" FontSize="18" TextColor="White"
-             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, ElementName=AlbumArt, Property=Width, Factor=1, Constant=16}"
-             RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=16}"/> 
+      </ContentView>
+      <Label x:Name="Title" TextColor="White"
+             RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, ElementName={StaticResource PlayRelativeElement}, Property=Width, Factor=1, Constant=16}"
+             RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=16}">
+        <Label.FontSize>
+          <OnPlatform x:TypeArguments="x:Double" Android="18" iOS="14"/>
+        </Label.FontSize>      
+      </Label>
       <Label x:Name="Artist" FontSize="14" TextColor="#ffebee"
              RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, ElementName=AlbumArt, Property=Width, Factor=1, Constant=16}"
-             RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=40}"/>       
+             RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=40}">
+        <Label.IsVisible>
+          <OnPlatform x:TypeArguments="x:Boolean" Android="True" iOS="False"/>
+        </Label.IsVisible>      
+      </Label>
       <Image RelativeLayout.XConstraint="{ConstraintExpression Type={StaticResource XType}, Property=Width, Factor=1, Constant={StaticResource XConstant}}"
-              RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant={StaticResource YConstant}}">
+             RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant={StaticResource YConstant}}">
         <Image.Source>
           <OnPlatform x:TypeArguments="ImageSource" Android="ic_play_arrow_white_36dp.png" iOS="Play.png"/>
         </Image.Source>      
