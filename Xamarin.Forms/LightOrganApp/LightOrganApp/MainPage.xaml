@@ -9,7 +9,7 @@
     <ResourceDictionary>
       <OnPlatform x:Key="AlbumArt" x:TypeArguments="View">        
         <OnPlatform.Android>
-          <Image BackgroundColor="#ef9a9a" Source="ic_audiotrack_white_36dp.png" Aspect="AspectFit" WidthRequest="64" HeightRequest="64"/>
+          <Image BackgroundColor="#9ccc65" Source="ic_audiotrack_white_36dp.png" Aspect="AspectFit" WidthRequest="64" HeightRequest="64"/>
         </OnPlatform.Android>        
       </OnPlatform>
     </ResourceDictionary>

@@ -11,7 +11,7 @@
       <DataTemplate>
         <ViewCell>
           <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="12,0,0,0">
-            <Image BackgroundColor="#ef9a9a" Aspect="AspectFit" WidthRequest="36" HeightRequest="36" VerticalOptions="Center">
+            <Image BackgroundColor="#9ccc65" Aspect="AspectFit" WidthRequest="36" HeightRequest="36" VerticalOptions="Center">
               <Image.Source>
                 <OnPlatform x:TypeArguments="ImageSource" Android="ic_audiotrack_white_36dp.png"/>
               </Image.Source>
@@ -22,7 +22,7 @@
                   <OnPlatform x:TypeArguments="x:Double" Android="18" />
                 </Label.FontSize>
               </Label>
-              <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+              <StackLayout Padding="0,-5,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
                 <Label Text="{Binding Artist}" VerticalTextAlignment="Center" FontSize="14" TextColor="#ffebee" />
                 <Label Text="{Binding Duration}" VerticalTextAlignment="Center" FontSize="14" TextColor="#ffebee" />
               </StackLayout>              
