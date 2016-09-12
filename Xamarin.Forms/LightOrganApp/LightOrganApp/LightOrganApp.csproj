@@ -57,6 +57,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.pl.resx</DependentUpon>
     </Compile>
+    <Compile Include="Services\IMusicService.cs" />
     <Compile Include="TranslateExtension.cs" />
   </ItemGroup>
   <ItemGroup>

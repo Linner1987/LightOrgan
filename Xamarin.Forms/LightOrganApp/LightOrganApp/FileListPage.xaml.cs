@@ -1,5 +1,4 @@
-﻿using LightOrganApp.Model;
-using System.Collections.Generic;
+﻿using LightOrganApp.Services;
 
 using Xamarin.Forms;
 
@@ -16,11 +15,7 @@ namespace LightOrganApp
         {
             base.OnAppearing();
 
-
-            var items = new List<MediaItem>();
-
-            for (int i = 0; i < 15; i++)
-                items.Add(new MediaItem($"Kawa {i}", $"Gang {i}", i * 1000));
+            var items = DependencyService.Get<IMusicService>().GetItems();         
 
             listView.ItemsSource = items;
         }       

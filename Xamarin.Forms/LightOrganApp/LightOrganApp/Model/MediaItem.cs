@@ -10,9 +10,9 @@ namespace LightOrganApp.Model
     {
         public string Title { get; private set; }
         public string Artist { get; private set; }
-        public long Duration { get; private set; }
+        public string Duration { get; private set; }
 
-        public MediaItem(string title, string artist, long duration)
+        public MediaItem(string title, string artist, string duration)
         {
             Title = title;
             Artist = artist;

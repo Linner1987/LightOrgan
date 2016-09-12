@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="LightOrganApp.FileListPage"
-             BackgroundColor="{StaticResource PageBackgroundColor}">    
-  <ListView x:Name="listView">
+             BackgroundColor="{StaticResource PageBackgroundColor}"
+             Padding="0,6,0,0">    
+  <ListView x:Name="listView" SeparatorVisibility="None">
     <ListView.RowHeight>
       <OnPlatform x:TypeArguments="x:Int32" Android="72" iOS="30" />
     </ListView.RowHeight>
