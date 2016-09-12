@@ -4,7 +4,7 @@
              x:Class="LightOrganApp.FileListPage"
              BackgroundColor="{StaticResource PageBackgroundColor}"
              Padding="0,6,0,0">    
-  <ListView x:Name="listView" SeparatorVisibility="None">
+  <ListView x:Name="listView" SeparatorVisibility="None" ItemTapped="listView_ItemTapped" ItemSelected="listView_ItemSelected">
     <ListView.RowHeight>
       <OnPlatform x:TypeArguments="x:Int32" Android="72" iOS="30" />
     </ListView.RowHeight>

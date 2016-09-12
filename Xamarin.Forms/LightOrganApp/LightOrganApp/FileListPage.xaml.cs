@@ -17,7 +17,19 @@ namespace LightOrganApp
 
             var items = DependencyService.Get<IMusicService>().GetItems();         
 
-            listView.ItemsSource = items;
+            listView.ItemsSource = items;                          
+        }
+
+        private async void listView_ItemTapped(object sender, ItemTappedEventArgs e)
+        {
+            var mainPage = new MainPage();
+
+            await Navigation.PushAsync(mainPage);
+        }
+
+        private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            listView.SelectedItem = null;
         }       
     }
 }
