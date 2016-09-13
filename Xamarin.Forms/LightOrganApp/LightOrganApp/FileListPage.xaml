@@ -4,28 +4,42 @@
              x:Class="LightOrganApp.FileListPage"
              BackgroundColor="{StaticResource PageBackgroundColor}"
              Padding="0,6,0,0">    
-  <ListView x:Name="listView" SeparatorVisibility="None" ItemTapped="listView_ItemTapped" ItemSelected="listView_ItemSelected">
+  <ListView x:Name="listView" BackgroundColor="{StaticResource PageBackgroundColor}" SeparatorColor="#e57373" ItemTapped="listView_ItemTapped" ItemSelected="listView_ItemSelected">
+    <ListView.SeparatorVisibility>
+      <OnPlatform x:TypeArguments="SeparatorVisibility" Android="None" iOS="Default"/>
+    </ListView.SeparatorVisibility>
     <ListView.RowHeight>
-      <OnPlatform x:TypeArguments="x:Int32" Android="72" iOS="30" />
+      <OnPlatform x:TypeArguments="x:Int32" Android="72"/>
     </ListView.RowHeight>
     <ListView.ItemTemplate>
       <DataTemplate>
         <ViewCell>
-          <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal" Padding="12,0,0,0">
+          <StackLayout HorizontalOptions="StartAndExpand" Orientation="Horizontal">
+            <StackLayout.Padding>
+              <OnPlatform x:TypeArguments="Thickness" Android="12,0,0,0" iOS="6,0,0,0"/>
+            </StackLayout.Padding>
             <Image BackgroundColor="#9ccc65" Aspect="AspectFit" WidthRequest="36" HeightRequest="36" VerticalOptions="Center">
               <Image.Source>
-                <OnPlatform x:TypeArguments="ImageSource" Android="ic_audiotrack_white_36dp.png"/>
+                <OnPlatform x:TypeArguments="ImageSource" Android="ic_audiotrack_white_36dp.png" iOS="audioIcon.png"/>
               </Image.Source>
             </Image>            
             <StackLayout Padding="12,0,0,0" VerticalOptions="Center" Orientation="Vertical">
               <Label Text="{Binding Title}" VerticalTextAlignment="Center" TextColor="White">
                 <Label.FontSize>
-                  <OnPlatform x:TypeArguments="x:Double" Android="18" />
+                  <OnPlatform x:TypeArguments="x:Double" Android="18"/>
                 </Label.FontSize>
               </Label>
               <StackLayout Padding="0,-5,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
-                <Label Text="{Binding Artist}" VerticalTextAlignment="Center" FontSize="14" TextColor="#ffebee" />
-                <Label Text="{Binding Duration}" VerticalTextAlignment="Center" FontSize="14" TextColor="#ffebee" />
+                <Label Text="{Binding Artist}" VerticalTextAlignment="Center" TextColor="#ffebee">
+                  <Label.FontSize>
+                    <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="10"/>
+                  </Label.FontSize>
+                </Label>
+                <Label Text="{Binding Duration}" VerticalTextAlignment="Center" TextColor="#ffebee">
+                  <Label.FontSize>
+                    <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="10"/>
+                  </Label.FontSize>
+                </Label>
               </StackLayout>              
             </StackLayout>
           </StackLayout>
