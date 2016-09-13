@@ -23,21 +23,24 @@
                 <OnPlatform x:TypeArguments="ImageSource" Android="ic_audiotrack_white_36dp.png" iOS="audioIcon.png"/>
               </Image.Source>
             </Image>            
-            <StackLayout Padding="12,0,0,0" VerticalOptions="Center" Orientation="Vertical">
+            <StackLayout VerticalOptions="Center" Orientation="Vertical">
+              <StackLayout.Padding>
+                <OnPlatform x:TypeArguments="Thickness" Android="12,0,0,0" iOS="0"/>
+              </StackLayout.Padding>
               <Label Text="{Binding Title}" VerticalTextAlignment="Center" TextColor="White">
                 <Label.FontSize>
-                  <OnPlatform x:TypeArguments="x:Double" Android="18"/>
+                  <OnPlatform x:TypeArguments="x:Double" Android="18" iOS="16"/>
                 </Label.FontSize>
               </Label>
               <StackLayout Padding="0,-5,0,0" HorizontalOptions="StartAndExpand" Orientation="Horizontal">
                 <Label Text="{Binding Artist}" VerticalTextAlignment="Center" TextColor="#ffebee">
                   <Label.FontSize>
-                    <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="10"/>
+                    <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="12"/>
                   </Label.FontSize>
                 </Label>
                 <Label Text="{Binding Duration}" VerticalTextAlignment="Center" TextColor="#ffebee">
                   <Label.FontSize>
-                    <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="10"/>
+                    <OnPlatform x:TypeArguments="x:Double" Android="14" iOS="12"/>
                   </Label.FontSize>
                 </Label>
               </StackLayout>              

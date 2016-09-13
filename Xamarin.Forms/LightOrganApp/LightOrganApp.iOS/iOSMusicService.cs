@@ -13,7 +13,7 @@ namespace LightOrganApp.iOS
         {
             var items = new List<MediaItem>();
 
-            for (int i = 0; i < 12; i++)
+            for (int i = 0; i < 15; i++)
                 items.Add(new MediaItem($"Kawa {i}", $"Gang {i}", GetDisplayTime((i + 1) * 90)));
 
             return items;
