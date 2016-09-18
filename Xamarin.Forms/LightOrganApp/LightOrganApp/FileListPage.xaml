@@ -7,10 +7,19 @@
   <StackLayout>
     <!-- <SearchBar Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged"/> -->
     <Frame Padding="8, 0" OutlineColor="Transparent"  BackgroundColor="Transparent" HasShadow="False" HorizontalOptions="FillAndExpand">
-      <Entry TextColor="White" PlaceholderColor="#ffcdd2" Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged">
+      <Frame.Padding>
+        <OnPlatform x:TypeArguments="Thickness" Android="8,0" iOS="6,6,6,0"/>
+      </Frame.Padding>
+      <Entry Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged">
         <Entry.FontSize>
-          <OnPlatform x:TypeArguments="x:Double" Android="20"/>
+          <OnPlatform x:TypeArguments="x:Double" Android="20" iOS="16"/>
         </Entry.FontSize>
+        <Entry.TextColor>
+          <OnPlatform x:TypeArguments="Color" Android="White" iOS="#e57373"/>
+        </Entry.TextColor>
+        <Entry.PlaceholderColor>
+          <OnPlatform x:TypeArguments="Color" Android="#ffcdd2" iOS="#f8bbd0"/>
+        </Entry.PlaceholderColor>
       </Entry>
     </Frame>
     <ListView x:Name="listView" BackgroundColor="{StaticResource PageBackgroundColor}" SeparatorColor="#e57373" ItemTapped="listView_ItemTapped" ItemSelected="listView_ItemSelected">
