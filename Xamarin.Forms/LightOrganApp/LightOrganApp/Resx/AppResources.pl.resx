@@ -126,4 +126,10 @@
   <data name="AppName" xml:space="preserve">
     <value>Kolorofon XF</value>
   </data>
+  <data name="FileListPageName" xml:space="preserve">
+    <value>Pliki audio</value>
+  </data>
+  <data name="SearchSongs" xml:space="preserve">
+    <value>szukaj utworów</value>
+  </data>
 </root>

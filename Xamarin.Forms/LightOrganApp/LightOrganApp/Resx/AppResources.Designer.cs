@@ -87,5 +87,23 @@ namespace LightOrganApp.Resx {
                 return ResourceManager.GetString("AppName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Music library.
+        /// </summary>
+        internal static string FileListPageName {
+            get {
+                return ResourceManager.GetString("FileListPageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to search songs.
+        /// </summary>
+        internal static string SearchSongs {
+            get {
+                return ResourceManager.GetString("SearchSongs", resourceCulture);
+            }
+        }
     }
 }

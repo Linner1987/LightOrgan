@@ -126,4 +126,10 @@
   <data name="AppName" xml:space="preserve">
     <value>Light Organ XF</value>
   </data>
+  <data name="FileListPageName" xml:space="preserve">
+    <value>Music library</value>
+  </data>
+  <data name="SearchSongs" xml:space="preserve">
+    <value>search songs</value>
+  </data>
 </root>
