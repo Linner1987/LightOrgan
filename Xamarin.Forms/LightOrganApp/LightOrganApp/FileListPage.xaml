@@ -8,7 +8,7 @@
     <!-- <SearchBar Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged"/> -->
     <Frame Padding="8, 0" OutlineColor="Transparent"  BackgroundColor="Transparent" HasShadow="False" HorizontalOptions="FillAndExpand">
       <Frame.Padding>
-        <OnPlatform x:TypeArguments="Thickness" Android="8,0" iOS="6,6,6,0"/>
+        <OnPlatform x:TypeArguments="Thickness" Android="8,0" iOS="6,8,6,0"/>
       </Frame.Padding>
       <Entry Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged">
         <Entry.FontSize>
