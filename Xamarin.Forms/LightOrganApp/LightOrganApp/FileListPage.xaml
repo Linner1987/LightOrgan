@@ -8,7 +8,7 @@
     <!-- <SearchBar Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged"/> -->
     <Frame Padding="8, 0" OutlineColor="Transparent"  BackgroundColor="Transparent" HasShadow="False" HorizontalOptions="FillAndExpand">
       <Frame.Padding>
-        <OnPlatform x:TypeArguments="Thickness" Android="8,0" iOS="6,8,6,0"/>
+        <OnPlatform x:TypeArguments="Thickness" Android="8,0" iOS="6,10,6,4"/>
       </Frame.Padding>
       <Entry Placeholder="{i18n:Translate SearchSongs}" TextChanged="SearchBar_OnTextChanged">
         <Entry.FontSize>
@@ -27,7 +27,7 @@
         <OnPlatform x:TypeArguments="SeparatorVisibility" Android="None" iOS="Default"/>
       </ListView.SeparatorVisibility>
       <ListView.RowHeight>
-        <OnPlatform x:TypeArguments="x:Int32" Android="72"/>
+        <OnPlatform x:TypeArguments="x:Int32" Android="68"/>
       </ListView.RowHeight>
       <ListView.ItemTemplate>
         <DataTemplate>
