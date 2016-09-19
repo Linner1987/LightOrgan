@@ -4,7 +4,9 @@
              xmlns:i18n="clr-namespace:LightOrganApp"
              xmlns:local="clr-namespace:LightOrganApp"
              xmlns:controls="clr-namespace:LightOrganApp.Controls;assembly=LightOrganApp"
-             x:Class="LightOrganApp.MainPage" Title="{i18n:Translate AppName}"
+             x:Class="LightOrganApp.MainPage"
+             NavigationPage.HasBackButton="False"
+             Title="{i18n:Translate AppName}"
              BackgroundColor="{StaticResource PageBackgroundColor}">
   <ContentPage.Resources>
     <ResourceDictionary>
@@ -23,24 +25,20 @@
       </ToolbarItem.Icon>      
     </ToolbarItem>    
   </ContentPage.ToolbarItems>
-  <Grid>
+  <Grid RowSpacing="0">
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-    
-    <Grid Padding="20">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="20"/>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="20"/>
-        <RowDefinition Height="*"/>
-      </Grid.RowDefinitions>
-      <controls:CircleView x:Name="bassLight" CircleColor="#d50000"/>
-      <controls:CircleView x:Name="midLight" Grid.Row="2" CircleColor="#ffab00"/>
-      <controls:CircleView x:Name="trebleLight" Grid.Row="4" CircleColor="#6200ea"/>
-    </Grid>
+
+    <StackLayout x:Name="lightsStack" Padding="20" Spacing="20">      
+      <controls:CircleView x:Name="bassLight" VerticalOptions="FillAndExpand" 
+        HorizontalOptions="FillAndExpand" CircleColor="#d50000"/>
+      <controls:CircleView x:Name="midLight" VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand" CircleColor="#ffab00"/>
+      <controls:CircleView x:Name="trebleLight" VerticalOptions="FillAndExpand"
+        HorizontalOptions="FillAndExpand" CircleColor="#6200ea"/>
+    </StackLayout>
     
     <RelativeLayout Grid.Row="1" BackgroundColor="#e57373">      
       <RelativeLayout.Resources>
