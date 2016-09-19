@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:i18n="clr-namespace:LightOrganApp"
              xmlns:local="clr-namespace:LightOrganApp"
+             xmlns:controls="clr-namespace:LightOrganApp.Controls;assembly=LightOrganApp"
              x:Class="LightOrganApp.MainPage" Title="{i18n:Translate AppName}"
              BackgroundColor="{StaticResource PageBackgroundColor}">
   <ContentPage.Resources>
@@ -22,8 +23,26 @@
       </ToolbarItem.Icon>      
     </ToolbarItem>    
   </ContentPage.ToolbarItems>
-  <Grid>    
-    <RelativeLayout VerticalOptions="End" BackgroundColor="#e57373">      
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="Auto"/>
+    </Grid.RowDefinitions>
+    
+    <Grid Padding="20">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="20"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="20"/>
+        <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+      <controls:CircleView x:Name="bassLight" CircleColor="#d50000"/>
+      <controls:CircleView x:Name="midLight" Grid.Row="2" CircleColor="#ffab00"/>
+      <controls:CircleView x:Name="trebleLight" Grid.Row="4" CircleColor="#6200ea"/>
+    </Grid>
+    
+    <RelativeLayout Grid.Row="1" BackgroundColor="#e57373">      
       <RelativeLayout.Resources>
         <ResourceDictionary>
             <OnPlatform x:TypeArguments="ConstraintType" Android="RelativeToParent" iOS="Constant" x:Key="XType" /> 
@@ -63,5 +82,6 @@
         </Image.Source>      
       </Image>      
     </RelativeLayout>    
+  
   </Grid>
 </ContentPage>

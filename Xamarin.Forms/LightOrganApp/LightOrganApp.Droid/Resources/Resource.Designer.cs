@@ -1748,6 +1748,9 @@ namespace LightOrganApp.Droid
 			// aapt resource value: 0x7f0100c5
 			public const int checkedTextViewStyle = 2130772165;
 			
+			// aapt resource value: 0x7f010118
+			public const int circleColor = 2130772248;
+			
 			// aapt resource value: 0x7f010051
 			public const int closeIcon = 2130772049;
 			
@@ -5308,6 +5311,12 @@ namespace LightOrganApp.Droid
 			
 			// aapt resource value: 9
 			public const int CardView_contentPaddingTop = 9;
+			
+			public static int[] CircleView = new int[] {
+					2130772248};
+			
+			// aapt resource value: 0
+			public const int CircleView_circleColor = 0;
 			
 			public static int[] CollapsingAppBarLayout_LayoutParams = new int[] {
 					2130772194,
