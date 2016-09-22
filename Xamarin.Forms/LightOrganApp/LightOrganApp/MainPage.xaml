@@ -14,7 +14,27 @@
         <OnPlatform.Android>
           <Image BackgroundColor="#9ccc65" Source="ic_audiotrack_white_36dp.png" Aspect="AspectFit" WidthRequest="64" HeightRequest="64"/>
         </OnPlatform.Android>        
-      </OnPlatform>
+      </OnPlatform>  
+      <DataTemplate x:Key="VerticalLights">        
+        <StackLayout Spacing="20">             
+          <controls:CircleView VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" CircleColor="#d50000"/>
+          <controls:CircleView VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" CircleColor="#ffab00"/>
+          <controls:CircleView VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" CircleColor="#6200ea"/>              
+        </StackLayout>        
+      </DataTemplate>
+      <DataTemplate x:Key="HorizontalLights">        
+        <StackLayout Spacing="20" Orientation="Horizontal">             
+          <controls:CircleView VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" CircleColor="#d50000"/>
+          <controls:CircleView VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" CircleColor="#ffab00"/>
+          <controls:CircleView VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand" CircleColor="#6200ea"/>              
+        </StackLayout>        
+      </DataTemplate>
     </ResourceDictionary>
   </ContentPage.Resources>
 
@@ -30,15 +50,9 @@
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
     </Grid.RowDefinitions>
-
-    <StackLayout x:Name="lightsStack" Padding="20" Spacing="20">      
-      <controls:CircleView x:Name="bassLight" VerticalOptions="FillAndExpand" 
-        HorizontalOptions="FillAndExpand" CircleColor="#d50000"/>
-      <controls:CircleView x:Name="midLight" VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand" CircleColor="#ffab00"/>
-      <controls:CircleView x:Name="trebleLight" VerticalOptions="FillAndExpand"
-        HorizontalOptions="FillAndExpand" CircleColor="#6200ea"/>
-    </StackLayout>
+   
+    <!-- <ContentView x:Name="lights" Padding="20" /> -->
+    <controls:ContentControl x:Name="lights" Padding="20" />
     
     <RelativeLayout Grid.Row="1" BackgroundColor="#e57373">      
       <RelativeLayout.Resources>

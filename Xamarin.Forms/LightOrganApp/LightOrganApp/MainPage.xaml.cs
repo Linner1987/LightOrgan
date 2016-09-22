@@ -34,13 +34,14 @@ namespace LightOrganApp
             {
                 this.width = width;
                 this.height = height;
+
                 if (width > height)
                 {
-                    lightsStack.Orientation = StackOrientation.Horizontal;
+                    lights.ContentTemplate = Resources["HorizontalLights"] as DataTemplate;
                 }
                 else
                 {
-                    lightsStack.Orientation = StackOrientation.Vertical;
+                    lights.ContentTemplate = Resources["VerticalLights"] as DataTemplate;                                 
                 }
             }
         }
