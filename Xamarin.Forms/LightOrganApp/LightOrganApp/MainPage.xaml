@@ -18,21 +18,21 @@
       <DataTemplate x:Key="VerticalLights">        
         <StackLayout Spacing="20">             
           <controls:CircleView VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" CircleColor="#d50000"/>
+            HorizontalOptions="FillAndExpand" CircleColor="{Binding BassColor}"/>
           <controls:CircleView VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" CircleColor="#ffab00"/>
+            HorizontalOptions="FillAndExpand" CircleColor="{Binding MidColor}"/>
           <controls:CircleView VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" CircleColor="#6200ea"/>              
+            HorizontalOptions="FillAndExpand" CircleColor="{Binding TrebleColor}"/>              
         </StackLayout>        
       </DataTemplate>
       <DataTemplate x:Key="HorizontalLights">        
         <StackLayout Spacing="20" Orientation="Horizontal">             
           <controls:CircleView VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" CircleColor="#d50000"/>
+            HorizontalOptions="FillAndExpand" CircleColor="{Binding BassColor}"/>
           <controls:CircleView VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" CircleColor="#ffab00"/>
+            HorizontalOptions="FillAndExpand" CircleColor="{Binding MidColor}"/>
           <controls:CircleView VerticalOptions="FillAndExpand"
-            HorizontalOptions="FillAndExpand" CircleColor="#6200ea"/>              
+            HorizontalOptions="FillAndExpand" CircleColor="{Binding TrebleColor}"/>               
         </StackLayout>        
       </DataTemplate>
     </ResourceDictionary>
@@ -49,9 +49,8 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="*"/>
       <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
-   
-    <!-- <ContentView x:Name="lights" Padding="20" /> -->
+    </Grid.RowDefinitions>   
+    
     <controls:ContentControl x:Name="lights" Padding="20" />
     
     <RelativeLayout Grid.Row="1" BackgroundColor="#e57373">      
