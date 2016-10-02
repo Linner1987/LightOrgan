@@ -1,8 +1,11 @@
 using System.Collections.Generic;
-using LightOrganApp.Model;
-using LightOrganApp.Services;
 using Android.Text.Format;
 using LightOrganApp.Droid;
+using System.Threading.Tasks;
+using Android.Provider;
+using Xamarin.Forms;
+using LightOrganApp.Model;
+using LightOrganApp.Services;
 
 [assembly: Xamarin.Forms.Dependency(typeof(AndroidMusicService))]
 
@@ -10,14 +13,53 @@ namespace LightOrganApp.Droid
 {
     public class AndroidMusicService : IMusicService
     {
-        public IEnumerable<MediaItem> GetItems()
+        public const string CustomMetadataTrackSource = "__SOURCE__";
+
+        public async Task<List<MediaItem>> GetItemsAsync()
         {
-            var items = new List<MediaItem>();
+            return await Task.Run(() =>
+            {
+                var items = new List<MediaItem>();
 
-            for (int i = 0; i < 12; i++)
-                items.Add(new MediaItem($"Kawa {i}", $"Gang {i}", DateUtils.FormatElapsedTime((i+1)*90)));
+                try
+                {
+                    var projection = new string[]
+                    {
+                        MediaStore.Audio.Media.InterfaceConsts.Id,
+                        MediaStore.Audio.Media.InterfaceConsts.Artist,
+                        MediaStore.Audio.Media.InterfaceConsts.Title,
+                        MediaStore.Audio.Media.InterfaceConsts.Duration,
+                        MediaStore.Audio.Media.InterfaceConsts.Data,
+                        MediaStore.Audio.Media.InterfaceConsts.MimeType
+                    };
 
-            return items;
-        }
+                    var selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + "!= 0";
+                    var sortOrder = MediaStore.Audio.Media.InterfaceConsts.DateAdded + " DESC";
+
+                    var cursor = Forms.Context.ContentResolver.Query(MediaStore.Audio.Media.ExternalContentUri, projection, selection, null, sortOrder);
+
+                    if (cursor != null && cursor.MoveToFirst())
+                    {
+                        do
+                        {
+                            int idColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Id);
+                            int artistColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Artist);
+                            int titleColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Title);
+                            int durationColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Duration);
+                            int filePathIndex = cursor.GetColumnIndexOrThrow(MediaStore.Audio.Media.InterfaceConsts.Data);                            
+
+                            var item = new MediaItem(cursor.GetString(titleColumn), cursor.GetString(artistColumn), DateUtils.FormatElapsedTime(cursor.GetInt(durationColumn)));
+                            items.Add(item);                          
+
+                        } while (cursor.MoveToNext());
+                    }                        
+                }
+                catch
+                {                   
+                }
+
+                return items;
+            });            
+        }       
     }
 }

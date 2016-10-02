@@ -129,6 +129,15 @@
   <data name="FileListPageName" xml:space="preserve">
     <value>Pliki audio</value>
   </data>
+  <data name="NotAllPermissionsMsg" xml:space="preserve">
+    <value>Niektóre uprawnienia nie zostały nadane.</value>
+  </data>
+  <data name="PermissionDeniedMsg" xml:space="preserve">
+    <value>Uprawnienie {0} nie zostało nadane.</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Uprawnienia</value>
+  </data>
   <data name="SearchSongs" xml:space="preserve">
     <value>szukaj utworów</value>
   </data>

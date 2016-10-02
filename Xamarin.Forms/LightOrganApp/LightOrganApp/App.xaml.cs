@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Plugin.Permissions;
+using LightOrganApp.Resx;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
+using System.Threading.Tasks;
 using Xamarin.Forms;
+using Plugin.Permissions.Abstractions;
 
 namespace LightOrganApp
 {
@@ -25,9 +27,9 @@ namespace LightOrganApp
             MainPage = new NavigationPage(new MainPage());
         }
 
-        protected override void OnStart()
+        protected override async void OnStart()
         {
-            // Handle when your app starts
+            await CheckPermissions();
         }
 
         protected override void OnSleep()
@@ -35,9 +37,41 @@ namespace LightOrganApp
             // Handle when your app sleeps
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
-            // Handle when your app resumes
+            await CheckPermissions();
+        }
+
+        private async Task CheckPermissions()
+        {
+            try
+            {
+                if (Device.OS == TargetPlatform.Android)
+                {
+                    var permissionsList = new List<Permission>();
+
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+                    if (status != PermissionStatus.Granted)
+                        permissionsList.Add(Permission.Storage);
+
+                    status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Microphone);
+
+                    if (status != PermissionStatus.Granted)
+                        permissionsList.Add(Permission.Microphone);
+
+                    if (permissionsList.Count > 0)
+                    {
+                        var results = await CrossPermissions.Current.RequestPermissionsAsync(permissionsList.ToArray());
+
+                        if(results.Any(p => p.Value != PermissionStatus.Granted))
+                            await MainPage.DisplayAlert(AppResources.Permissions, AppResources.NotAllPermissionsMsg, "OK");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {                
+            }
         }
     }
 }

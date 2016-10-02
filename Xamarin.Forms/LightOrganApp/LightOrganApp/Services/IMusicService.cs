@@ -1,10 +1,11 @@
 ﻿using LightOrganApp.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LightOrganApp.Services
 {
     public interface IMusicService
     {
-        IEnumerable<MediaItem> GetItems();
+       Task<List<MediaItem>> GetItemsAsync();
     }
 }

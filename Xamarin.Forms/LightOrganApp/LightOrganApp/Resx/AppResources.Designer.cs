@@ -98,6 +98,33 @@ namespace LightOrganApp.Resx {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Some Permission is Denied..
+        /// </summary>
+        internal static string NotAllPermissionsMsg {
+            get {
+                return ResourceManager.GetString("NotAllPermissionsMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} permission denied..
+        /// </summary>
+        internal static string PermissionDeniedMsg {
+            get {
+                return ResourceManager.GetString("PermissionDeniedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Permissions.
+        /// </summary>
+        internal static string Permissions {
+            get {
+                return ResourceManager.GetString("Permissions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to search songs.
         /// </summary>
         internal static string SearchSongs {

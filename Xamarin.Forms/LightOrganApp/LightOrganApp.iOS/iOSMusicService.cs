@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using LightOrganApp.Model;
 using LightOrganApp.iOS;
+using System.Threading.Tasks;
 
 [assembly: Xamarin.Forms.Dependency(typeof(iOSMusicService))]
 
@@ -9,7 +10,7 @@ namespace LightOrganApp.iOS
 {
     public class iOSMusicService : IMusicService
     {
-        public IEnumerable<MediaItem> GetItems()
+        public async Task<List<MediaItem>> GetItemsAsync()
         {
             var items = new List<MediaItem>();
 

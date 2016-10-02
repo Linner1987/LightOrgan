@@ -2,7 +2,10 @@
 using LightOrganApp.Services;
 using System.Collections.Generic;
 using Xamarin.Forms;
-using System.Linq;
+using Plugin.Permissions;
+using Plugin.Permissions.Abstractions;
+using System.Threading.Tasks;
+using LightOrganApp.Resx;
 
 namespace LightOrganApp
 {
@@ -18,12 +21,42 @@ namespace LightOrganApp
             InitializeComponent();
         }
 
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             base.OnAppearing();
 
-            allMediaItems = DependencyService.Get<IMusicService>().GetItems().ToList();
-            SearchFiles();                                       
+            var hasPermission = await CheckPermission();
+
+            if (hasPermission)
+            {
+                allMediaItems = await DependencyService.Get<IMusicService>().GetItemsAsync();                  
+            }
+            else
+            {
+                allMediaItems = new List<MediaItem>();
+
+                await DisplayAlert(AppResources.Permissions, string.Format(AppResources.PermissionDeniedMsg, GetPermissionName()), "OK");                
+            }
+
+            SearchFiles();
+        }
+
+        private async Task<bool> CheckPermission()
+        {
+            var status = PermissionStatus.Denied;
+
+            if (Device.OS == TargetPlatform.Android)
+               status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+
+            return status == PermissionStatus.Granted;
+        }
+
+        private string GetPermissionName()
+        {
+            if (Device.OS == TargetPlatform.Android)
+                return "READ_EXTERNAL_STORAGE";
+
+            return string.Empty;
         }
 
         private List<MediaItem> Filter(List<MediaItem> items, string query)

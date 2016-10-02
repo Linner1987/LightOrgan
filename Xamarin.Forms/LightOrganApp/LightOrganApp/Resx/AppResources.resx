@@ -129,6 +129,15 @@
   <data name="FileListPageName" xml:space="preserve">
     <value>Music library</value>
   </data>
+  <data name="NotAllPermissionsMsg" xml:space="preserve">
+    <value>Some Permission is Denied.</value>
+  </data>
+  <data name="PermissionDeniedMsg" xml:space="preserve">
+    <value>{0} permission denied.</value>
+  </data>
+  <data name="Permissions" xml:space="preserve">
+    <value>Permissions</value>
+  </data>
   <data name="SearchSongs" xml:space="preserve">
     <value>search songs</value>
   </data>
