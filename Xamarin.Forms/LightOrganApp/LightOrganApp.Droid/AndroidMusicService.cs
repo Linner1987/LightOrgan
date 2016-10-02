@@ -13,8 +13,6 @@ namespace LightOrganApp.Droid
 {
     public class AndroidMusicService : IMusicService
     {
-        public const string CustomMetadataTrackSource = "__SOURCE__";
-
         public async Task<List<MediaItem>> GetItemsAsync()
         {
             return await Task.Run(() =>
@@ -48,7 +46,7 @@ namespace LightOrganApp.Droid
                             int durationColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Duration);
                             int filePathIndex = cursor.GetColumnIndexOrThrow(MediaStore.Audio.Media.InterfaceConsts.Data);                            
 
-                            var item = new MediaItem(cursor.GetString(titleColumn), cursor.GetString(artistColumn), DateUtils.FormatElapsedTime(cursor.GetInt(durationColumn)));
+                            var item = new MediaItem(cursor.GetString(titleColumn), cursor.GetString(artistColumn), DateUtils.FormatElapsedTime(cursor.GetInt(durationColumn) / 1000));
                             items.Add(item);                          
 
                         } while (cursor.MoveToNext());
