@@ -47,6 +47,8 @@ namespace LightOrganApp
 
             if (Device.OS == TargetPlatform.Android)
                status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
+            else if (Device.OS == TargetPlatform.iOS)
+               status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Media);
 
             return status == PermissionStatus.Granted;
         }
@@ -55,6 +57,8 @@ namespace LightOrganApp
         {
             if (Device.OS == TargetPlatform.Android)
                 return "READ_EXTERNAL_STORAGE";
+            else if (Device.OS == TargetPlatform.iOS)
+                return "Media library access";
 
             return string.Empty;
         }

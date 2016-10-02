@@ -46,10 +46,10 @@ namespace LightOrganApp
         {
             try
             {
+                var permissionsList = new List<Permission>();
+
                 if (Device.OS == TargetPlatform.Android)
                 {
-                    var permissionsList = new List<Permission>();
-
                     var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Storage);
 
                     if (status != PermissionStatus.Granted)
@@ -58,15 +58,22 @@ namespace LightOrganApp
                     status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Microphone);
 
                     if (status != PermissionStatus.Granted)
-                        permissionsList.Add(Permission.Microphone);
+                        permissionsList.Add(Permission.Microphone);                   
+                }
+                else if (Device.OS == TargetPlatform.iOS)
+                {
+                    var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Media);
 
-                    if (permissionsList.Count > 0)
-                    {
-                        var results = await CrossPermissions.Current.RequestPermissionsAsync(permissionsList.ToArray());
+                    if (status != PermissionStatus.Granted)
+                        permissionsList.Add(Permission.Media);
+                }
 
-                        if(results.Any(p => p.Value != PermissionStatus.Granted))
-                            await MainPage.DisplayAlert(AppResources.Permissions, AppResources.NotAllPermissionsMsg, "OK");
-                    }
+                if (permissionsList.Count > 0)
+                {
+                    var results = await CrossPermissions.Current.RequestPermissionsAsync(permissionsList.ToArray());
+
+                    if (results.Any(p => p.Value != PermissionStatus.Granted))
+                        await MainPage.DisplayAlert(AppResources.Permissions, AppResources.NotAllPermissionsMsg, "OK");
                 }
             }
             catch (Exception ex)

@@ -96,14 +96,22 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\CircleViewRenderer.cs" />
     <Compile Include="Renderers\MainPageRenderer.cs" />
-    <None Include="Entitlements.plist" />
-    <None Include="Info.plist" />
+    <None Include="Entitlements.plist">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork@2x" />
     <None Include="packages.config" />
-    <BundleResource Include="Resources\en.lproj\InfoPlist.strings" />
+    <BundleResource Include="Resources\en.lproj\InfoPlist.strings">
+      <SubType>Designer</SubType>
+    </BundleResource>
     <BundleResource Include="Resources\pl.lproj\InfoPlist.strings" />
+    <BundleResource Include="Resources\en.lproj\Localizable.strings" />
+    <BundleResource Include="Resources\pl.lproj\Localizable.strings" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\Default-568h%402x.png" />
@@ -146,6 +154,16 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Plugin.Permissions\Plugin.Permissions.Abstractions\Plugin.Permissions.Abstractions.csproj">
+      <Project>{6edb0588-ffc5-4ef5-8a99-9e241d0f878d}</Project>
+      <Name>Plugin.Permissions.Abstractions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Plugin.Permissions\Plugin.Permissions.iOSUnified\Plugin.Permissions.iOSUnified.csproj">
+      <Project>{2882aeeb-d4cd-4eb9-8a6c-6653b33681f0}</Project>
+      <Name>Plugin.Permissions.iOSUnified</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
     <ProjectReference Include="..\LightOrganApp\LightOrganApp.csproj">
       <Project>{2E92B235-3163-4760-BFD1-94C73A409308}</Project>
       <Name>LightOrganApp</Name>

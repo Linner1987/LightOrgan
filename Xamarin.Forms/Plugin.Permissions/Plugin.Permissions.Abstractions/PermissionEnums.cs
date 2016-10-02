@@ -90,6 +90,11 @@
         /// Android: External Storage
         /// iOS: Nothing
         /// </summary>
-        Storage
+        Storage,
+        /// <summary>
+        /// Android: Nothing
+        /// iOS: Media
+        /// </summary>
+        Media
     }
 }

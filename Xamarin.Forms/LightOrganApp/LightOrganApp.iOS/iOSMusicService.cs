@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using LightOrganApp.Model;
 using LightOrganApp.iOS;
 using System.Threading.Tasks;
+using MediaPlayer;
+using Foundation;
+using System.Linq;
 
 [assembly: Xamarin.Forms.Dependency(typeof(iOSMusicService))]
 
@@ -12,12 +15,18 @@ namespace LightOrganApp.iOS
     {
         public async Task<List<MediaItem>> GetItemsAsync()
         {
-            var items = new List<MediaItem>();
+            return await Task.Run(() =>
+            {
+                var query = new MPMediaQuery();
+                var mediaTypeNumber = NSNumber.FromInt32((int)MPMediaType.Music);
+                var predicate = MPMediaPropertyPredicate.PredicateWithValue(mediaTypeNumber, MPMediaItem.MediaTypeProperty);
 
-            for (int i = 0; i < 15; i++)
-                items.Add(new MediaItem($"Kawa {i}", $"Gang {i}", GetDisplayTime((i + 1) * 90)));
+                query.AddFilterPredicate(predicate);
 
-            return items;
+                var unknownArtist = NSBundle.MainBundle.LocalizedString("unknownArtist", "Unknown Artist");
+
+                return query.Items.Select(item => new MediaItem(item.Title, (item.Artist != null) ? item.Artist : unknownArtist, GetDisplayTime((int)item.PlaybackDuration))).ToList();
+            });          
         }
 
         private string GetDisplayTime(int seconds)

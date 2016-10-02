@@ -11,7 +11,7 @@ using EventKit;
 using UIKit;
 using Photos;
 using System.Diagnostics;
-
+using MediaPlayer;
 
 namespace Plugin.Permissions
 {
@@ -76,6 +76,9 @@ namespace Plugin.Permissions
                     return Task.FromResult(GetEventPermissionStatus(EKEntityType.Reminder));
                 case Permission.Sensors:
                     return Task.FromResult((CMMotionActivityManager.IsActivityAvailable ? PermissionStatus.Granted : PermissionStatus.Denied));
+                //mk
+                case Permission.Media:
+                    return Task.FromResult(MediaPermissionStatus);
             }
             return Task.FromResult(PermissionStatus.Granted);
         }
@@ -136,6 +139,10 @@ namespace Plugin.Permissions
                         break;
                     case Permission.Sensors:
                         results.Add(permission, await RequestSensorsPermission().ConfigureAwait(false));
+                        break;
+                    //mk
+                    case Permission.Media:
+                        results.Add(permission, await RequestMediaPermission().ConfigureAwait(false));
                         break;
                 }
 
@@ -427,5 +434,73 @@ namespace Plugin.Permissions
             return PermissionStatus.Unknown;
         }
         #endregion
+
+
+        //mk
+        #region Music
+        PermissionStatus MediaPermissionStatus
+        {
+            get
+            {
+                if (UIDevice.CurrentDevice.CheckSystemVersion(9, 3))
+                {
+                    var status = MPMediaLibrary.AuthorizationStatus;
+                    switch (status)
+                    {
+                        case MPMediaLibraryAuthorizationStatus.Authorized:
+                            return PermissionStatus.Granted;
+                        case MPMediaLibraryAuthorizationStatus.Denied:
+                            return PermissionStatus.Denied;
+                        case MPMediaLibraryAuthorizationStatus.Restricted:
+                            return PermissionStatus.Restricted;
+                        default:
+                            return PermissionStatus.Unknown;
+                    }
+                }
+                else
+                {
+                    return PermissionStatus.Granted;
+                }                   
+            }
+        }
+
+        Task<PermissionStatus> RequestMediaPermission()
+        {
+            if (UIDevice.CurrentDevice.CheckSystemVersion(9, 3))
+            {
+                if (MediaPermissionStatus != PermissionStatus.Unknown)
+                    return Task.FromResult(MediaPermissionStatus);
+
+                var tcs = new TaskCompletionSource<PermissionStatus>();
+
+                MPMediaLibrary.RequestAuthorization(status =>
+                {
+                    switch (status)
+                    {
+                        case MPMediaLibraryAuthorizationStatus.Authorized:
+                            tcs.SetResult(PermissionStatus.Granted);
+                            break;
+                        case MPMediaLibraryAuthorizationStatus.Denied:
+                            tcs.SetResult(PermissionStatus.Denied);
+                            break;
+                        case MPMediaLibraryAuthorizationStatus.Restricted:
+                            tcs.SetResult(PermissionStatus.Restricted);
+                            break;
+                        default:
+                            tcs.SetResult(PermissionStatus.Unknown);
+                            break;
+                    }
+                });
+
+                return tcs.Task;
+            }
+            else
+            {
+                return Task.FromResult(PermissionStatus.Granted);
+            }            
+        }
+
+        #endregion
+
     }
 }
