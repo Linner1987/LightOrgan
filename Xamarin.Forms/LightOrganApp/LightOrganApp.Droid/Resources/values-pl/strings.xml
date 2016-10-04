@@ -1,4 +1,9 @@
 ﻿<resources>
-  <string name="app_name">Kolorofon XF</string>  
+  <string name="app_name">Kolorofon XF</string>
+  <string name="browse_musics_by_genre_subtitle">Utwory %1$s</string>
+  <string name="search_queue_title">Wyniki wyszukiwania</string>
+  <string name="random_queue_title">Losowa muzyka</string>
+  <string name="permission_denied_msg">Uprawnienie %1$s nie zostało nadane.</string>
+  <string name="no_metadata_msg">Pobieranie metadanych nie powiodło się.</string>
 </resources>
 
