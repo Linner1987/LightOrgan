@@ -6,6 +6,7 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using System.Threading.Tasks;
 using LightOrganApp.Resx;
+using LightOrganApp.Messages;
 
 namespace LightOrganApp
 {
@@ -19,6 +20,14 @@ namespace LightOrganApp
         public FileListPage()
         {
             InitializeComponent();
+
+            MessagingCenter.Subscribe<MediaItemsLoadedMessage>(this, nameof(MediaItemsLoadedMessage), message => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    allMediaItems = message.Items;
+                    SearchFiles();
+                });
+            });            
         }
 
         protected override async void OnAppearing()
@@ -29,16 +38,18 @@ namespace LightOrganApp
 
             if (hasPermission)
             {
-                allMediaItems = await DependencyService.Get<IMusicService>().GetItemsAsync();                  
+                //allMediaItems = await DependencyService.Get<IMusicService>().GetItemsAsync();
+
+                var message = new MediaBrowserConnectMessage();
+                MessagingCenter.Send(message, nameof(MediaBrowserConnectMessage));
             }
             else
             {
                 allMediaItems = new List<MediaItem>();
+                SearchFiles();
 
                 await DisplayAlert(AppResources.Permissions, string.Format(AppResources.PermissionDeniedMsg, GetPermissionName()), "OK");                
-            }
-
-            SearchFiles();
+            }            
         }
 
         private async Task<bool> CheckPermission()

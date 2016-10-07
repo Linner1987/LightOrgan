@@ -53,7 +53,7 @@
     
     <controls:ContentControl x:Name="lights" Padding="20" />
     
-    <RelativeLayout Grid.Row="1" BackgroundColor="#e57373">      
+    <RelativeLayout x:Name="PlaybackPanel" Grid.Row="1" BackgroundColor="#e57373">      
       <RelativeLayout.Resources>
         <ResourceDictionary>
             <OnPlatform x:TypeArguments="ConstraintType" Android="RelativeToParent" iOS="Constant" x:Key="XType" /> 

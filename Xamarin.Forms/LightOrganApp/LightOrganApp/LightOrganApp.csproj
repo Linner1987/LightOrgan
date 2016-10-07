@@ -47,8 +47,15 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\MediaItemsLoadedMessage.cs" />
+    <Compile Include="Messages\MediaBrowserConnectMessage.cs" />
+    <Compile Include="Messages\MetadataChangedMessage.cs" />
+    <Compile Include="Messages\PlaybackStateChangedMessage.cs" />
+    <Compile Include="Messages\ShowPlaybackControlsMessage.cs" />
     <Compile Include="Model\LightsData.cs" />
     <Compile Include="Model\MediaItem.cs" />
+    <Compile Include="Model\MediaMetadata.cs" />
+    <Compile Include="Model\PlaybackState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resx\AppResources.Designer.cs">
       <AutoGen>True</AutoGen>

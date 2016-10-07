@@ -46,7 +46,7 @@ namespace LightOrganApp.Droid
                             int durationColumn = cursor.GetColumnIndex(MediaStore.Audio.Media.InterfaceConsts.Duration);
                             int filePathIndex = cursor.GetColumnIndexOrThrow(MediaStore.Audio.Media.InterfaceConsts.Data);                            
 
-                            var item = new MediaItem(cursor.GetString(titleColumn), cursor.GetString(artistColumn), DateUtils.FormatElapsedTime(cursor.GetInt(durationColumn) / 1000));
+                            var item = new MediaItem(idColumn.ToString(), cursor.GetString(titleColumn), cursor.GetString(artistColumn), DateUtils.FormatElapsedTime(cursor.GetInt(durationColumn) / 1000));
                             items.Add(item);                          
 
                         } while (cursor.MoveToNext());

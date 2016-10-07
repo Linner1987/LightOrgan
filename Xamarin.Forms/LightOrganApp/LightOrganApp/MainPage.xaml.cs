@@ -1,4 +1,5 @@
-﻿using LightOrganApp.Model;
+﻿using LightOrganApp.Messages;
+using LightOrganApp.Model;
 using LightOrganApp.Resx;
 using System;
 using System.Collections.Generic;
@@ -29,8 +30,47 @@ namespace LightOrganApp
                 ToolbarItems.Add(toolbarItem);
             }
 
-            Title.Text = "Gang Albanii - Napad na bank";
-            Artist.Text = "<unknown>";
+            MessagingCenter.Subscribe<ShowPlaybackControlsMessage>(this, nameof(ShowPlaybackControlsMessage), message => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    PlaybackPanel.IsVisible = true;
+                });
+            });
+
+            MessagingCenter.Subscribe<PlaybackStateChangedMessage>(this, nameof(PlaybackStateChangedMessage), message => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    bool enablePlay = false;
+                    switch (message.State)
+                    {
+                        case PlaybackState.Paused:
+                        case PlaybackState.Stopped:
+                            enablePlay = true;
+                            break;
+                        case PlaybackState.Error:
+                            break;
+                    }
+
+                    if (enablePlay)
+                    {
+                        if (Device.OS == TargetPlatform.Android)
+                            PlayPauseIcon.Source = "ic_play_arrow_white_36dp.png";                       
+                    }
+                    else
+                    {
+                        if (Device.OS == TargetPlatform.Android)
+                            PlayPauseIcon.Source = "ic_pause_white_36dp.png";                        
+                    }
+                });
+            });
+
+            MessagingCenter.Subscribe<MetadataChangedMessage>(this, nameof(MetadataChangedMessage), message => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Title.Text = message.Metadata.Title;
+                    Artist.Text = message.Metadata.Artist;
+                });
+            });           
 
             //test
             //OnLightOrganDataUpdated(0.1f, 1, 0.1f);
