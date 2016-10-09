@@ -96,15 +96,17 @@ namespace LightOrganApp
 
         private void SearchFiles()
         {
-            var filteredList = Filter(allMediaItems, searchText);
-            listView.ItemsSource = filteredList;
+            var filteredList = Filter(allMediaItems, searchText);            
+            listView.ItemsSource = filteredList;                       
         }
 
         private async void listView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             var mainPage = new MainPage();
-
             await Navigation.PushAsync(mainPage);
+
+            var message = new PlayMediaItemMessage { MediaId = ((MediaItem)e.Item).Id };
+            MessagingCenter.Send(message, nameof(PlayMediaItemMessage));
         }
 
         private void listView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

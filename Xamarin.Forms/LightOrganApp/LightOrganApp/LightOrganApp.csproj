@@ -40,6 +40,9 @@
     </Compile>
     <Compile Include="Controls\CircleView.cs" />
     <Compile Include="Controls\ContentControl.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\ImageButtonSourceConverter.cs" />
+    <Compile Include="Enums\ImageOrientation.cs" />
     <Compile Include="FileListPage.xaml.cs">
       <DependentUpon>FileListPage.xaml</DependentUpon>
     </Compile>
@@ -47,10 +50,13 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Messages\HidePlaybackControlsMessage.cs" />
     <Compile Include="Messages\MediaItemsLoadedMessage.cs" />
     <Compile Include="Messages\MediaBrowserConnectMessage.cs" />
     <Compile Include="Messages\MetadataChangedMessage.cs" />
     <Compile Include="Messages\PlaybackStateChangedMessage.cs" />
+    <Compile Include="Messages\PlayMediaItemMessage.cs" />
+    <Compile Include="Messages\PlayOrPauseMessage.cs" />
     <Compile Include="Messages\ShowPlaybackControlsMessage.cs" />
     <Compile Include="Model\LightsData.cs" />
     <Compile Include="Model\MediaItem.cs" />

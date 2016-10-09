@@ -143,7 +143,7 @@ namespace Plugin.Permissions
             var permissionsToRequest = new List<string>();
             foreach (var permission in permissions)
             {
-                var result = await CheckPermissionStatusAsync(permission).ConfigureAwait(false);
+                var result = await CheckPermissionStatusAsync(permission); /*.ConfigureAwait(false);*/
                 if (result != PermissionStatus.Granted)
                 {
                     var names = GetManifestNames(permission);
@@ -177,7 +177,7 @@ namespace Plugin.Permissions
 
             ActivityCompat.RequestPermissions(activity, permissionsToRequest.ToArray(), PermissionCode);
 
-            return await tcs.Task.ConfigureAwait(false);
+            return await tcs.Task; /*.ConfigureAwait(false);*/
         }
 
         const int PermissionCode = 25;

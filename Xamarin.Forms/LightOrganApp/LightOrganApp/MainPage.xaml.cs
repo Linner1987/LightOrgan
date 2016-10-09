@@ -37,6 +37,13 @@ namespace LightOrganApp
                 });
             });
 
+            MessagingCenter.Subscribe<HidePlaybackControlsMessage>(this, nameof(HidePlaybackControlsMessage), message => {
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    PlaybackPanel.IsVisible = false;
+                });
+            });
+
             MessagingCenter.Subscribe<PlaybackStateChangedMessage>(this, nameof(PlaybackStateChangedMessage), message => {
                 Device.BeginInvokeOnMainThread(() =>
                 {
@@ -54,12 +61,12 @@ namespace LightOrganApp
                     if (enablePlay)
                     {
                         if (Device.OS == TargetPlatform.Android)
-                            PlayPauseIcon.Source = "ic_play_arrow_white_36dp.png";                       
+                            PlayPauseButton.Source = "ic_play_arrow_white_36dp.png";                       
                     }
                     else
                     {
                         if (Device.OS == TargetPlatform.Android)
-                            PlayPauseIcon.Source = "ic_pause_white_36dp.png";                        
+                            PlayPauseButton.Source = "ic_pause_white_36dp.png";                        
                     }
                 });
             });
@@ -104,9 +111,14 @@ namespace LightOrganApp
 
         async void OnMediaFilesClicked(object sender, EventArgs e)
         {
-            var fileListPage = new FileListPage();
-                 
+            var fileListPage = new FileListPage();                 
             await Navigation.PushAsync(fileListPage);
+        }
+
+        void OnPlayPauseButtonClicked(object sender, EventArgs e)
+        {
+            var message = new PlayOrPauseMessage();
+            MessagingCenter.Send(message, nameof(PlayOrPauseMessage));
         }
 
         private static Color GetColorWithAlpha(Color color, float ratio)

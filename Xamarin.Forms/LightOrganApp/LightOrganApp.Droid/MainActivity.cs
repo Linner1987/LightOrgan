@@ -153,14 +153,36 @@ namespace LightOrganApp.Droid
             };
 
             WireUpMediaBrowser();
+            WireUpPlayMediaItemTask();
         }
 
         void WireUpMediaBrowser()
         {
             MessagingCenter.Subscribe<MediaBrowserConnectMessage>(this, nameof(MediaBrowserConnectMessage), message =>
             {
-                mediaBrowser.Connect();
+                if (mediaBrowser.IsConnected)
+                {
+                    OnConnected();
+                }
+                else
+                {
+                    mediaBrowser.Connect();
+                }             
+                                
             });
+        }
+
+        void WireUpPlayMediaItemTask()
+        {
+            MessagingCenter.Subscribe<PlayMediaItemMessage>(this, nameof(PlayMediaItemMessage), message =>
+            {
+                PlayFromMediaId(message.MediaId);
+            });
+
+            MessagingCenter.Subscribe<PlayOrPauseMessage>(this, nameof(PlayOrPauseMessage), message =>
+            {
+                PlayOrPause();
+            });           
         }
 
         protected override void OnStart()
@@ -308,10 +330,11 @@ namespace LightOrganApp.Droid
 
         private void HidePlaybackControls()
         {
-
+            var message = new HidePlaybackControlsMessage();
+            MessagingCenter.Send(message, nameof(HidePlaybackControlsMessage));
         }
 
-        private void OnPlayOrPause()
+        private void PlayOrPause()
         {
             var controller = SupportMediaController;
             var stateObj = controller.PlaybackState;

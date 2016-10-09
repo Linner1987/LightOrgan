@@ -10,5 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)LightsRemoteController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Renderers\ImageButtonRenderer.cs" />
   </ItemGroup>
 </Project>
